@@ -11,8 +11,20 @@ public class PessoaJuridica extends Pessoa {
 		this.preposto = preposto;
 	}
 
+	public PessoaJuridica(String nome, String email, long cnpj, PessoaFisica preposto) {
+		super(nome, email);
+		this.cnpj = cnpj;
+		this.preposto = preposto;
+	}
+	
+	public PessoaJuridica(String nome, long telefone, long cnpj, PessoaFisica preposto) {
+		super(nome, telefone);
+		this.cnpj = cnpj;
+		this.preposto = preposto;
+	}
+	
 	@Override
-	public long getCadastro() {
+	public long getCadastroRF() {
 		return this.cnpj;
 	}
 

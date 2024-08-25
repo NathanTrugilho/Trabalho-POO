@@ -10,6 +10,18 @@ public abstract class Pessoa {
 		this.email = email;
 		this.telefone = telefone;
 	}
+	
+	public Pessoa(String nome, String email) {
+		this.nome = nome;
+		this.email = email;
+		this.telefone = 0;
+	}
+	
+	public Pessoa(String nome, long telefone) {
+		this.nome = nome;
+		this.email = null;
+		this.telefone = telefone;
+	}
 
 	public String getNome() {
 		return nome;
@@ -35,6 +47,6 @@ public abstract class Pessoa {
 		this.telefone = telefone;
 	}
 	
-	public abstract long getCadastro();
+	public abstract long getCadastroRF();
 	
 }
