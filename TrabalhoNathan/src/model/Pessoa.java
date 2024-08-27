@@ -55,6 +55,8 @@ public abstract class Pessoa {
 		
 		sb.append("Nome: " + this.nome + "\n");
 		
+		sb.append("CadastroRF: " + getCadastroRF() + "\n");
+		
 		if (this.email != null) {
 			sb.append("Email: " + this.email + "\n");
 		}
@@ -62,8 +64,6 @@ public abstract class Pessoa {
 		if (this.telefone != 0) {
 			sb.append("Telefone: " + this.telefone + "\n");
 		}
-		
-		sb.append("CadastroRF: " + getCadastroRF() + "\n");
 		
 		return sb.toString();
 	}

@@ -5,19 +5,19 @@ public class PessoaJuridica extends Pessoa {
 	private final long cnpj;
 	private PessoaFisica preposto;
 	
-	public PessoaJuridica(String nome, String email, long telefone, long cnpj, PessoaFisica preposto) {
+	public PessoaJuridica(String nome, long cnpj, PessoaFisica preposto, String email, long telefone) {
 		super(nome, email, telefone);
 		this.cnpj = cnpj;
 		this.preposto = preposto;
 	}
 
-	public PessoaJuridica(String nome, String email, long cnpj, PessoaFisica preposto) {
+	public PessoaJuridica(String nome, long cnpj, PessoaFisica preposto, String email) {
 		super(nome, email);
 		this.cnpj = cnpj;
 		this.preposto = preposto;
 	}
 	
-	public PessoaJuridica(String nome, long telefone, long cnpj, PessoaFisica preposto) {
+	public PessoaJuridica(String nome, long cnpj, PessoaFisica preposto, long telefone) {
 		super(nome, telefone);
 		this.cnpj = cnpj;
 		this.preposto = preposto;
