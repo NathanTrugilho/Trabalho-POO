@@ -22,4 +22,10 @@ public class Tribunal {
 	public String getSecao() {
 		return secao;
 	}
+	
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return super.toString();
+	}
 }

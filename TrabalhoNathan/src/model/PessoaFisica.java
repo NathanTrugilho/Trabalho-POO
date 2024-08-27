@@ -23,5 +23,4 @@ public class PessoaFisica extends Pessoa {
 	public long getCadastroRF() {
 		return this.cpf;
 	}
-
 }

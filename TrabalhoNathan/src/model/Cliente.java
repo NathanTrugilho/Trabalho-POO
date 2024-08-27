@@ -8,9 +8,8 @@ public class Cliente {
 	private final Pessoa pessoa;
 	private List<Processo> processos = new ArrayList<>();
 	
-	public Cliente(Pessoa pessoa, Processo processo) {
+	public Cliente(Pessoa pessoa) {
 		this.pessoa = pessoa;
-		processos.add(processo);
 	}
 	
 	public Pessoa getPessoa() {
@@ -26,11 +25,11 @@ public class Cliente {
 	}
 	
 	public StringBuilder getExtratoConta() {
-		
+		return;
 	}
 	
 	public double getSaldoConta() {
-		
+		return 0;
 	}
 	
 	@Override

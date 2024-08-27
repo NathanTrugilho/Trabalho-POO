@@ -36,5 +36,14 @@ public class PessoaJuridica extends Pessoa {
 		this.preposto = preposto;
 	}
 	
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		
+		sb.append(super.toString());
+		sb.append("Preposto: " + getPreposto().getCadastroRF() + "\n");
+		
+		return sb.toString();
+	}
 
 }
