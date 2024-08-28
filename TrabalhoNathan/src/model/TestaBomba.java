@@ -16,6 +16,21 @@ public class TestaBomba {
 		Audiencia aud1 = new Audiencia(a1, new Date(), "Matar polícia");
 		
 		System.out.println(aud1);
+		
+		Conta c1 = new Conta();
+		c1.addDespesa(new Date(), "Honorarios", 400);
+		c1.addDespesa(new Date(), "Xerox", 50);
+		c1.addDespesa(new Date(), "Uber", 752);
+		c1.addPagamento(EFormaPagamento.DINHEIRO, new Date(), 300);
+		c1.addPagamento(EFormaPagamento.PIX, new Date(), 285);
+		
+		System.out.println(c1.getTotalDespesas());
+		System.out.println(c1.getTotalPagamentos());
+		System.out.println(c1.getSaldoConta());
+		
+		System.out.println(c1.getExtrato().toString());
+		
 	}
+	
 	
 }

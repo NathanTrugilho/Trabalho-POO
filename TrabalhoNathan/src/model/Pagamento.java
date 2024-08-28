@@ -6,9 +6,9 @@ public class Pagamento {
 	
 	private final EFormaPagamento formaPagamento;
 	private final Date data;
-	private final float valor;
+	private final double valor;
 	
-	public Pagamento(EFormaPagamento formaPagamento, Date data, float valor) {
+	public Pagamento(EFormaPagamento formaPagamento, Date data, double valor) {
 		this.formaPagamento = formaPagamento;
 		this.data = data;
 		this.valor = valor;
@@ -22,14 +22,20 @@ public class Pagamento {
 		return data;
 	}
 
-	public float getValor() {
+	public double getValor() {
 		return valor;
 	}
 	
 	@Override
 	public String toString() {
-		// TODO Auto-generated method stub
-		return super.toString();
+		
+		StringBuilder sb = new StringBuilder();
+		
+		sb.append("Data: " + this.getData() + "\n");
+
+		sb.append("FormaPagamento: " + this.getFormaPagamento() + "\tValor: " + this.getValor() + "\n\n");
+		
+		return sb.toString();
 	}
 	
 
