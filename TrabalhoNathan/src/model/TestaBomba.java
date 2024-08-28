@@ -1,5 +1,7 @@
 package model;
 
+import java.util.Date;
+
 public class TestaBomba {
 
 	public static void main(String[] args) {
@@ -10,6 +12,10 @@ public class TestaBomba {
 		System.out.println(p1.toString());
 		System.out.println(p2.toString());
 		System.out.println(a1.toString());
+		
+		Audiencia aud1 = new Audiencia(a1, new Date(), "Matar polícia");
+		
+		System.out.println(aud1);
 	}
-
+	
 }

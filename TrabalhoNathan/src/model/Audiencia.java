@@ -28,7 +28,14 @@ public class Audiencia {
 
 	@Override
 	public String toString() {
-		// TODO Auto-generated method stub
-		return super.toString();
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("Advogado: " + this.getAdvogado().getNome() + "\tRegistro: " + this.getAdvogado().getRegistro() + "\n");
+				
+		sb.append("Data: " + this.getData() + "\n");
+
+		sb.append("Recomendacao: " + this.getRecomendacao() + "\n");
+
+		return sb.toString();
 	}
 }
