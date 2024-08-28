@@ -34,7 +34,7 @@ public class Audiencia {
 				
 		sb.append("Data: " + this.getData() + "\n");
 
-		sb.append("Recomendacao: " + this.getRecomendacao() + "\n");
+		sb.append("Recomendacao: " + this.getRecomendacao() + "\n\n");
 
 		return sb.toString();
 	}

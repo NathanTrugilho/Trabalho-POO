@@ -25,11 +25,25 @@ public class Cliente {
 	}
 	
 	public StringBuilder getExtratoConta() {
-		return;
+		
+		StringBuilder sb = new StringBuilder();
+		
+		for (Processo processo : processos) {
+			sb.append(processo.getExtratoContas());
+		}
+		
+		return sb;
 	}
 	
 	public double getSaldoConta() {
-		return 0;
+		
+		double somaSaldo = 0;
+		
+		for (Processo processo : processos) {
+			somaSaldo += processo.getConta().getSaldoConta();
+		}
+		
+		return somaSaldo;
 	}
 	
 	@Override

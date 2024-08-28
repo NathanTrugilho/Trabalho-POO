@@ -12,7 +12,7 @@ public class Processo {
 	private EFaseProcesso fase;
 	private final Cliente cliente;
 	private final Pessoa parteContraria;
-	private Tribunal tribunal;
+	private final Tribunal tribunal;
 	private final IConta conta;
 	private List<Audiencia> audiencias = new ArrayList<>();
 
@@ -27,12 +27,16 @@ public class Processo {
 		this.conta = new Conta();
 	}
 
-	public Date getDataConclusao() {
-		return dataConclusao;
+	public void addPagamento(EFormaPagamento forma, Date data, double valor) {
+		conta.addPagamento(forma, data, valor);
 	}
 
-	private void setDataConclusao(Date dataConclusao) {
-		this.dataConclusao = dataConclusao;
+	public void addDespesa(Date data, String descricao, double valor) {
+		conta.addDespesa(data, descricao, valor);
+	}
+
+	public Date getDataConclusao() {
+		return dataConclusao;
 	}
 
 	public EFaseProcesso getFase() {
@@ -47,12 +51,15 @@ public class Processo {
 		return tribunal;
 	}
 
-	public void setTribunal(Tribunal tribunal) {
-		this.tribunal = tribunal;
-	}
-
 	public StringBuilder getAudiencias() {
-		return ;
+
+		StringBuilder sb = new StringBuilder();
+
+		for (Audiencia audiencia : audiencias) {
+			sb.append(audiencia.toString());
+		}
+
+		return sb;
 	}
 
 	public void addAudiencia(Audiencia audiencia) {
@@ -78,18 +85,40 @@ public class Processo {
 	public IConta getConta() {
 		return conta;
 	}
-	
+
 	public StringBuilder getExtratoContas() {
-		
+		return this.conta.getExtrato();
 	}
-	
+
 	public double getTotalCustas() {
-		
+		return this.conta.getTotalDespesas();
 	}
-	
+
+	public void encerraProcesso(Date dataConclusao) {
+		this.dataConclusao = dataConclusao;
+		this.fase = EFaseProcesso.CONCLUSAO;
+	}
+
+	public void encerraProcesso() {
+		this.dataConclusao = new Date();
+		this.fase = EFaseProcesso.CONCLUSAO;
+	}
+
 	@Override
 	public String toString() {
-		// TODO Auto-generated method stub
-		return super.toString();
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("Numero: " + this.getNumero() + "\n");
+		sb.append("Data abertura: " + this.getDataAbertura() + "\n");
+		if (this.getFase() == EFaseProcesso.CONCLUSAO) {
+			sb.append("Data conclusao: " + this.getDataConclusao() + "\n");
+			sb.append("Fase: " + this.getFase() + "\n");
+		}
+		sb.append("Cliente: " + this.getCliente().getPessoa().getNome() + "\n");
+		sb.append("Parte contraria: " + this.getParteContraria() + "\n");
+		sb.append("Tribunal: " + this.getTribunal().toString() + "\n");
+		sb.append("===== Conta ===== " + this.getConta().getExtrato() + "\n");
+		
+		return sb.toString();
 	}
 }
