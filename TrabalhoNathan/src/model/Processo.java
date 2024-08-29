@@ -62,7 +62,8 @@ public class Processo {
 		return sb;
 	}
 
-	public void addAudiencia(Audiencia audiencia) {
+	public void addAudiencia(Advogado advogado, Date data, String recomendacao) {
+		Audiencia audiencia = new Audiencia(advogado, data, recomendacao);
 		audiencias.add(audiencia);
 	}
 
