@@ -101,8 +101,9 @@ public class MenuView extends JFrame {
     }
 
     private void actionCadastroPessoaView() {
-        CadastroPessoaView cadastroPessoaView = new CadastroPessoaView();
+        CadastroPessoaView cadastroPessoaView = new CadastroPessoaView(this);
         cadastroPessoaView.setVisible(true);
+        this.setVisible(false);
     }
 
 }
