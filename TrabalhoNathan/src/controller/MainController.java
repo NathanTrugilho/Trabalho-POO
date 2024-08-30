@@ -10,9 +10,9 @@ public class MainController implements Serializable {
 
 	private static MainController instance;
 
-	//private CatalogoController catalogoController;
 	
 	private CadastroPessoaController cadastroPessoaController;
+	private CadastroTribunalController cadastrotribunalController;
 	
 	// declarar os demais controladores
 
@@ -21,6 +21,7 @@ public class MainController implements Serializable {
 		
 		//catalogoController = new CatalogoController();
 		cadastroPessoaController = new CadastroPessoaController();
+		cadastrotribunalController = new CadastroTribunalController();
 		// instanciar os demais controladores
 		
 	}
@@ -36,6 +37,10 @@ public class MainController implements Serializable {
 
 	public static CadastroPessoaController getCadastroPessoaController() {
 		return instance.cadastroPessoaController;
+	}
+	
+	public static CadastroTribunalController getCadastroTribunalController() {
+		return instance.cadastrotribunalController;
 	}
 	
 	// implementar metodos acessadores estaticos para os demais controladores
