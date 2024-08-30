@@ -28,41 +28,50 @@ public class CadastroPessoaController implements Serializable {
 
 	public void addPessoasFisicas(String nome, long cpf, String email, long telefone) {
 		pessoasFisicas.put(cpf, new PessoaFisica(nome, cpf, email, telefone));
+		MainController.save();
 	}
 
 	public void addPessoasFisicas(String nome, long cpf, String email) {
 		pessoasFisicas.put(cpf, new PessoaFisica(nome, cpf, email));
+
 	}
 
 	public void addPessoasFisicas(String nome, long cpf, long telefone) {
 		pessoasFisicas.put(cpf, new PessoaFisica(nome, cpf, telefone));
+
 	}
 
 	// A chave no meu map de Pessoas Jurídicas será o CNPJ ==============================================
 
 	public void addPessoaJuridica(String nome, long cnpj, PessoaFisica preposto, String email, long telefone) {
 		pessoasJuridicas.put(cnpj, new PessoaJuridica(nome, cnpj, preposto, email, telefone));
+
 	}
 
 	public void addPessoaJuridica(String nome, long cnpj, PessoaFisica preposto, String email) {
 		pessoasJuridicas.put(cnpj, new PessoaJuridica(nome, cnpj, preposto, email));
+
 	}
 
 	public void addPessoaJuridica(String nome, long cnpj, PessoaFisica preposto, long telefone) {
 		pessoasJuridicas.put(cnpj, new PessoaJuridica(nome, cnpj, preposto, telefone));
+
 	}
 
 	// A chave no meu map de Advogados será o registro ==============================================
 
 	public void addAdvogado(String nome, long cpf, long registro, String email, long telefone) {
 		advogados.put(registro, new Advogado(nome, cpf, registro, email, telefone));
+
 	}
 
 	public void addAdvogado(String nome, long cpf, long registro, String email) {
 		advogados.put(registro, new Advogado(nome, cpf, registro, email));
+
 	}
 
 	public void addAdvogado(String nome, long cpf, long registro, long telefone) {
 		advogados.put(registro, new Advogado(nome, cpf, registro, telefone));
+
 	}
 }

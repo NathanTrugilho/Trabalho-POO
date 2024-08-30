@@ -1,109 +1,65 @@
 package view;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
-import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
+import javax.swing.JTabbedPane;
+import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
-
-import controller.CadastroPessoaController;
+import javax.swing.plaf.ColorUIResource;
 
 @SuppressWarnings("serial")
 public class MenuView extends JFrame {
 
-    private CadastroPessoaController controller;
-    private JTextField nomeField, cpfCnpjField, emailField, telefoneField, registroField;
-    private JComboBox<String> tipoPessoaBox;
-    
     private JPanel contentPane;
 
-    private JButton btnCadastroPessoa;
-    
-	public MenuView() {
-		initialize();
-	}
+    public MenuView() {
+        initialize();
+    }
 
     private void initialize() {
+        // Ajusta o estilo do TabbedPane
+        UIManager.put("TabbedPane.selected", new ColorUIResource(new Color(70, 130, 180)));
+        UIManager.put("TabbedPane.font", new Font("Arial", Font.BOLD, 14));
+        UIManager.put("TabbedPane.contentBorderInsets", new Insets(10, 10, 10, 10));
 
-        setTitle("App advocacia");
+        setTitle("App Advocacia");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setSize(600, 450); // Define um tamanho maior para a janela
+        setLocationRelativeTo(null); // Centraliza a janela
 
-        contentPane = new JPanel(new GridBagLayout());
-        contentPane.setBorder(new EmptyBorder(12, 15, 12, 15));
+        contentPane = new JPanel(new BorderLayout());
+        contentPane.setBorder(new EmptyBorder(15, 20, 15, 20)); // Bordas com espaçamento ajustado
 
-        GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(10, 10, 10, 10);
-        gbc.fill = GridBagConstraints.CENTER; //Tipo da responsividade
-        gbc.weightx = 1.0;
-        gbc.gridx = 0;
-        
-        // Botão para Categorias
-        btnCadastroPessoa = createButton("Cadastro de Pessoas");
-        gbc.gridy = 0;
-        contentPane.add(btnCadastroPessoa, gbc);
+        JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
+        tabbedPane.setBackground(new Color(240, 248, 255)); // Fundo das abas
+        tabbedPane.setForeground(Color.BLACK); // Cor do texto das abas
 
-        /*
-        // Botão para Itens
-        btnItemView = createButton("Itens");
-        gbc.gridy = 1;
-        contentPane.add(btnItemView, gbc);
+        // Aba Cadastro de Pessoas
+        JPanel cadastroPessoaPanel = createCadastroPessoaPanel();
+        tabbedPane.addTab("Cadastro de Pessoas", null, cadastroPessoaPanel, "Cadastro de novos clientes");
 
-        // Botão para Clientes
-        btnClienteView = createButton("Clientes");
-        gbc.gridy = 2;
-        contentPane.add(btnClienteView, gbc);
+        // Adicione mais abas aqui se necessário
+        // Exemplo: tabbedPane.addTab("Outra Aba", createOutraPanel());
 
-        // Botão para Fornecedores
-        btnFornecedorView = createButton("Fornecedores");
-        gbc.gridy = 3;
-        contentPane.add(btnFornecedorView, gbc);
-
-        // Botão para Produtos
-        btnProdutoView = createButton("Produtos");
-        gbc.gridy = 4;
-        contentPane.add(btnProdutoView, gbc);
-
-        // Botão para Relatórios
-        btnRelatorioView = createButton("Relatórios");
-        gbc.gridy = 5;
-        contentPane.add(btnRelatorioView, gbc);*/
-
-        // Ações para os botões
-        btnCadastroPessoa.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				actionCadastroPessoaView();
-			}
-		});
-
+        contentPane.add(tabbedPane, BorderLayout.CENTER);
         setContentPane(contentPane);
-        pack();  // Ajusta o tamanho da janela para acomodar os componentes
-        setLocationRelativeTo(null);  // Centraliza a janela
     }
 
-    private JButton createButton(String text) {
-        JButton button = new JButton(text);
-        button.setFont(new Font("Arial", Font.BOLD, 14));
-        button.setForeground(Color.WHITE);
-        button.setBackground(new Color(70, 130, 180));
-        button.setFocusPainted(false);
-        button.setPreferredSize(new Dimension(200, 40));
-        return button;
-    }
+    private JPanel createCadastroPessoaPanel() {
+        // Cria a instância de CadastroPessoaView para exibir dentro da aba
+        CadastroPessoaView cadastroPessoaView = new CadastroPessoaView();
 
-    private void actionCadastroPessoaView() {
-        CadastroPessoaView cadastroPessoaView = new CadastroPessoaView(this);
-        cadastroPessoaView.setVisible(true);
-        this.setVisible(false);
-    }
+        // Cria um JPanel que conterá o conteúdo da CadastroPessoaView
+        JPanel panel = new JPanel(new BorderLayout());
+        panel.setBackground(new Color(255, 255, 255)); // Fundo branco para o painel
+        panel.setBorder(new EmptyBorder(10, 10, 10, 10)); // Bordas internas
+        panel.add(cadastroPessoaView.getContentPane(), BorderLayout.CENTER);
 
+        return panel;
+    }
 }
