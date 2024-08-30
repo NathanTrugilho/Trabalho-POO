@@ -1,70 +1,108 @@
 package view;
 
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
+import controller.CadastroPessoaController;
+
+@SuppressWarnings("serial")
 public class MenuView extends JFrame {
 
-	private static final long serialVersionUID = -2113576277373274435L;
+    private CadastroPessoaController controller;
+    private JTextField nomeField, cpfCnpjField, emailField, telefoneField, registroField;
+    private JComboBox<String> tipoPessoaBox;
+    
+    private JPanel contentPane;
 
-	private JPanel contentPane;
-
-	private JButton btnCategoriaView;
-	private JButton btnItemView;
-
+    private JButton btnCadastroPessoa;
+    
 	public MenuView() {
 		initialize();
 	}
 
-	private void initialize() {
+    private void initialize() {
 
-		setTitle("App Catalogo");
+        setTitle("App advocacia");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+        contentPane = new JPanel(new GridBagLayout());
+        contentPane.setBorder(new EmptyBorder(12, 15, 12, 15));
 
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		contentPane.setLayout(null);
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(10, 10, 10, 10);
+        gbc.fill = GridBagConstraints.CENTER; //Tipo da responsividade
+        gbc.weightx = 1.0;
+        gbc.gridx = 0;
+        
+        // Botão para Categorias
+        btnCadastroPessoa = createButton("Cadastro de Pessoas");
+        gbc.gridy = 0;
+        contentPane.add(btnCadastroPessoa, gbc);
 
-		this.setContentPane(contentPane);
+        /*
+        // Botão para Itens
+        btnItemView = createButton("Itens");
+        gbc.gridy = 1;
+        contentPane.add(btnItemView, gbc);
 
-		btnCategoriaView = new JButton("Categorias");
-		btnCategoriaView.setBounds(6, 18, 228, 29);
+        // Botão para Clientes
+        btnClienteView = createButton("Clientes");
+        gbc.gridy = 2;
+        contentPane.add(btnClienteView, gbc);
 
-		btnCategoriaView.addActionListener(new ActionListener() {
+        // Botão para Fornecedores
+        btnFornecedorView = createButton("Fornecedores");
+        gbc.gridy = 3;
+        contentPane.add(btnFornecedorView, gbc);
+
+        // Botão para Produtos
+        btnProdutoView = createButton("Produtos");
+        gbc.gridy = 4;
+        contentPane.add(btnProdutoView, gbc);
+
+        // Botão para Relatórios
+        btnRelatorioView = createButton("Relatórios");
+        gbc.gridy = 5;
+        contentPane.add(btnRelatorioView, gbc);*/
+
+        // Ações para os botões
+        btnCadastroPessoa.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				actionCategoriaView();
+				actionCadastroPessoaView();
 			}
 		});
 
-		btnItemView = new JButton("Itens");
-		btnItemView.setBounds(6, 52, 228, 29);
+        setContentPane(contentPane);
+        pack();  // Ajusta o tamanho da janela para acomodar os componentes
+        setLocationRelativeTo(null);  // Centraliza a janela
+    }
 
-		btnItemView.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				actionItemView();
-			}
-		});
+    private JButton createButton(String text) {
+        JButton button = new JButton(text);
+        button.setFont(new Font("Arial", Font.BOLD, 14));
+        button.setForeground(Color.WHITE);
+        button.setBackground(new Color(70, 130, 180));
+        button.setFocusPainted(false);
+        button.setPreferredSize(new Dimension(200, 40));
+        return button;
+    }
 
-		contentPane.add(btnCategoriaView);
-		contentPane.add(btnItemView);
-	}
+    private void actionCadastroPessoaView() {
+        CadastroPessoaView cadastroPessoaView = new CadastroPessoaView();
+        cadastroPessoaView.setVisible(true);
+    }
 
-	private void actionCategoriaView() {
-
-		CategoriaView categoriaView = new CategoriaView();
-		categoriaView.setVisible(true);
-	}
-
-	private void actionItemView() {
-
-		ItemView itemView = new ItemView();
-		itemView.setVisible(true);
-	}
 }
