@@ -92,7 +92,7 @@ public class CadastroPessoaView extends JFrame {
 		// Campo Preposto
 		gbc.gridx = 0;
 		gbc.gridy = 3;
-		JLabel prepostoLabel = new JLabel("Preposto:");
+		JLabel prepostoLabel = new JLabel("CPF Preposto:");
 		prepostoLabel.setFont(labelFont);
 		panel.add(prepostoLabel, gbc);
 
@@ -147,6 +147,7 @@ public class CadastroPessoaView extends JFrame {
 		tipoPessoaBox.addItemListener(e -> {
 			if (e.getStateChange() == ItemEvent.SELECTED) {
 				atualizarCamposParaTipoSelecionado(registroLabel, cpfCnpjLabel, prepostoLabel);
+				limparCampos();
 			}
 		});
 
@@ -182,6 +183,7 @@ public class CadastroPessoaView extends JFrame {
 		try {
 			String nome = nomeField.getText();
 			String cpfCnpj = cpfCnpjField.getText();
+			String preposto = prepostoField.getText();
 			String email = emailField.getText();
 			String telefone = telefoneField.getText();
 			String registro = registroField.getText();
@@ -194,8 +196,10 @@ public class CadastroPessoaView extends JFrame {
 				break;
 
 			case "Pessoa Jurídica":
-
+				PessoaUtils.validarCadastroPessoaJuridica(nome, cpfCnpj, preposto, email, telefone);
+				MainController.getCadastroPessoaController().addPessoaJuridica(nome, cpfCnpj, preposto, email, telefone);
 				break;
+				
 			case "Advogado":
 
 				break;
