@@ -46,8 +46,8 @@ public class Serializer {
 
 			output.close();
 
-		} catch (IOException e) {
-			System.err.println(String.format("Erro na gravação do arquivo %s!", fileName));
+		//} catch (IOException e) {
+			//System.err.println(String.format("Erro na gravação do arquivo %s!", fileName));
 			
 		} catch (Exception e) {
 			e.printStackTrace();

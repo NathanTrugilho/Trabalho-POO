@@ -1,6 +1,11 @@
 package model;
 
-public abstract class Pessoa {
+import java.io.Serializable;
+
+public abstract class Pessoa implements Serializable {
+
+	private static final long serialVersionUID = 1395106238440220596L;
+
 	private String nome;
 	private String email;
 	private long telefone;
@@ -52,19 +57,19 @@ public abstract class Pessoa {
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
-		
+
 		sb.append("Nome: " + this.nome + "\n");
-		
+
 		sb.append("CadastroRF: " + getCadastroRF() + "\n");
-		
+
 		if (this.email != null) {
 			sb.append("Email: " + this.email + "\n");
 		}
-		
+
 		if (this.telefone != 0) {
 			sb.append("Telefone: " + this.telefone + "\n");
 		}
-		
+
 		return sb.toString();
 	}
 }

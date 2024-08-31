@@ -16,7 +16,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import controller.MainController;
-import model.PessoaFisica;
+import util.PessoaUtils;
 
 @SuppressWarnings("serial")
 public class CadastroPessoaView extends JFrame {
@@ -85,7 +85,7 @@ public class CadastroPessoaView extends JFrame {
 		panel.add(cpfCnpjLabel, gbc);
 
 		gbc.gridx = 1;
-		cpfCnpjField = new JTextField(11);
+		cpfCnpjField = new JTextField(20);
 		cpfCnpjField.setFont(fieldFont);
 		panel.add(cpfCnpjField, gbc);
 
@@ -181,32 +181,31 @@ public class CadastroPessoaView extends JFrame {
 	private void realizarCadastro() {
 		try {
 			String nome = nomeField.getText();
-			long cpfCnpj = Long.parseLong(cpfCnpjField.getText());
+			String cpfCnpj = cpfCnpjField.getText();
 			String email = emailField.getText();
-			long telefone = telefoneField.getText().isEmpty() ? 0 : Long.parseLong(telefoneField.getText());
-			long registro = registroField.getText().isEmpty() ? 0 : Long.parseLong(registroField.getText());
-			//long preposto = Long.parseLong(prepostoField.getText());
-			
+			String telefone = telefoneField.getText();
+			String registro = registroField.getText();
 			String tipoPessoa = (String) this.tipoPessoaBox.getSelectedItem();
 
 			switch (tipoPessoa) {
 			case "Pessoa Física":
+				PessoaUtils.validarCadastroPessoaFisica(nome, cpfCnpj, email, telefone);
 				MainController.getCadastroPessoaController().addPessoasFisicas(nome, cpfCnpj, email, telefone);
 				break;
+
 			case "Pessoa Jurídica":
-				MainController.getCadastroPessoaController().addPessoaJuridica(nome, cpfCnpj, preposto, email,
-						telefone);
+
 				break;
 			case "Advogado":
-				MainController.getCadastroPessoaController().addAdvogado(nome, cpfCnpj, registro, email, telefone);
+
 				break;
 			}
 
 			JOptionPane.showMessageDialog(null, "Cadastro realizado com sucesso!");
 			limparCampos();
-		} catch (NumberFormatException ex) {
-			JOptionPane.showMessageDialog(null, "Por favor, preencha todos os campos obrigatórios corretamente.",
-					"Erro de Entrada", JOptionPane.ERROR_MESSAGE);
+
+		} catch (Exception ex) {
+			JOptionPane.showMessageDialog(null, ex.getMessage(), "Erro de Entrada", JOptionPane.ERROR_MESSAGE);
 		}
 	}
 

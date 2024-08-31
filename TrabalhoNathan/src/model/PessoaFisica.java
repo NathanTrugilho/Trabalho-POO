@@ -1,6 +1,10 @@
 package model;
 
-public class PessoaFisica extends Pessoa {
+import java.io.Serializable;
+
+public class PessoaFisica extends Pessoa implements Serializable{
+
+	private static final long serialVersionUID = 2873049312251537530L;
 
 	private final long cpf;
 

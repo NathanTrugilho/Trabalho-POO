@@ -11,6 +11,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 import controller.MainController;
@@ -22,6 +24,7 @@ public class CadastroTribunalView extends JFrame {
 	private JTextField siglaField;
 	private JTextField secaoField;
 	private JTextField descricaoField;
+	private JTextArea textArea; // Área de texto para exibir os tribunais
 
 	public CadastroTribunalView() {
 		initialize();
@@ -30,7 +33,7 @@ public class CadastroTribunalView extends JFrame {
 	private void initialize() {
 		setTitle("Tribunal View");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setSize(500, 350); // Tamanho maior para acomodar novos elementos
+		setSize(500, 400); // Tamanho aumentado para acomodar a área de texto
 		setLocationRelativeTo(null); // Centraliza a janela
 
 		JPanel panel = new JPanel(new GridBagLayout());
@@ -83,13 +86,34 @@ public class CadastroTribunalView extends JFrame {
 		// Botão Confirmar Cadastro
 		gbc.gridx = 1;
 		gbc.gridy = 3;
-		gbc.gridwidth = 2; // Faz com que o botão ocupe toda a largura disponível
+		gbc.gridwidth = 1;
 		gbc.anchor = GridBagConstraints.CENTER; // Centraliza o botão
 		JButton cadastrarButton = new JButton("Cadastrar");
 		cadastrarButton.setFont(buttonFont);
 		panel.add(cadastrarButton, gbc);
 
 		cadastrarButton.addActionListener(e -> realizarCadastro());
+
+		// Botão Listar Tribunais
+		gbc.gridx = 0;
+		gbc.gridwidth = 1;
+		JButton listarButton = new JButton("Listar Tribunais");
+		listarButton.setFont(buttonFont);
+		panel.add(listarButton, gbc);
+
+		listarButton.addActionListener(e -> listaTribunais());
+
+		// Área de texto para exibir os tribunais
+		gbc.gridx = 0;
+		gbc.gridy = 4;
+		gbc.gridwidth = 3; // Faz com que a área de texto ocupe toda a largura disponível
+		gbc.fill = GridBagConstraints.BOTH; // Faz com que a área de texto ocupe o espaço disponível
+		gbc.weighty = 1.0; // Faz com que a área de texto ocupe o espaço vertical disponível
+
+		textArea = new JTextArea(10, 40);
+		textArea.setEditable(false); // A área de texto é somente leitura
+		JScrollPane scrollPane = new JScrollPane(textArea);
+		panel.add(scrollPane, gbc);
 
 		// Adiciona o painel ao JFrame
 		getContentPane().add(panel);
@@ -117,10 +141,21 @@ public class CadastroTribunalView extends JFrame {
 		}
 	}
 
-	private void limparCampos() {
-		secaoField.setText("");
-		siglaField.setText("");
-		descricaoField.setText("");
+	private void listaTribunais() {
+		try {
+
+			// Ultra mega power delegação
+			textArea.setText(MainController.getCadastroTribunalController().listaTribunais().toString());
+
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(this, "Ocorreu um erro ao listar os tribunais: " + e.getMessage(), "Erro",
+					JOptionPane.ERROR_MESSAGE);
+		}
 	}
 
+	private void limparCampos() {
+		siglaField.setText("");
+		secaoField.setText("");
+		descricaoField.setText("");
+	}
 }

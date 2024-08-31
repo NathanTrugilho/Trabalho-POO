@@ -7,16 +7,16 @@ public class TribunalUtils {
 	public static void validarCadastroTribunal(String sigla, String secao, String descricao)
 			throws CampoNaoPreenchidoException {
 
-		if (sigla.isEmpty()) {
-			throw new CampoNaoPreenchidoException("Sigla não pode estar vazia!");
+		if (sigla.isBlank()) {
+			throw new CampoNaoPreenchidoException("Insira uma sigla!");
 		}
 
-		if (secao.isEmpty()) {
-			throw new CampoNaoPreenchidoException("Seção não pode estar vazia!");
+		if (secao.isBlank()) {
+			throw new CampoNaoPreenchidoException("Insira uma seção!");
 		}
 
-		if (descricao.isEmpty()) {
-			throw new CampoNaoPreenchidoException("Descrição não pode estar vazia!");
+		if (descricao.isBlank()) {
+			throw new CampoNaoPreenchidoException("Insira uma descrição!");
 		}
 
 	}

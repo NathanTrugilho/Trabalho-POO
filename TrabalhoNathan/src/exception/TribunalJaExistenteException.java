@@ -1,10 +1,10 @@
 package exception;
 
-public class TribunalJaExisteException extends Exception {
+public class TribunalJaExistenteException extends Exception {
 	
 	private static final long serialVersionUID = 160683976610211867L;
 
-	public TribunalJaExisteException(String message) {
+	public TribunalJaExistenteException(String message) {
         super(message);
     }
 }

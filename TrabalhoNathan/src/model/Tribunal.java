@@ -1,6 +1,11 @@
 package model;
 
-public class Tribunal {
+import java.io.Serializable;
+
+public class Tribunal implements Serializable {
+
+	private static final long serialVersionUID = -5242369707305899479L;
+
 	private final String sigla;
 	private final String secao;
 	private final String descricao;
@@ -25,13 +30,12 @@ public class Tribunal {
 
 	@Override
 	public String toString() {
-		
+
 		StringBuilder sb = new StringBuilder();
-		
+
 		sb.append("Sigla: " + this.getSigla() + "\tSeção: " + this.getSecao() + "\n");
-		
 		sb.append("Descricao: " + this.getDescricao() + "\n\n");
-		
+
 		return sb.toString();
 	}
 }

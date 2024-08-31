@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.Map;
 import java.util.TreeMap;
 
-import exception.TribunalJaExisteException;
+import exception.TribunalJaExistenteException;
 import model.Tribunal;
 
 public class CadastroTribunalController implements Serializable {
@@ -17,19 +17,23 @@ public class CadastroTribunalController implements Serializable {
 		tribunais = new TreeMap<>();
 	}
 
-	public void addTribunal(String sigla, String secao, String descricao) throws TribunalJaExisteException {
+	public void addTribunal(String sigla, String secao, String descricao) throws TribunalJaExistenteException {
 
-		if (MainController.getCadastroTribunalController().procuraTribunal(sigla)) {
-			throw new TribunalJaExisteException("Já existe um tribunal com a sigla: " + sigla);
+		if (tribunais.containsKey(sigla)) {
+			throw new TribunalJaExistenteException("Já existe um tribunal com a sigla: " + sigla);
 		}
 		
 		tribunais.put(sigla, new Tribunal(sigla, secao, descricao));
 		MainController.save();
-		
-		System.out.println(MainController.getCadastroTribunalController().tribunais.get(sigla));
 	}
 
-	private boolean procuraTribunal(String sigla) {
-		return tribunais.containsKey(sigla);
+	public StringBuilder listaTribunais() {
+		StringBuilder sb = new StringBuilder();
+		
+		for (Tribunal tribunal : tribunais.values()) {
+			sb.append(tribunal.toString());
+		}
+		
+		return sb;
 	}
 }
