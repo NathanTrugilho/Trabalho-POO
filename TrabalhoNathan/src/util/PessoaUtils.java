@@ -1,5 +1,8 @@
 package util;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import exception.CNPJInvalidoException;
 import exception.CNPJNaoNumericoException;
 import exception.CPFInvalidoException;
@@ -7,9 +10,136 @@ import exception.CPFNaoNumericoException;
 import exception.CampoNaoPreenchidoException;
 import exception.FormatoEmailInvalidoException;
 import exception.NecessarioAlgumMeioComunicacao;
-import exception.TelefoneNaoNumerico;
+import exception.TelefoneInvalidoException;
+import exception.TelefoneNaoNumericoException;
 
 public class PessoaUtils {
+
+	public static void validarCadastroPessoaFisica(String nome, String cpf, String email, String telefone)
+			throws CampoNaoPreenchidoException, NecessarioAlgumMeioComunicacao, CPFNaoNumericoException,
+			TelefoneNaoNumericoException, CPFInvalidoException, FormatoEmailInvalidoException,
+			TelefoneInvalidoException {
+
+		if (nome.isBlank()) {
+			throw new CampoNaoPreenchidoException("Insira um nome!");
+		}
+
+		if (cpf.isBlank()) {
+			throw new CampoNaoPreenchidoException("Insira um CPF!");
+		}
+
+		if (!cpf.matches("\\d+")) {
+			throw new CPFNaoNumericoException("CPF deve conter apenas números!");
+		}
+
+		PessoaUtils.validarCPF(cpf);
+
+		if (!email.isBlank()) {
+			PessoaUtils.validarEmail(email);
+		}
+
+		if (!telefone.isBlank()) {
+			PessoaUtils.validarTelefone(telefone);
+		}
+
+		if (telefone.isBlank() && email.isBlank()) {
+			throw new NecessarioAlgumMeioComunicacao("Insira ao menos um meio de comunicação!");
+		}
+
+	}
+
+	public static void validarCadastroAdvogado(String nome, String cpf, String registro, String email, String telefone)
+			throws CampoNaoPreenchidoException, NecessarioAlgumMeioComunicacao, CPFNaoNumericoException,
+			TelefoneNaoNumericoException, CPFInvalidoException, FormatoEmailInvalidoException,
+			TelefoneInvalidoException {
+
+		if (nome.isBlank()) {
+			throw new CampoNaoPreenchidoException("Insira um nome!");
+		}
+
+		if (cpf.isBlank()) {
+			throw new CampoNaoPreenchidoException("Insira um CPF!");
+		}
+
+		if (!cpf.matches("\\d+")) {
+			throw new CPFNaoNumericoException("CPF deve conter apenas números!");
+		}
+
+		PessoaUtils.validarCPF(cpf);
+		
+		if (registro.isBlank()) {
+			throw new CampoNaoPreenchidoException("Insira um registro!");
+		}
+		
+		if (!email.isBlank()) {
+			PessoaUtils.validarEmail(email);
+		}
+
+		if (!telefone.isBlank()) {
+			PessoaUtils.validarTelefone(telefone);
+		}
+
+		if (telefone.isBlank() && email.isBlank()) {
+			throw new NecessarioAlgumMeioComunicacao("Insira ao menos um meio de comunicação!");
+		}
+
+	}
+	
+	public static void validarCadastroPessoaJuridica(String nome, String cnpj, String preposto, String email,
+			String telefone) throws CampoNaoPreenchidoException, NecessarioAlgumMeioComunicacao,
+			TelefoneNaoNumericoException, FormatoEmailInvalidoException, CNPJNaoNumericoException,
+			CNPJInvalidoException, CPFInvalidoException, CPFNaoNumericoException, TelefoneInvalidoException {
+
+		if (nome.isBlank()) {
+			throw new CampoNaoPreenchidoException("Insira um nome!");
+		}
+
+		if (cnpj.isBlank()) {
+			throw new CampoNaoPreenchidoException("Insira um CNPJ!");
+		}
+
+		if (!cnpj.matches("\\d+")) {
+			throw new CNPJNaoNumericoException("CNPJ deve conter apenas números!");
+		}
+
+		PessoaUtils.validarCNPJ(cnpj);
+
+		if (preposto.isBlank()) {
+			throw new CampoNaoPreenchidoException("Insira um Preposto!");
+		}
+
+		if (!preposto.matches("\\d+")) {
+			throw new CPFNaoNumericoException("Preposto deve conter apenas números!");
+		}
+
+		if (!email.isBlank()) {
+			PessoaUtils.validarEmail(email);
+		}
+
+		if (!telefone.isBlank()) {
+			PessoaUtils.validarTelefone(telefone);
+		}
+
+		PessoaUtils.validarTelefone(telefone);
+
+		if (telefone.isBlank() && email.isBlank()) {
+			throw new NecessarioAlgumMeioComunicacao("Insira ao menos um meio de comunicação!");
+		}
+	}
+
+	public static void validarEmail(String email) throws FormatoEmailInvalidoException {
+		// Expressão regular para validar o email
+		String emailRegex = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";
+
+		Pattern pattern = Pattern.compile(emailRegex);
+
+		Matcher matcher = pattern.matcher(email);
+
+		if (!matcher.matches()) {
+			throw new FormatoEmailInvalidoException("Formato de email inválido!");
+		}
+
+	}
 
 	public static void validarCPF(String cpf) throws CPFInvalidoException {
 
@@ -28,7 +158,7 @@ public class PessoaUtils {
 			throw new CPFInvalidoException("CPF inválido!");
 		}
 	}
-	
+
 	private static boolean isCPFValid(String cpf) {
 
 		// Cálculo do primeiro dígito verificador
@@ -96,78 +226,31 @@ public class PessoaUtils {
 		}
 	}
 
-	public static void validarCadastroPessoaFisica(String nome, String cpf, String email, String telefone)
-			throws CampoNaoPreenchidoException, NecessarioAlgumMeioComunicacao, CPFNaoNumericoException,
-			TelefoneNaoNumerico, CPFInvalidoException, FormatoEmailInvalidoException {
+	public static void validarTelefone(String telefone) throws TelefoneInvalidoException, TelefoneNaoNumericoException {
+		// Remove espaços, traços, parênteses, etc.
+		String telefoneLimpo = telefone.replaceAll("[^\\d]", "");
 
-		if (nome.isBlank()) {
-			throw new CampoNaoPreenchidoException("Insira um nome!");
+		// Verifica se o telefone contém apenas números
+		if (!telefone.matches("\\d+")) {
+			throw new TelefoneNaoNumericoException("O telefone deve conter apenas números.");
 		}
 
-		if (cpf.isBlank()) {
-			throw new CampoNaoPreenchidoException("Insira um CPF!");
+		// Verifica se o telefone tem 10 ou 11 dígitos
+		if (telefoneLimpo.length() != 10 && telefoneLimpo.length() != 11) {
+			throw new TelefoneInvalidoException("O telefone deve ter 10 ou 11 dígitos.");
 		}
 
-		if (!cpf.matches("\\d+")) {
-			throw new CPFNaoNumericoException("CPF deve conter apenas números!");
+		// Verifica se o código de área está entre 11 e 99
+		String ddd = telefoneLimpo.substring(0, 2);
+		int codigoArea = Integer.parseInt(ddd);
+		if (codigoArea < 11 || codigoArea > 99) {
+			throw new TelefoneInvalidoException("O código de área deve estar entre 11 e 99.");
 		}
 
-		PessoaUtils.validarCPF(cpf);
-
-		if (!telefone.matches("\\d+") && !telefone.isBlank()) {
-			throw new TelefoneNaoNumerico("telefone deve conter apenas números!");
+		// Verifica se o número não começa com 0 (além do código de área)
+		String numero = telefoneLimpo.substring(2);
+		if (numero.startsWith("0")) {
+			throw new TelefoneInvalidoException("O número não pode começar com 0.");
 		}
-
-		if (!email.contains("@") && !email.isBlank()) {
-			throw new FormatoEmailInvalidoException("Formato de email inválido!");
-		}
-
-		if (telefone.isBlank() && email.isBlank()) {
-			throw new NecessarioAlgumMeioComunicacao("Insira ao menos um meio de comunicação!");
-		}
-
 	}
-
-	public static void validarCadastroPessoaJuridica(String nome, String cnpj, String preposto, String email,
-			String telefone) throws CampoNaoPreenchidoException, NecessarioAlgumMeioComunicacao, TelefoneNaoNumerico,
-			FormatoEmailInvalidoException, CNPJNaoNumericoException, CNPJInvalidoException, CPFInvalidoException, CPFNaoNumericoException {
-
-		if (nome.isBlank()) {
-			throw new CampoNaoPreenchidoException("Insira um nome!");
-		}
-
-		if (cnpj.isBlank()) {
-			throw new CampoNaoPreenchidoException("Insira um CNPJ!");
-		}
-
-		if (!cnpj.matches("\\d+")) {
-			throw new CNPJNaoNumericoException("CNPJ deve conter apenas números!");
-		}
-
-		PessoaUtils.validarCNPJ(cnpj);
-		
-		if (preposto.isBlank()) {
-			throw new CampoNaoPreenchidoException("Insira um Preposto!");
-		}
-
-		if (!preposto.matches("\\d+")) {
-			throw new CPFNaoNumericoException("Preposto deve conter apenas números!");
-		}
-
-		PessoaUtils.validarCPF(preposto);
-		
-		if (!telefone.matches("\\d+") && !telefone.isBlank()) {
-			throw new TelefoneNaoNumerico("telefone deve conter apenas números!");
-		}
-
-		if (!email.contains("@") && !email.isBlank()) {
-			throw new FormatoEmailInvalidoException("Formato de email inválido!");
-		}
-
-		if (telefone.isBlank() && email.isBlank()) {
-			throw new NecessarioAlgumMeioComunicacao("Insira ao menos um meio de comunicação!");
-		}
-
-	}
-
 }

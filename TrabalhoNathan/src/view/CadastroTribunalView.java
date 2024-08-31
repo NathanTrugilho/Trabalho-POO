@@ -40,7 +40,7 @@ public class CadastroTribunalView extends JFrame {
 		panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10)); // Adiciona margens internas
 
 		GridBagConstraints gbc = new GridBagConstraints();
-		gbc.insets = new Insets(10, 10, 10, 10); // Ajusta o espaçamento entre os componentes
+		gbc.insets = new Insets(5, 2, 5, 2); // Ajusta o espaçamento entre os componentes
 		gbc.fill = GridBagConstraints.HORIZONTAL;
 		gbc.weightx = 1.0; // Faz com que os campos ocupem o espaço disponível
 

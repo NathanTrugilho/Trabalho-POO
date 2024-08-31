@@ -44,8 +44,8 @@ public class PessoaJuridica extends Pessoa implements Serializable{
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		
-		sb.append(super.toString());
 		sb.append("Preposto: " + getPreposto().getCadastroRF() + "\n");
+		sb.append(super.toString());
 		
 		return sb.toString();
 	}

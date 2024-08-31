@@ -30,7 +30,7 @@ public class MenuView extends JFrame {
 
         setTitle("App Advocacia");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(750, 500); // Define um tamanho maior para a janela
+        setSize(750, 600); // Define um tamanho maior para a janela
         setLocationRelativeTo(null); // Centraliza a janela
 
         contentPane = new JPanel(new BorderLayout());

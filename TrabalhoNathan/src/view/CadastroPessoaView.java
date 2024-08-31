@@ -13,6 +13,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 import controller.MainController;
@@ -28,7 +30,8 @@ public class CadastroPessoaView extends JFrame {
 	private JTextField telefoneField;
 	private JTextField registroField;
 	private JComboBox<String> tipoPessoaBox;
-
+	private JTextArea textArea;
+	
 	public CadastroPessoaView() {
 		initialize();
 	}
@@ -36,9 +39,6 @@ public class CadastroPessoaView extends JFrame {
 	private void initialize() {
 
 		setTitle("Cadastro de Pessoa");
-		setSize(400, 300);
-		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setLocationRelativeTo(null);
 
 		JPanel panel = new JPanel(new GridBagLayout());
 		panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
@@ -46,7 +46,7 @@ public class CadastroPessoaView extends JFrame {
 		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.insets = new Insets(5, 2, 5, 2);
 		gbc.fill = GridBagConstraints.HORIZONTAL;
-		gbc.weightx = 1.0;
+		gbc.weightx = 1;
 
 		// Definir fonte maior
 		Font labelFont = new Font("Arial", Font.BOLD, 14);
@@ -80,7 +80,7 @@ public class CadastroPessoaView extends JFrame {
 		// Campo CPF/CNPJ
 		gbc.gridx = 0;
 		gbc.gridy = 2;
-		JLabel cpfCnpjLabel = new JLabel("CPF:");
+		JLabel cpfCnpjLabel = new JLabel("CPF (numero):");
 		cpfCnpjLabel.setFont(labelFont);
 		panel.add(cpfCnpjLabel, gbc);
 
@@ -116,7 +116,7 @@ public class CadastroPessoaView extends JFrame {
 		// Campo Telefone
 		gbc.gridx = 0;
 		gbc.gridy = 5;
-		JLabel telefoneLabel = new JLabel("Telefone:");
+		JLabel telefoneLabel = new JLabel("Telefone (DDD + num):");
 		telefoneLabel.setFont(labelFont);
 		panel.add(telefoneLabel, gbc);
 
@@ -150,24 +150,45 @@ public class CadastroPessoaView extends JFrame {
 				limparCampos();
 			}
 		});
-
+		
 		// Botão de Cadastro
 		gbc.gridx = 1;
 		gbc.gridy = 7;
-		gbc.gridwidth = 2;
+		gbc.gridwidth = 1;
 		gbc.anchor = GridBagConstraints.CENTER;
 		JButton cadastrarButton = new JButton("Cadastrar");
 		cadastrarButton.setFont(buttonFont);
 		panel.add(cadastrarButton, gbc);
 
 		cadastrarButton.addActionListener(e -> realizarCadastro());
+		
+		// Botão Listar Tribunais
+		gbc.gridx = 0;
+		gbc.gridwidth = 1;
+		JButton listarButton = new JButton("Listar Pessoas");
+		listarButton.setFont(buttonFont);
+		panel.add(listarButton, gbc);
 
-		getContentPane().add(panel);
+		listarButton.addActionListener(e -> listaPessoas());
+		
+		//Área de texto para exibir os tribunais
+		gbc.gridx = 0;
+		gbc.gridy = 8;
+		gbc.gridwidth = 2; // Faz com que a área de texto ocupe toda a largura disponível
+		gbc.fill = GridBagConstraints.BOTH; // Faz com que a área de texto ocupe o espaço disponível
+		gbc.weighty = 1.0; // Faz com que a área de texto ocupe o espaço vertical disponível
+
+		textArea = new JTextArea(10, 40);
+		textArea.setEditable(false); // A área de texto é somente leitura
+		JScrollPane scrollPane = new JScrollPane(textArea);
+		panel.add(scrollPane, gbc);
+		
+		getContentPane().add(panel); 
 	}
 
 	private void atualizarCamposParaTipoSelecionado(JLabel registroLabel, JLabel cpfCnpjLabel, JLabel prepostoLabel) {
 		String selected = (String) tipoPessoaBox.getSelectedItem();
-
+		
 		boolean isAdvogado = "Advogado".equals(selected);
 		registroLabel.setVisible(isAdvogado);
 		registroField.setVisible(isAdvogado);
@@ -176,7 +197,7 @@ public class CadastroPessoaView extends JFrame {
 		prepostoLabel.setVisible(isPessoaJuridica);
 		prepostoField.setVisible(isPessoaJuridica);
 
-		cpfCnpjLabel.setText(isPessoaJuridica ? "CNPJ:" : "CPF:");
+		cpfCnpjLabel.setText(isPessoaJuridica ? "CNPJ (numero):" : "CPF (numero):");
 	}
 
 	private void realizarCadastro() {
@@ -201,7 +222,8 @@ public class CadastroPessoaView extends JFrame {
 				break;
 				
 			case "Advogado":
-
+				PessoaUtils.validarCadastroAdvogado(nome, cpfCnpj, registro, email, telefone);
+				MainController.getCadastroPessoaController().addAdvogados(nome, cpfCnpj, registro, email, telefone);
 				break;
 			}
 
@@ -212,13 +234,24 @@ public class CadastroPessoaView extends JFrame {
 			JOptionPane.showMessageDialog(null, ex.getMessage(), "Erro de Entrada", JOptionPane.ERROR_MESSAGE);
 		}
 	}
+	
+	private void listaPessoas() {
+		try {
+			// Ultra mega power delegação
+			textArea.setText(MainController.getCadastroPessoaController().listaPessoas().toString());
 
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(this, "Ocorreu um erro ao listar as pessoas: " + e.getMessage(), "Erro",
+					JOptionPane.ERROR_MESSAGE);
+		}
+	}
+	
 	private void limparCampos() {
 		nomeField.setText("");
 		cpfCnpjField.setText("");
 		emailField.setText("");
 		telefoneField.setText("");
 		registroField.setText("");
-		tipoPessoaBox.setSelectedIndex(0);
+		prepostoField.setText("");
 	}
 }

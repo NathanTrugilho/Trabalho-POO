@@ -69,7 +69,8 @@ public abstract class Pessoa implements Serializable {
 		if (this.telefone != 0) {
 			sb.append("Telefone: " + this.telefone + "\n");
 		}
-
+		
+		sb.append("\n");
 		return sb.toString();
 	}
 }
