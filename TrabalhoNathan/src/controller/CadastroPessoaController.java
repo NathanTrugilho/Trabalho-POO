@@ -5,13 +5,23 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import exception.AdvogadoJaExistenteException;
+import exception.CNPJInvalidoException;
+import exception.CNPJNaoNumericoException;
+import exception.CPFInvalidoException;
+import exception.CPFNaoNumericoException;
+import exception.CampoNaoPreenchidoException;
+import exception.FormatoEmailInvalidoException;
+import exception.NecessarioAlgumMeioComunicacao;
 import exception.PessoaFisicaJaExistenteException;
 import exception.PessoaJuridicaJaExistenteException;
 import exception.PrepostoNaoCadastradoException;
+import exception.TelefoneInvalidoException;
+import exception.TelefoneNaoNumericoException;
 import model.Advogado;
 import model.Pessoa;
 import model.PessoaFisica;
 import model.PessoaJuridica;
+import util.Utils;
 
 public class CadastroPessoaController implements Serializable {
 
@@ -30,82 +40,67 @@ public class CadastroPessoaController implements Serializable {
 
 	// A chave no meu map de Pessoas físicas será o CPF
 
-	public void addPessoasFisicas(String nome, String cpf, String email, String telefone)
-			throws PessoaFisicaJaExistenteException {
+	public void addPessoasFisicas(String nome, long cpf, String email, long telefone)
+			throws PessoaFisicaJaExistenteException, NumberFormatException, CampoNaoPreenchidoException,
+			NecessarioAlgumMeioComunicacao, CPFNaoNumericoException, TelefoneNaoNumericoException, CPFInvalidoException,
+			FormatoEmailInvalidoException, TelefoneInvalidoException {
 
-		if (pessoasFisicas.containsKey(Long.parseLong(cpf))) {
+		Utils.validarCPF(cpf);
+
+		if (pessoasFisicas.containsKey(cpf)) {
 			throw new PessoaFisicaJaExistenteException("CPF já cadastrado no sistema");
 		}
-		
+
 		for (Advogado advogado : advogados.values()) {
-			if (advogado.getCadastroRF() == Long.parseLong(cpf)) {
+			if (advogado.getCadastroRF() == cpf) {
 				throw new PessoaFisicaJaExistenteException("CPF já cadastrado no sistema");
 			}
 		}
-		
-		if (email.isBlank()) {
-			pessoasFisicas.put(Long.parseLong(cpf),
-					new PessoaFisica(nome, Long.parseLong(cpf), Long.parseLong(telefone)));
-			MainController.save();
-			return;
-		}
 
-		if (telefone.isBlank()) {
-			pessoasFisicas.put(Long.parseLong(cpf), new PessoaFisica(nome, Long.parseLong(cpf), email));
-			MainController.save();
-			return;
-		}
-
-		pessoasFisicas.put(Long.parseLong(cpf),
-				new PessoaFisica(nome, Long.parseLong(cpf), email, Long.parseLong(telefone)));
+		pessoasFisicas.put(cpf, new PessoaFisica(nome, cpf, email, telefone));
 		MainController.save();
 	}
 
 	// A chave no meu map de Pessoas Jurídicas será o CNPJ
 
-	public void addPessoaJuridica(String nome, String cnpj, String preposto, String email, String telefone)
-			throws PessoaJuridicaJaExistenteException, PrepostoNaoCadastradoException {
+	public void addPessoaJuridica(String nome, long cnpj, long preposto, String email, long telefone)
+			throws PessoaJuridicaJaExistenteException, PrepostoNaoCadastradoException, CampoNaoPreenchidoException,
+			CNPJNaoNumericoException, NumberFormatException, CNPJInvalidoException, CPFInvalidoException,
+			CPFNaoNumericoException, FormatoEmailInvalidoException, TelefoneInvalidoException,
+			TelefoneNaoNumericoException {
 
-		if (pessoasJuridicas.containsKey(Long.parseLong(cnpj))) {
+		Utils.validarCPF(preposto);
+
+		Utils.validarCNPJ(cnpj);
+
+		if (pessoasJuridicas.containsKey(cnpj)) {
 			throw new PessoaJuridicaJaExistenteException("CNPJ já cadastrado no sistema!");
 		}
 
-		if (!pessoasFisicas.containsKey(Long.parseLong(preposto))) {
+		if (!pessoasFisicas.containsKey(preposto)) {
 			throw new PrepostoNaoCadastradoException("Preposto não cadastrado no sistema!");
 		}
 
-		if (email.isBlank()) {
-			pessoasJuridicas.put(Long.parseLong(cnpj), new PessoaJuridica(nome, Long.parseLong(cnpj),
-					pessoasFisicas.get(Long.parseLong(preposto)), Long.parseLong(telefone)));
-			MainController.save();
-			return;
-		}
-
-		if (telefone.isBlank()) {
-			pessoasJuridicas.put(Long.parseLong(cnpj), new PessoaJuridica(nome, Long.parseLong(cnpj),
-					pessoasFisicas.get(Long.parseLong(preposto)), email));
-			MainController.save();
-			return;
-		}
-
-		pessoasJuridicas.put(Long.parseLong(cnpj), new PessoaJuridica(nome, Long.parseLong(cnpj),
-				pessoasFisicas.get(Long.parseLong(preposto)), email, Long.parseLong(telefone)));
+		pessoasJuridicas.put(cnpj, new PessoaJuridica(nome, cnpj, pessoasFisicas.get(preposto), email, telefone));
 		MainController.save();
 	}
 
 	// A chave no meu map de Advogados será o registro
 
 	public void addAdvogados(String nome, String cpf, String registro, String email, String telefone)
-			throws PessoaFisicaJaExistenteException, AdvogadoJaExistenteException {
+			throws PessoaFisicaJaExistenteException, AdvogadoJaExistenteException, NumberFormatException,
+			CampoNaoPreenchidoException, NecessarioAlgumMeioComunicacao, CPFNaoNumericoException,
+			TelefoneNaoNumericoException, CPFInvalidoException, FormatoEmailInvalidoException,
+			TelefoneInvalidoException {
 
 		if (pessoasFisicas.containsKey(Long.parseLong(cpf))) {
 			throw new PessoaFisicaJaExistenteException("CPF já cadastrado no sistema!");
 		}
-		
+
 		if (advogados.containsKey(Long.parseLong(registro))) {
 			throw new AdvogadoJaExistenteException("Registro já cadastrado no sistema!");
 		}
-		
+
 		if (email.isBlank()) {
 			pessoasFisicas.put(Long.parseLong(cpf),
 					new PessoaFisica(nome, Long.parseLong(cpf), Long.parseLong(telefone)));

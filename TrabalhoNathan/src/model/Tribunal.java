@@ -2,6 +2,8 @@ package model;
 
 import java.io.Serializable;
 
+import exception.CampoNaoPreenchidoException;
+
 public class Tribunal implements Serializable {
 
 	private static final long serialVersionUID = -5242369707305899479L;
@@ -10,7 +12,19 @@ public class Tribunal implements Serializable {
 	private final String secao;
 	private final String descricao;
 
-	public Tribunal(String sigla, String secao, String descricao) {
+	public Tribunal(String sigla, String secao, String descricao) throws CampoNaoPreenchidoException {
+		if (sigla.isBlank()) {
+			throw new CampoNaoPreenchidoException("Insira uma sigla!");
+		}
+
+		if (secao.isBlank()) {
+			throw new CampoNaoPreenchidoException("Insira uma seção!");
+		}
+
+		if (descricao.isBlank()) {
+			throw new CampoNaoPreenchidoException("Insira uma descrição!");
+		}
+
 		this.sigla = sigla;
 		this.descricao = descricao;
 		this.secao = secao;

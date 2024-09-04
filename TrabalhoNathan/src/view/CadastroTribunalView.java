@@ -16,7 +16,6 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 import controller.MainController;
-import util.TribunalUtils;
 
 @SuppressWarnings("serial")
 public class CadastroTribunalView extends JFrame {
@@ -124,8 +123,6 @@ public class CadastroTribunalView extends JFrame {
 			String sigla = siglaField.getText();
 			String secao = secaoField.getText();
 			String descricao = descricaoField.getText();
-
-			TribunalUtils.validarCadastroTribunal(sigla, secao, descricao);
 
 			MainController.getCadastroTribunalController().addTribunal(sigla, secao, descricao);
 

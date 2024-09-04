@@ -13,40 +13,7 @@ import exception.NecessarioAlgumMeioComunicacao;
 import exception.TelefoneInvalidoException;
 import exception.TelefoneNaoNumericoException;
 
-public class PessoaUtils {
-
-	public static void validarCadastroPessoaFisica(String nome, String cpf, String email, String telefone)
-			throws CampoNaoPreenchidoException, NecessarioAlgumMeioComunicacao, CPFNaoNumericoException,
-			TelefoneNaoNumericoException, CPFInvalidoException, FormatoEmailInvalidoException,
-			TelefoneInvalidoException {
-
-		if (nome.isBlank()) {
-			throw new CampoNaoPreenchidoException("Insira um nome!");
-		}
-
-		if (cpf.isBlank()) {
-			throw new CampoNaoPreenchidoException("Insira um CPF!");
-		}
-
-		if (!cpf.matches("\\d+")) {
-			throw new CPFNaoNumericoException("CPF deve conter apenas números!");
-		}
-
-		PessoaUtils.validarCPF(cpf);
-
-		if (!email.isBlank()) {
-			PessoaUtils.validarEmail(email);
-		}
-
-		if (!telefone.isBlank()) {
-			PessoaUtils.validarTelefone(telefone);
-		}
-
-		if (telefone.isBlank() && email.isBlank()) {
-			throw new NecessarioAlgumMeioComunicacao("Insira ao menos um meio de comunicação!");
-		}
-
-	}
+public class Utils {
 
 	public static void validarCadastroAdvogado(String nome, String cpf, String registro, String email, String telefone)
 			throws CampoNaoPreenchidoException, NecessarioAlgumMeioComunicacao, CPFNaoNumericoException,
@@ -65,18 +32,18 @@ public class PessoaUtils {
 			throw new CPFNaoNumericoException("CPF deve conter apenas números!");
 		}
 
-		PessoaUtils.validarCPF(cpf);
-		
+		Utils.validarCPF(cpf);
+
 		if (registro.isBlank()) {
 			throw new CampoNaoPreenchidoException("Insira um registro!");
 		}
-		
+
 		if (!email.isBlank()) {
-			PessoaUtils.validarEmail(email);
+			Utils.validarEmail(email);
 		}
 
 		if (!telefone.isBlank()) {
-			PessoaUtils.validarTelefone(telefone);
+			Utils.validarTelefone(telefone);
 		}
 
 		if (telefone.isBlank() && email.isBlank()) {
@@ -84,50 +51,13 @@ public class PessoaUtils {
 		}
 
 	}
-	
-	public static void validarCadastroPessoaJuridica(String nome, String cnpj, String preposto, String email,
-			String telefone) throws CampoNaoPreenchidoException, NecessarioAlgumMeioComunicacao,
-			TelefoneNaoNumericoException, FormatoEmailInvalidoException, CNPJNaoNumericoException,
-			CNPJInvalidoException, CPFInvalidoException, CPFNaoNumericoException, TelefoneInvalidoException {
 
-		if (nome.isBlank()) {
-			throw new CampoNaoPreenchidoException("Insira um nome!");
+	public static void validarEmail(String email) throws FormatoEmailInvalidoException, CampoNaoPreenchidoException {
+
+		if (email.isBlank()) {
+			throw new CampoNaoPreenchidoException("Insira um email!");
 		}
 
-		if (cnpj.isBlank()) {
-			throw new CampoNaoPreenchidoException("Insira um CNPJ!");
-		}
-
-		if (!cnpj.matches("\\d+")) {
-			throw new CNPJNaoNumericoException("CNPJ deve conter apenas números!");
-		}
-
-		PessoaUtils.validarCNPJ(cnpj);
-
-		if (preposto.isBlank()) {
-			throw new CampoNaoPreenchidoException("Insira um Preposto!");
-		}
-
-		if (!preposto.matches("\\d+")) {
-			throw new CPFNaoNumericoException("Preposto deve conter apenas números!");
-		}
-
-		if (!email.isBlank()) {
-			PessoaUtils.validarEmail(email);
-		}
-
-		if (!telefone.isBlank()) {
-			PessoaUtils.validarTelefone(telefone);
-		}
-
-		PessoaUtils.validarTelefone(telefone);
-
-		if (telefone.isBlank() && email.isBlank()) {
-			throw new NecessarioAlgumMeioComunicacao("Insira ao menos um meio de comunicação!");
-		}
-	}
-
-	public static void validarEmail(String email) throws FormatoEmailInvalidoException {
 		// Expressão regular para validar o email
 		String emailRegex = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";
 
@@ -136,12 +66,14 @@ public class PessoaUtils {
 		Matcher matcher = pattern.matcher(email);
 
 		if (!matcher.matches()) {
-			throw new FormatoEmailInvalidoException("Formato de email inválido!");
+			throw new FormatoEmailInvalidoException();
 		}
 
 	}
 
-	public static void validarCPF(String cpf) throws CPFInvalidoException {
+	public static void validarCPF(long cpfLong) throws CPFInvalidoException {
+
+		String cpf = Long.toString(cpfLong);
 
 		// Verifica se o CPF contém 11 dígitos
 		if (cpf.length() != 11) {
@@ -185,7 +117,9 @@ public class PessoaUtils {
 		return (firstDigit == cpf.charAt(9) - '0') && (secondDigit == cpf.charAt(10) - '0');
 	}
 
-	public static void validarCNPJ(String cnpj) throws CNPJInvalidoException {
+	public static void validarCNPJ(long cnpjLong) throws CNPJInvalidoException {
+
+		String cnpj = Long.toString(cnpjLong);
 
 		// Verifica se o CNPJ tem 14 dígitos
 		if (cnpj.length() != 14) {
@@ -226,9 +160,17 @@ public class PessoaUtils {
 		}
 	}
 
-	public static void validarTelefone(String telefone) throws TelefoneInvalidoException, TelefoneNaoNumericoException {
+	public static void validarTelefone(long telefoneLong)
+			throws TelefoneInvalidoException, TelefoneNaoNumericoException, CampoNaoPreenchidoException {
+
+		String telefone = Long.toString(telefoneLong);
+
 		// Remove espaços, traços, parênteses, etc.
 		String telefoneLimpo = telefone.replaceAll("[^\\d]", "");
+
+		if (telefone.isBlank()) {
+			throw new CampoNaoPreenchidoException("Insira um telefone!");
+		}
 
 		// Verifica se o telefone contém apenas números
 		if (!telefone.matches("\\d+")) {

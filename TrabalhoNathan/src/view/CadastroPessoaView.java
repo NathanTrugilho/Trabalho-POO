@@ -18,7 +18,6 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 import controller.MainController;
-import util.PessoaUtils;
 
 @SuppressWarnings("serial")
 public class CadastroPessoaView extends JFrame {
@@ -49,8 +48,8 @@ public class CadastroPessoaView extends JFrame {
 		gbc.weightx = 1;
 
 		// Definir fonte maior
-		Font labelFont = new Font("Arial", Font.BOLD, 14);
-		Font fieldFont = new Font("Arial", Font.PLAIN, 14);
+		Font labelFont = new Font("Arial", Font.BOLD, 16);
+		Font fieldFont = new Font("Arial", Font.PLAIN, 13);
 		Font buttonFont = new Font("Arial", Font.BOLD, 16);
 
 		// Campo Tipo de Pessoa
@@ -212,17 +211,41 @@ public class CadastroPessoaView extends JFrame {
 
 			switch (tipoPessoa) {
 			case "Pessoa Física":
-				PessoaUtils.validarCadastroPessoaFisica(nome, cpfCnpj, email, telefone);
-				MainController.getCadastroPessoaController().addPessoasFisicas(nome, cpfCnpj, email, telefone);
+				
+				if (cpfCnpj.isBlank() || !cpfCnpj.matches("\\d+")) {
+					JOptionPane.showMessageDialog(null, "Insira um CPF numérico!", "Erro de Entrada", JOptionPane.ERROR_MESSAGE);
+					return;
+				}
+				
+				if (telefone.isBlank() || !telefone.matches("\\d+")) {
+					JOptionPane.showMessageDialog(null, "Insira um telefone numérico", "Erro de Entrada", JOptionPane.ERROR_MESSAGE);
+					return;
+				}
+				
+				MainController.getCadastroPessoaController().addPessoasFisicas(nome, Long.parseLong(cpfCnpj), email, Long.parseLong(telefone));
 				break;
 
 			case "Pessoa Jurídica":
-				PessoaUtils.validarCadastroPessoaJuridica(nome, cpfCnpj, preposto, email, telefone);
-				MainController.getCadastroPessoaController().addPessoaJuridica(nome, cpfCnpj, preposto, email, telefone);
+				
+				if (cpfCnpj.isBlank() || !cpfCnpj.matches("\\d+")) {
+					JOptionPane.showMessageDialog(null, "Insira um CNPJ numérico!", "Erro de Entrada", JOptionPane.ERROR_MESSAGE);
+					return;
+				}
+				
+				if (preposto.isBlank() || !preposto.matches("\\d+")) {
+					JOptionPane.showMessageDialog(null, "Insira um CPF numérico", "Erro de Entrada", JOptionPane.ERROR_MESSAGE);
+					return;
+				}
+				
+				if (telefone.isBlank() || !telefone.matches("\\d+")) {
+					JOptionPane.showMessageDialog(null, "Insira um telefone numérico", "Erro de Entrada", JOptionPane.ERROR_MESSAGE);
+					return;
+				}
+				
+				MainController.getCadastroPessoaController().addPessoaJuridica(nome, Long.parseLong(cpfCnpj), Long.parseLong(preposto), email, Long.parseLong(telefone));
 				break;
 				
 			case "Advogado":
-				PessoaUtils.validarCadastroAdvogado(nome, cpfCnpj, registro, email, telefone);
 				MainController.getCadastroPessoaController().addAdvogados(nome, cpfCnpj, registro, email, telefone);
 				break;
 			}

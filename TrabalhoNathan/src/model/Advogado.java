@@ -10,16 +10,6 @@ public class Advogado extends PessoaFisica {
 		super(nome, cpf, email, telefone);
 		this.registro = registro;
 	}
-
-	public Advogado(String nome, long cpf, long registro, String email) {
-		super(nome, cpf, email);
-		this.registro = registro;
-	}
-	
-	public Advogado(String nome, long cpf, long registro, long telefone) {
-		super(nome, cpf, telefone);
-		this.registro = registro;
-	}
 	
 	public long getRegistro() {
 		return registro;

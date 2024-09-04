@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Map;
 import java.util.TreeMap;
 
+import exception.CampoNaoPreenchidoException;
 import exception.TribunalJaExistenteException;
 import model.Tribunal;
 
@@ -17,7 +18,7 @@ public class CadastroTribunalController implements Serializable {
 		tribunais = new TreeMap<>();
 	}
 
-	public void addTribunal(String sigla, String secao, String descricao) throws TribunalJaExistenteException {
+	public void addTribunal(String sigla, String secao, String descricao) throws TribunalJaExistenteException, CampoNaoPreenchidoException {
 
 		if (tribunais.containsKey(sigla)) {
 			throw new TribunalJaExistenteException("Já existe um tribunal com a sigla: " + sigla);
