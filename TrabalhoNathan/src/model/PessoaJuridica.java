@@ -5,7 +5,7 @@ import java.io.Serializable;
 import exception.CNPJInvalidoException;
 import exception.CampoNaoPreenchidoException;
 import exception.FormatoEmailInvalidoException;
-import exception.PrepostoNaoPodeSerNulo;
+import exception.PrepostoNaoPodeSerNuloException;
 import exception.TelefoneInvalidoException;
 import exception.TelefoneNaoNumericoException;
 import util.Utils;
@@ -19,13 +19,14 @@ public class PessoaJuridica extends Pessoa implements Serializable {
 
 	public PessoaJuridica(String nome, long cnpj, PessoaFisica preposto, String email, long telefone)
 			throws CampoNaoPreenchidoException, FormatoEmailInvalidoException, TelefoneInvalidoException,
-			TelefoneNaoNumericoException, CNPJInvalidoException, PrepostoNaoPodeSerNulo {
+			TelefoneNaoNumericoException, CNPJInvalidoException, PrepostoNaoPodeSerNuloException {
 
 		super(nome, email, telefone);
 
 		Utils.validarCNPJ(cnpj);
+
 		if (preposto == null) {
-			throw new PrepostoNaoPodeSerNulo();
+			throw new PrepostoNaoPodeSerNuloException();
 		}
 
 		this.cnpj = cnpj;

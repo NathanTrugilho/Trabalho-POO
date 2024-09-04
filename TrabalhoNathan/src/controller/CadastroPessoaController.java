@@ -11,10 +11,12 @@ import exception.CPFInvalidoException;
 import exception.CPFNaoNumericoException;
 import exception.CampoNaoPreenchidoException;
 import exception.FormatoEmailInvalidoException;
-import exception.NecessarioAlgumMeioComunicacao;
+import exception.NecessarioAlgumMeioComunicacaoException;
 import exception.PessoaFisicaJaExistenteException;
 import exception.PessoaJuridicaJaExistenteException;
 import exception.PrepostoNaoCadastradoException;
+import exception.PrepostoNaoPodeSerNuloException;
+import exception.RegistroInvalidoException;
 import exception.TelefoneInvalidoException;
 import exception.TelefoneNaoNumericoException;
 import model.Advogado;
@@ -42,18 +44,18 @@ public class CadastroPessoaController implements Serializable {
 
 	public void addPessoasFisicas(String nome, long cpf, String email, long telefone)
 			throws PessoaFisicaJaExistenteException, NumberFormatException, CampoNaoPreenchidoException,
-			NecessarioAlgumMeioComunicacao, CPFNaoNumericoException, TelefoneNaoNumericoException, CPFInvalidoException,
+			NecessarioAlgumMeioComunicacaoException, CPFNaoNumericoException, TelefoneNaoNumericoException, CPFInvalidoException,
 			FormatoEmailInvalidoException, TelefoneInvalidoException {
 
 		Utils.validarCPF(cpf);
 
 		if (pessoasFisicas.containsKey(cpf)) {
-			throw new PessoaFisicaJaExistenteException("CPF já cadastrado no sistema");
+			throw new PessoaFisicaJaExistenteException();
 		}
 
 		for (Advogado advogado : advogados.values()) {
 			if (advogado.getCadastroRF() == cpf) {
-				throw new PessoaFisicaJaExistenteException("CPF já cadastrado no sistema");
+				throw new PessoaFisicaJaExistenteException();
 			}
 		}
 
@@ -67,7 +69,7 @@ public class CadastroPessoaController implements Serializable {
 			throws PessoaJuridicaJaExistenteException, PrepostoNaoCadastradoException, CampoNaoPreenchidoException,
 			CNPJNaoNumericoException, NumberFormatException, CNPJInvalidoException, CPFInvalidoException,
 			CPFNaoNumericoException, FormatoEmailInvalidoException, TelefoneInvalidoException,
-			TelefoneNaoNumericoException {
+			TelefoneNaoNumericoException, PrepostoNaoPodeSerNuloException {
 
 		Utils.validarCPF(preposto);
 
@@ -78,7 +80,7 @@ public class CadastroPessoaController implements Serializable {
 		}
 
 		if (!pessoasFisicas.containsKey(preposto)) {
-			throw new PrepostoNaoCadastradoException("Preposto não cadastrado no sistema!");
+			throw new PrepostoNaoCadastradoException();
 		}
 
 		pessoasJuridicas.put(cnpj, new PessoaJuridica(nome, cnpj, pessoasFisicas.get(preposto), email, telefone));
@@ -87,35 +89,21 @@ public class CadastroPessoaController implements Serializable {
 
 	// A chave no meu map de Advogados será o registro
 
-	public void addAdvogados(String nome, String cpf, String registro, String email, String telefone)
+	public void addAdvogados(String nome, long cpf, long registro, String email, long telefone)
 			throws PessoaFisicaJaExistenteException, AdvogadoJaExistenteException, NumberFormatException,
-			CampoNaoPreenchidoException, NecessarioAlgumMeioComunicacao, CPFNaoNumericoException,
+			CampoNaoPreenchidoException, NecessarioAlgumMeioComunicacaoException, CPFNaoNumericoException,
 			TelefoneNaoNumericoException, CPFInvalidoException, FormatoEmailInvalidoException,
-			TelefoneInvalidoException {
+			TelefoneInvalidoException, RegistroInvalidoException {
 
-		if (pessoasFisicas.containsKey(Long.parseLong(cpf))) {
-			throw new PessoaFisicaJaExistenteException("CPF já cadastrado no sistema!");
+		if (pessoasFisicas.containsKey(cpf)) {
+			throw new PessoaFisicaJaExistenteException();
 		}
 
-		if (advogados.containsKey(Long.parseLong(registro))) {
-			throw new AdvogadoJaExistenteException("Registro já cadastrado no sistema!");
+		if (advogados.containsKey(registro)) {
+			throw new AdvogadoJaExistenteException();
 		}
 
-		if (email.isBlank()) {
-			pessoasFisicas.put(Long.parseLong(cpf),
-					new PessoaFisica(nome, Long.parseLong(cpf), Long.parseLong(telefone)));
-			MainController.save();
-			return;
-		}
-
-		if (telefone.isBlank()) {
-			pessoasFisicas.put(Long.parseLong(cpf), new PessoaFisica(nome, Long.parseLong(cpf), email));
-			MainController.save();
-			return;
-		}
-
-		advogados.put(Long.parseLong(registro),
-				new Advogado(nome, Long.parseLong(cpf), Long.parseLong(registro), email, Long.parseLong(telefone)));
+		advogados.put(registro, new Advogado(nome, cpf, registro, email, telefone));
 		MainController.save();
 	}
 

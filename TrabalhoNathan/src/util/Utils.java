@@ -4,53 +4,13 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import exception.CNPJInvalidoException;
-import exception.CNPJNaoNumericoException;
 import exception.CPFInvalidoException;
-import exception.CPFNaoNumericoException;
 import exception.CampoNaoPreenchidoException;
 import exception.FormatoEmailInvalidoException;
-import exception.NecessarioAlgumMeioComunicacao;
 import exception.TelefoneInvalidoException;
 import exception.TelefoneNaoNumericoException;
 
 public class Utils {
-
-	public static void validarCadastroAdvogado(String nome, String cpf, String registro, String email, String telefone)
-			throws CampoNaoPreenchidoException, NecessarioAlgumMeioComunicacao, CPFNaoNumericoException,
-			TelefoneNaoNumericoException, CPFInvalidoException, FormatoEmailInvalidoException,
-			TelefoneInvalidoException {
-
-		if (nome.isBlank()) {
-			throw new CampoNaoPreenchidoException("Insira um nome!");
-		}
-
-		if (cpf.isBlank()) {
-			throw new CampoNaoPreenchidoException("Insira um CPF!");
-		}
-
-		if (!cpf.matches("\\d+")) {
-			throw new CPFNaoNumericoException("CPF deve conter apenas números!");
-		}
-
-		Utils.validarCPF(cpf);
-
-		if (registro.isBlank()) {
-			throw new CampoNaoPreenchidoException("Insira um registro!");
-		}
-
-		if (!email.isBlank()) {
-			Utils.validarEmail(email);
-		}
-
-		if (!telefone.isBlank()) {
-			Utils.validarTelefone(telefone);
-		}
-
-		if (telefone.isBlank() && email.isBlank()) {
-			throw new NecessarioAlgumMeioComunicacao("Insira ao menos um meio de comunicação!");
-		}
-
-	}
 
 	public static void validarEmail(String email) throws FormatoEmailInvalidoException, CampoNaoPreenchidoException {
 

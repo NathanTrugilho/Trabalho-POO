@@ -1,10 +1,10 @@
 package exception;
 
-public class PrepostoNaoPodeSerNulo extends Exception{
+public class PrepostoNaoPodeSerNuloException extends Exception{
 
 	private static final long serialVersionUID = 8477677051599173705L;
 
-	public PrepostoNaoPodeSerNulo() {
+	public PrepostoNaoPodeSerNuloException() {
 		super("O preposto não pode ser nulo!");
 	}
 

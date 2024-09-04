@@ -30,7 +30,7 @@ public class CadastroPessoaView extends JFrame {
 	private JTextField registroField;
 	private JComboBox<String> tipoPessoaBox;
 	private JTextArea textArea;
-	
+
 	public CadastroPessoaView() {
 		initialize();
 	}
@@ -149,7 +149,7 @@ public class CadastroPessoaView extends JFrame {
 				limparCampos();
 			}
 		});
-		
+
 		// Botão de Cadastro
 		gbc.gridx = 1;
 		gbc.gridy = 7;
@@ -160,7 +160,7 @@ public class CadastroPessoaView extends JFrame {
 		panel.add(cadastrarButton, gbc);
 
 		cadastrarButton.addActionListener(e -> realizarCadastro());
-		
+
 		// Botão Listar Tribunais
 		gbc.gridx = 0;
 		gbc.gridwidth = 1;
@@ -169,8 +169,8 @@ public class CadastroPessoaView extends JFrame {
 		panel.add(listarButton, gbc);
 
 		listarButton.addActionListener(e -> listaPessoas());
-		
-		//Área de texto para exibir os tribunais
+
+		// Área de texto para exibir os tribunais
 		gbc.gridx = 0;
 		gbc.gridy = 8;
 		gbc.gridwidth = 2; // Faz com que a área de texto ocupe toda a largura disponível
@@ -181,13 +181,13 @@ public class CadastroPessoaView extends JFrame {
 		textArea.setEditable(false); // A área de texto é somente leitura
 		JScrollPane scrollPane = new JScrollPane(textArea);
 		panel.add(scrollPane, gbc);
-		
-		getContentPane().add(panel); 
+
+		getContentPane().add(panel);
 	}
 
 	private void atualizarCamposParaTipoSelecionado(JLabel registroLabel, JLabel cpfCnpjLabel, JLabel prepostoLabel) {
 		String selected = (String) tipoPessoaBox.getSelectedItem();
-		
+
 		boolean isAdvogado = "Advogado".equals(selected);
 		registroLabel.setVisible(isAdvogado);
 		registroField.setVisible(isAdvogado);
@@ -211,42 +211,69 @@ public class CadastroPessoaView extends JFrame {
 
 			switch (tipoPessoa) {
 			case "Pessoa Física":
-				
+
 				if (cpfCnpj.isBlank() || !cpfCnpj.matches("\\d+")) {
-					JOptionPane.showMessageDialog(null, "Insira um CPF numérico!", "Erro de Entrada", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(null, "Insira um CPF numérico!", "Erro de Entrada",
+							JOptionPane.ERROR_MESSAGE);
 					return;
 				}
-				
+
 				if (telefone.isBlank() || !telefone.matches("\\d+")) {
-					JOptionPane.showMessageDialog(null, "Insira um telefone numérico", "Erro de Entrada", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(null, "Insira um telefone numérico", "Erro de Entrada",
+							JOptionPane.ERROR_MESSAGE);
 					return;
 				}
-				
-				MainController.getCadastroPessoaController().addPessoasFisicas(nome, Long.parseLong(cpfCnpj), email, Long.parseLong(telefone));
+
+				MainController.getCadastroPessoaController().addPessoasFisicas(nome, Long.parseLong(cpfCnpj), email,
+						Long.parseLong(telefone));
 				break;
 
 			case "Pessoa Jurídica":
-				
+
 				if (cpfCnpj.isBlank() || !cpfCnpj.matches("\\d+")) {
-					JOptionPane.showMessageDialog(null, "Insira um CNPJ numérico!", "Erro de Entrada", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(null, "Insira um CNPJ numérico!", "Erro de Entrada",
+							JOptionPane.ERROR_MESSAGE);
 					return;
 				}
-				
+
 				if (preposto.isBlank() || !preposto.matches("\\d+")) {
-					JOptionPane.showMessageDialog(null, "Insira um CPF numérico", "Erro de Entrada", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(null, "Insira um CPF numérico", "Erro de Entrada",
+							JOptionPane.ERROR_MESSAGE);
 					return;
 				}
-				
+
 				if (telefone.isBlank() || !telefone.matches("\\d+")) {
-					JOptionPane.showMessageDialog(null, "Insira um telefone numérico", "Erro de Entrada", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(null, "Insira um telefone numérico", "Erro de Entrada",
+							JOptionPane.ERROR_MESSAGE);
 					return;
 				}
-				
-				MainController.getCadastroPessoaController().addPessoaJuridica(nome, Long.parseLong(cpfCnpj), Long.parseLong(preposto), email, Long.parseLong(telefone));
+
+				MainController.getCadastroPessoaController().addPessoaJuridica(nome, Long.parseLong(cpfCnpj),
+						Long.parseLong(preposto), email, Long.parseLong(telefone));
 				break;
-				
+
 			case "Advogado":
-				MainController.getCadastroPessoaController().addAdvogados(nome, cpfCnpj, registro, email, telefone);
+
+				if (cpfCnpj.isBlank() || !cpfCnpj.matches("\\d+")) {
+					JOptionPane.showMessageDialog(null, "Insira um CPF numérico!", "Erro de Entrada",
+							JOptionPane.ERROR_MESSAGE);
+					return;
+				}
+
+				if (telefone.isBlank() || !telefone.matches("\\d+")) {
+					JOptionPane.showMessageDialog(null, "Insira um telefone numérico", "Erro de Entrada",
+							JOptionPane.ERROR_MESSAGE);
+					return;
+				}
+
+				if (registro.isBlank() || !registro.matches("\\d+")) {
+					JOptionPane.showMessageDialog(null, "Insira um registro numérico", "Erro de Entrada",
+							JOptionPane.ERROR_MESSAGE);
+					return;
+				}
+
+				MainController.getCadastroPessoaController().addAdvogados(nome, Long.parseLong(cpfCnpj),
+						Long.parseLong(registro), email, Long.parseLong(telefone));
 				break;
 			}
 
@@ -257,7 +284,7 @@ public class CadastroPessoaView extends JFrame {
 			JOptionPane.showMessageDialog(null, ex.getMessage(), "Erro de Entrada", JOptionPane.ERROR_MESSAGE);
 		}
 	}
-	
+
 	private void listaPessoas() {
 		try {
 			// Ultra mega power delegação
@@ -268,7 +295,7 @@ public class CadastroPessoaView extends JFrame {
 					JOptionPane.ERROR_MESSAGE);
 		}
 	}
-	
+
 	private void limparCampos() {
 		nomeField.setText("");
 		cpfCnpjField.setText("");
