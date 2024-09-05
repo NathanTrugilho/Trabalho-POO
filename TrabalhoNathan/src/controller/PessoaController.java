@@ -42,9 +42,9 @@ public class PessoaController implements Serializable {
 	// A chave no meu map de Pessoas físicas será o CPF
 
 	public void addPessoasFisicas(String nome, long cpf, String email, long telefone)
-			throws NumberFormatException, CampoNaoPreenchidoException,
-			NecessarioAlgumMeioComunicacaoException, CPFNaoNumericoException, TelefoneNaoNumericoException, CPFInvalidoException,
-			FormatoEmailInvalidoException, TelefoneInvalidoException, PessoaJaExistenteException {
+			throws NumberFormatException, CampoNaoPreenchidoException, NecessarioAlgumMeioComunicacaoException,
+			CPFNaoNumericoException, TelefoneNaoNumericoException, CPFInvalidoException, FormatoEmailInvalidoException,
+			TelefoneInvalidoException, PessoaJaExistenteException {
 
 		if (pessoasFisicas.containsKey(cpf)) {
 			throw new PessoaJaExistenteException("CPF já cadastrado no sistema!");
@@ -83,15 +83,21 @@ public class PessoaController implements Serializable {
 	// A chave no meu map de Advogados será o registro
 
 	public void addAdvogados(String nome, long cpf, long registro, String email, long telefone)
-			throws AdvogadoJaExistenteException, NumberFormatException,
-			CampoNaoPreenchidoException, NecessarioAlgumMeioComunicacaoException, CPFNaoNumericoException,
-			TelefoneNaoNumericoException, CPFInvalidoException, FormatoEmailInvalidoException,
-			TelefoneInvalidoException, RegistroInvalidoException, PessoaJaExistenteException {
+			throws AdvogadoJaExistenteException, NumberFormatException, CampoNaoPreenchidoException,
+			NecessarioAlgumMeioComunicacaoException, CPFNaoNumericoException, TelefoneNaoNumericoException,
+			CPFInvalidoException, FormatoEmailInvalidoException, TelefoneInvalidoException, RegistroInvalidoException,
+			PessoaJaExistenteException {
 
 		if (pessoasFisicas.containsKey(cpf)) {
 			throw new PessoaJaExistenteException("CPF já cadastrado no sistema!");
 		}
-
+		
+		for (Advogado advogado : advogados.values()) {
+			if (advogado.getCadastroRF() == cpf) {
+				throw new PessoaJaExistenteException("CPF já cadastrado no sistema!");
+			}
+		}
+		
 		if (advogados.containsKey(registro)) {
 			throw new AdvogadoJaExistenteException();
 		}
@@ -100,23 +106,22 @@ public class PessoaController implements Serializable {
 		MainController.save();
 	}
 
-	public PessoaFisica getPessoaFisica(long cpf) throws PessoaNaoExistenteException {
-		if (pessoasFisicas.containsKey(cpf)) {
-			return pessoasFisicas.get(cpf);
+	public Pessoa getPessoa(long cadastroRF) throws PessoaNaoExistenteException {
+		
+		if (pessoasFisicas.containsKey(cadastroRF)) {
+			return pessoasFisicas.get(cadastroRF);
+			
+		} else if (pessoasJuridicas.containsKey(cadastroRF)) {
+			return pessoasFisicas.get(cadastroRF);
+			
+		} else if (advogados.containsKey(cadastroRF)) {
+			return advogados.get(cadastroRF);
+			
 		} else {
 			throw new PessoaNaoExistenteException();
 		}
 	}
-	
-	public PessoaJuridica getPessoaJuridica(long cnpj) throws PessoaNaoExistenteException {
-		if (pessoasJuridicas.containsKey(cnpj)) {
-			return pessoasJuridicas.get(cnpj);
-		} else {
-			throw new PessoaNaoExistenteException();
-		}
-	}
-	
-	
+
 	public StringBuilder listaPessoas() {
 
 		StringBuilder sb = new StringBuilder();

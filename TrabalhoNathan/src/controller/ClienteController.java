@@ -5,38 +5,27 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import exception.ClienteNaoExisteException;
+import exception.ClienteNecessitaPessoa;
+import exception.PessoaNaoExistenteException;
 import model.Cliente;
 
 public class ClienteController implements Serializable {
 
 	private static final long serialVersionUID = 3788235120261465931L;
 
-	private Map<Long, Cliente> clientesPF;
-	private Map<Long, Cliente> clientesPJ;
+	private Map<Long, Cliente> clientes;
 
 	public ClienteController() {
-		clientesPF = new TreeMap<>();
-		clientesPJ = new TreeMap<>();
-	}
-	
-	public void addClientePF(long cadastroRF) {
-
+		clientes = new TreeMap<>();
 	}
 
-	public Cliente getClientePF(long cpf) throws ClienteNaoExisteException {
-		if (clientesPF.containsKey(cpf)) {
-			System.out.println("bananadepijama");
-			return clientesPF.get(cpf);
-		} else {
-			System.out.println("peganapemga");
-			throw new ClienteNaoExisteException();
-		}
+	public void addCliente(long cadastroRF) throws PessoaNaoExistenteException, ClienteNecessitaPessoa {
+		clientes.put(cadastroRF, new Cliente(MainController.getPessoaController().getPessoa(cadastroRF)));
 	}
 
-	public Cliente getClientePJ(long cnpj) throws ClienteNaoExisteException {
-
-		if (clientesPJ.containsKey(cnpj)) {
-			return clientesPJ.get(cnpj);
+	public Cliente getClientePF(long cadastroRF) throws ClienteNaoExisteException {
+		if (clientes.containsKey(cadastroRF)) {
+			return clientes.get(cadastroRF);
 		} else {
 			throw new ClienteNaoExisteException();
 		}

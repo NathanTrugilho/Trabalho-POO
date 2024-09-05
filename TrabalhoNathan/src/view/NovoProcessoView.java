@@ -4,7 +4,6 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.util.Date;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -16,6 +15,9 @@ import javax.swing.JTextField;
 
 import controller.MainController;
 import exception.ClienteNaoExisteException;
+import exception.ClienteNecessitaPessoa;
+import exception.PessoaNaoExistenteException;
+import util.Utils;
 
 public class NovoProcessoView extends JFrame {
 
@@ -69,9 +71,10 @@ public class NovoProcessoView extends JFrame {
 		panel.add(label2, gbc);
 
 		gbc.gridx = 1;
-		dataAberturaField = new JTextField(25);
+		dataAberturaField = new JTextField(10);
 		dataAberturaField.setFont(fieldFont);
 		panel.add(dataAberturaField, gbc);
+		dataAberturaField.setText("dd/MM/yyyy");
 
 		// CPF Cliente
 		gbc.gridx = 0;
@@ -125,12 +128,19 @@ public class NovoProcessoView extends JFrame {
 	}
 
 	private void realizarCadastro() {
+
+		String numeroProcesso = numeroProcessoField.getText();
+		String dataAbertura = dataAberturaField.getText();
+		String cadastroRFCliente = cadastroRFClienteField.getText();
+		String cadastroRFParteContraria = cadastroRFParteContrariaField.getText();
+		String siglaTribunal = tribunalField.getText();
+
 		try {
-			String numeroProcesso = numeroProcessoField.getText();
-			String dataAbertura = dataAberturaField.getText();
-			String cadastroRFCliente = cadastroRFClienteField.getText();
-			String cadastroRFParteContraria = cadastroRFParteContrariaField.getText();
-			String siglaTribunal = tribunalField.getText();
+			if (numeroProcesso.isBlank() || !numeroProcesso.matches("\\d+")) {
+				JOptionPane.showMessageDialog(null, "Insira o número do processo corretamente!", "Erro de Entrada",
+						JOptionPane.ERROR_MESSAGE);
+				return;
+			}
 
 			if (cadastroRFCliente.isBlank() || !cadastroRFCliente.matches("\\d+")) {
 				JOptionPane.showMessageDialog(null, "Insira o CadastroRF do Cliente corretamente!", "Erro de Entrada",
@@ -138,46 +148,56 @@ public class NovoProcessoView extends JFrame {
 				return;
 			}
 
-			if (cadastroRFCliente.length() == 11) {
-
-				try {
-					if (cadastroRFParteContraria.length() == 11) {
-						System.out.println("chegou1");
-						MainController.getProcessoController().addProcesso(Long.parseLong(numeroProcesso), null,
-								MainController.getClienteController().getClientePF(Long.parseLong(cadastroRFCliente)),
-								MainController.getPessoaController()
-										.getPessoaFisica(Long.parseLong(cadastroRFParteContraria)),
-								MainController.getTribunalController().getTribunal(siglaTribunal));
-						System.out.println("chegou2");
-					} else if (cadastroRFParteContraria.length() == 14) {
-
-					}
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-
-			} else if (cadastroRFCliente.length() == 14) {
-
-			} else {
-				JOptionPane.showMessageDialog(null, "Insira o CNPJ ou CPF do Cliente!", "Erro de entrada",
+			if (cadastroRFCliente.length() != 11 && cadastroRFCliente.length() != 14) {
+				JOptionPane.showMessageDialog(null, "Insira o CadastroRF do Cliente corretamente!", "Erro de Entrada",
 						JOptionPane.ERROR_MESSAGE);
 				return;
 			}
 
+			if (cadastroRFParteContraria.isBlank() || !cadastroRFParteContraria.matches("\\d+")) {
+				JOptionPane.showMessageDialog(null, "Insira o CadastroRF da parte contrária corretamente!",
+						"Erro de Entrada", JOptionPane.ERROR_MESSAGE);
+				return;
+			}
+
+			if (cadastroRFParteContraria.length() != 11 && cadastroRFParteContraria.length() != 14) {
+				JOptionPane.showMessageDialog(null, "Insira o CadastroRF da parte contrária corretamente!",
+						"Erro de Entrada", JOptionPane.ERROR_MESSAGE);
+				return;
+			}
+
+			MainController.getProcessoController().addProcesso(Long.parseLong(numeroProcesso),
+					Utils.stringToDate(dataAbertura),
+					MainController.getClienteController().getClientePF(Long.parseLong(cadastroRFCliente)),
+					MainController.getPessoaController().getPessoa(Long.parseLong(cadastroRFParteContraria)),
+					MainController.getTribunalController().getTribunal(siglaTribunal));
+			
+			
+
 			JOptionPane.showMessageDialog(null, "Cadastro de processo realizado com sucesso!");
 			limparCampos();
 
+		} catch (ClienteNaoExisteException e) {
+			int resposta = JOptionPane.showConfirmDialog(null, "Você deseja criar um cliente para este cadastroRF?",
+					"Cliente não existente!", JOptionPane.YES_NO_OPTION);
+
+			try {
+				if (resposta == JOptionPane.YES_OPTION) {
+					MainController.getClienteController().addCliente(Long.parseLong(cadastroRFCliente));
+				}
+			} catch (Exception e1) {
+				JOptionPane.showMessageDialog(null, e1.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+			}
+
 		} catch (Exception e) {
-			JOptionPane.showMessageDialog(null, "Ocorreu um erro ao realizar o cadastro: " + e.getMessage(), "Erro",
-					JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
 		}
 	}
 
 	private void limparCampos() {
 		cadastroRFClienteField.setText("");
 		cadastroRFParteContrariaField.setText("");
-		dataAberturaField.setText("");
+		dataAberturaField.setText("dd/MM/yyyy");
 		numeroProcessoField.setText("");
 		tribunalField.setText("");
 	}

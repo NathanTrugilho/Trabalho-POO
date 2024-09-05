@@ -1,5 +1,8 @@
 package util;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -119,7 +122,17 @@ public class Utils {
 			throw new CNPJInvalidoException("CNPJ inválido!");
 		}
 	}
-
+	
+	public static Date stringToDate(String dateStr) throws ParseException{
+        // Define o formato da data que você espera receber
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+        try {
+            return formatter.parse(dateStr);
+        } catch (ParseException e) {
+        	throw new ParseException("Insira uma data válida!", e.getErrorOffset());
+        }
+	}
+	
 	public static void validarTelefone(long telefoneLong)
 			throws TelefoneInvalidoException, TelefoneNaoNumericoException, CampoNaoPreenchidoException {
 

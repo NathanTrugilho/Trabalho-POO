@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import exception.ClienteNecessitaPessoa;
+
 public class Cliente implements Serializable{
 
 	private static final long serialVersionUID = 1324820353526542179L;
@@ -11,7 +13,12 @@ public class Cliente implements Serializable{
 	private final Pessoa pessoa;
 	private List<Processo> processos = new ArrayList<>();
 	
-	public Cliente(Pessoa pessoa) {
+	public Cliente(Pessoa pessoa) throws ClienteNecessitaPessoa {
+		
+		if (pessoa == null) {
+			throw new ClienteNecessitaPessoa();
+		}
+		
 		this.pessoa = pessoa;
 	}
 	
