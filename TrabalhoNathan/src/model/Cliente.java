@@ -1,9 +1,12 @@
 package model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Cliente {
+public class Cliente implements Serializable{
+
+	private static final long serialVersionUID = 1324820353526542179L;
 	
 	private final Pessoa pessoa;
 	private List<Processo> processos = new ArrayList<>();

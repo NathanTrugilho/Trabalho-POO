@@ -9,16 +9,20 @@ public class MainController implements Serializable {
 	private static final long serialVersionUID = 6341528978400871936L;
 
 	private static MainController instance;
-	private CadastroPessoaController cadastroPessoaController;
-	private CadastroTribunalController cadastroTribunalController;
+	private PessoaController pessoaController;
+	private TribunalController tribunalController;
+	private ClienteController clienteController;
+	private ProcessoController processoController;
 	
 	// declarar os demais controladores
 
-	
 	private MainController() {
 		
-		cadastroPessoaController = new CadastroPessoaController();
-		cadastroTribunalController = new CadastroTribunalController();
+		pessoaController = new PessoaController();
+		tribunalController = new TribunalController();
+		clienteController = new ClienteController();
+		processoController = new ProcessoController();
+		
 		// instanciar os demais controladores
 	}
 
@@ -26,12 +30,20 @@ public class MainController implements Serializable {
 		return instance;
 	}
 
-	public static CadastroPessoaController getCadastroPessoaController() {
-		return instance.cadastroPessoaController;
+	public static PessoaController getPessoaController() {
+		return instance.pessoaController;
 	}
 	
-	public static CadastroTribunalController getCadastroTribunalController() {
-		return instance.cadastroTribunalController;
+	public static TribunalController getTribunalController() {
+		return instance.tribunalController;
+	}
+	
+	public static ClienteController getClienteController() {
+		return instance.clienteController;
+	}
+	
+	public static ProcessoController getProcessoController() {
+		return instance.processoController;
 	}
 	
 	// implementar metodos acessadores estaticos para os demais controladores

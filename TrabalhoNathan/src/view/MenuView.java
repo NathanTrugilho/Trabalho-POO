@@ -12,9 +12,10 @@ import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 import javax.swing.plaf.ColorUIResource;
 
-@SuppressWarnings("serial")
 public class MenuView extends JFrame {
 
+	private static final long serialVersionUID = 1L;
+	
 	private JPanel contentPane;
 
 	public MenuView() {

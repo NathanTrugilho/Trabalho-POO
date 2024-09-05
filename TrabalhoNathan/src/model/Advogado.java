@@ -18,7 +18,7 @@ public class Advogado extends PessoaFisica {
 			TelefoneNaoNumericoException, CPFInvalidoException, RegistroInvalidoException {
 
 		super(nome, cpf, email, telefone);
-		
+				
 		if (registro <= 0) {
 			throw new RegistroInvalidoException();
 		}

@@ -24,7 +24,6 @@ public abstract class Pessoa implements Serializable {
 		}
 
 		Utils.validarEmail(email);
-
 		Utils.validarTelefone(telefone);
 
 		this.nome = nome;

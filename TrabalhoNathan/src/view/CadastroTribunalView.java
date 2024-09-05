@@ -17,9 +17,10 @@ import javax.swing.JTextField;
 
 import controller.MainController;
 
-@SuppressWarnings("serial")
 public class CadastroTribunalView extends JFrame {
 
+	private static final long serialVersionUID = 1L;
+	
 	private JTextField siglaField;
 	private JTextField secaoField;
 	private JTextField descricaoField;
@@ -124,16 +125,16 @@ public class CadastroTribunalView extends JFrame {
 			String secao = secaoField.getText();
 			String descricao = descricaoField.getText();
 
-			MainController.getCadastroTribunalController().addTribunal(sigla, secao, descricao);
+			MainController.getTribunalController().addTribunal(sigla, secao, descricao);
 
-			JOptionPane.showMessageDialog(this, "Cadastro realizado com sucesso!", "Sucesso",
+			JOptionPane.showMessageDialog(null, "Cadastro realizado com sucesso!", "Sucesso",
 					JOptionPane.INFORMATION_MESSAGE);
 
 			limparCampos();
 
 		} catch (Exception e) {
 			// Em caso de erro, mostrar uma mensagem de erro
-			JOptionPane.showMessageDialog(this, "Ocorreu um erro ao realizar o cadastro: " + e.getMessage(), "Erro",
+			JOptionPane.showMessageDialog(null, "Ocorreu um erro ao realizar o cadastro: " + e.getMessage(), "Erro",
 					JOptionPane.ERROR_MESSAGE);
 		}
 	}
@@ -142,10 +143,10 @@ public class CadastroTribunalView extends JFrame {
 		try {
 
 			// Ultra mega power delegação
-			textArea.setText(MainController.getCadastroTribunalController().listaTribunais().toString());
+			textArea.setText(MainController.getTribunalController().listaTribunais().toString());
 
 		} catch (Exception e) {
-			JOptionPane.showMessageDialog(this, "Ocorreu um erro ao listar os tribunais: " + e.getMessage(), "Erro",
+			JOptionPane.showMessageDialog(null, "Ocorreu um erro ao listar os tribunais: " + e.getMessage(), "Erro",
 					JOptionPane.ERROR_MESSAGE);
 		}
 	}

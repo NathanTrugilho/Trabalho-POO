@@ -1,11 +1,14 @@
 package model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class Processo {
+public class Processo implements Serializable{
 
+	private static final long serialVersionUID = -4886434207815843672L;
+	
 	private final long numero;
 	private final Date dataAbertura;
 	private Date dataConclusao;
