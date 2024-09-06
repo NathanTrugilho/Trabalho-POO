@@ -11,6 +11,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 
 public class GerenciarProcessoView extends JFrame {
 
@@ -77,20 +78,26 @@ public class GerenciarProcessoView extends JFrame {
         pesquisarButton.setFont(buttonFont);
         panel.add(pesquisarButton, gbcPesquisarButton);
 
+        GridBagConstraints gbcNumeroProcessoLabel = new GridBagConstraints();
+        gbcNumeroProcessoLabel.insets = new Insets(5, 10, 0, 10); // 
+        gbcNumeroProcessoLabel.gridx = 1;
+        gbcNumeroProcessoLabel.gridy = 1;
+        JLabel numeroProcessoLabel = new JLabel("Número do processo");
+        numeroProcessoLabel.setFont(labelFont);
+        panel.add(numeroProcessoLabel, gbcNumeroProcessoLabel);
+
         GridBagConstraints gbcComboBox = new GridBagConstraints();
-        gbcComboBox.insets = new Insets(10, 10, 10, 10);
+        gbcComboBox.anchor = GridBagConstraints.NORTH;
+        gbcComboBox.insets = new Insets(10, 10, 10, 10); // 
         gbcComboBox.gridx = 0;
-        gbcComboBox.gridy = 1;
+        gbcComboBox.gridy = 2;  // A comboBox foi mantida na linha 2
         gbcComboBox.gridwidth = 3; // O comboBox ocupa três colunas
         gbcComboBox.fill = GridBagConstraints.HORIZONTAL;
         gbcComboBox.weightx = 1.0; // Permite expansão horizontal
         JComboBox<String> comboBox = new JComboBox<>();
-        comboBox.addItem("Opção 1");
-        comboBox.addItem("Opção 2");
-        comboBox.addItem("Opção 3");
         comboBox.setFont(fieldFont);
         panel.add(comboBox, gbcComboBox);
-
+        
         // GridBagConstraints para o painel de botões
         GridBagConstraints gbcBotoesPanel = new GridBagConstraints();
         gbcBotoesPanel.insets = new Insets(10, 5, 10, 5);
