@@ -1,11 +1,14 @@
 package model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class Conta implements IConta {
+public class Conta implements IConta, Serializable{
 
+	private static final long serialVersionUID = 2908618581228493812L;
+	
 	private List<Despesa> despesas = new ArrayList<>();
 	private List<Pagamento> pagamentos = new ArrayList<>();
 

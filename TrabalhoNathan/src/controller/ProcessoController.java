@@ -5,25 +5,45 @@ import java.util.Date;
 import java.util.Map;
 import java.util.TreeMap;
 
+import exception.AtributoNuloException;
+import exception.DataInvalidaException;
+import exception.DataNulaException;
+import exception.NumeroProcessoJaExistenteException;
 import model.Cliente;
 import model.Pessoa;
 import model.Processo;
 import model.Tribunal;
 
-public class ProcessoController implements Serializable{
+public class ProcessoController implements Serializable {
 
 	private static final long serialVersionUID = 4271118252351646738L;
 
 	private Map<Long, Processo> processosSistema;
-	
+
 	public ProcessoController() {
 		processosSistema = new TreeMap<>();
 	}
-	
-	public void addProcesso(long numero, Date dataAbertura, Cliente cliente, Pessoa parteContraria, Tribunal tribunal) {
+
+	public void addProcesso(long numero, Date dataAbertura, Cliente cliente, Pessoa parteContraria, Tribunal tribunal)
+			throws DataNulaException, DataInvalidaException, AtributoNuloException, NumeroProcessoJaExistenteException {
 		
-		//processosSistema.put(numero, new Processo(numero, dataAbertura, cliente, parteContraria, tribunal));
+		if(processosSistema.containsKey(numero)) {
+			throw new NumeroProcessoJaExistenteException();
+		}
 		
+		processosSistema.put(numero, new Processo(numero, dataAbertura, cliente, parteContraria, tribunal));
+		MainController.save();
 	}
 	
+	public StringBuilder listaProcessos() {
+
+		StringBuilder sb = new StringBuilder();
+
+		for (Processo processo : processosSistema.values()) {
+			sb.append(processo.toString());
+		}
+		
+		return sb;
+	}
+
 }

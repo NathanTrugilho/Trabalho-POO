@@ -5,10 +5,14 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class Processo implements Serializable{
+import exception.AtributoNuloException;
+import exception.DataInvalidaException;
+import exception.DataNulaException;
+
+public class Processo implements Serializable {
 
 	private static final long serialVersionUID = -4886434207815843672L;
-	
+
 	private final long numero;
 	private final Date dataAbertura;
 	private Date dataConclusao;
@@ -19,7 +23,21 @@ public class Processo implements Serializable{
 	private final IConta conta;
 	private List<Audiencia> audiencias = new ArrayList<>();
 
-	public Processo(long numero, Date dataAbertura, Cliente cliente, Pessoa parteContraria, Tribunal tribunal) {
+	public Processo(long numero, Date dataAbertura, Cliente cliente, Pessoa parteContraria, Tribunal tribunal)
+			throws DataNulaException, DataInvalidaException, AtributoNuloException {
+
+		if (cliente == null) {
+			throw new AtributoNuloException("cliente não pode ser nulo na criação de um processo");
+		}
+		
+		if (parteContraria == null) {
+			throw new AtributoNuloException("parteContraria não pode ser nulo na criação de um processo");
+		}
+		
+		if (tribunal == null) {
+			throw new AtributoNuloException("tribunal não pode ser nulo na criação de um processo");
+		}
+				
 		this.fase = EFaseProcesso.INICIAL;
 		this.dataConclusao = null;
 		this.numero = numero;
@@ -119,10 +137,10 @@ public class Processo implements Serializable{
 			sb.append("Fase: " + this.getFase() + "\n");
 		}
 		sb.append("Cliente: " + this.getCliente().getPessoa().getNome() + "\n");
-		sb.append("Parte contraria: " + this.getParteContraria() + "\n");
-		sb.append("Tribunal: " + this.getTribunal().toString() + "\n");
-		sb.append("===== Conta ===== " + this.getConta().getExtrato() + "\n");
-		
+		sb.append("Parte contraria: " + this.getParteContraria().getNome() + "\n");
+		sb.append("====== Tribunal ======" + "\n" + this.getTribunal().toString() + "\n");
+		sb.append("======= Conta =======" + this.getConta().getExtrato() + "\n");
+
 		return sb.toString();
 	}
 }

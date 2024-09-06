@@ -48,7 +48,7 @@ public class Tribunal implements Serializable {
 		StringBuilder sb = new StringBuilder();
 
 		sb.append("Sigla: " + this.getSigla() + "\tSeção: " + this.getSecao() + "\n");
-		sb.append("Descricao: " + this.getDescricao() + "\n\n");
+		sb.append("Descricao: " + this.getDescricao() + "\n");
 
 		return sb.toString();
 	}

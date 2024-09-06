@@ -19,31 +19,38 @@ public class TribunalController implements Serializable {
 		tribunais = new TreeMap<>();
 	}
 
-	public void addTribunal(String sigla, String secao, String descricao) throws TribunalJaExistenteException, CampoNaoPreenchidoException {
-		
+	public void addTribunal(String sigla, String secao, String descricao)
+			throws TribunalJaExistenteException, CampoNaoPreenchidoException {
+
 		if (tribunais.containsKey(sigla)) {
 			throw new TribunalJaExistenteException();
 		}
-		
+
 		tribunais.put(sigla, new Tribunal(sigla, secao, descricao));
 		MainController.save();
 	}
 
-	public Tribunal getTribunal(String sigla) throws TribunalNaoExistenteException  {
-		if (tribunais.containsKey(sigla)) {
-			return tribunais.get(sigla);
-		} else {
+	public Tribunal getTribunal(String sigla) throws TribunalNaoExistenteException {
+
+		verificaTribunalExistente(sigla);
+		return tribunais.get(sigla);
+	}
+
+	public void verificaTribunalExistente(String sigla) throws TribunalNaoExistenteException {
+
+		if (!tribunais.containsKey(sigla)) {
 			throw new TribunalNaoExistenteException();
 		}
 	}
-	
+
 	public StringBuilder listaTribunais() {
 		StringBuilder sb = new StringBuilder();
-		
+
 		for (Tribunal tribunal : tribunais.values()) {
 			sb.append(tribunal.toString());
+			sb.append("\n");
 		}
-		
+
 		return sb;
 	}
 }

@@ -9,6 +9,7 @@ import java.util.regex.Pattern;
 import exception.CNPJInvalidoException;
 import exception.CPFInvalidoException;
 import exception.CampoNaoPreenchidoException;
+import exception.DataFormatoErradoException;
 import exception.FormatoEmailInvalidoException;
 import exception.TelefoneInvalidoException;
 import exception.TelefoneNaoNumericoException;
@@ -122,17 +123,17 @@ public class Utils {
 			throw new CNPJInvalidoException("CNPJ inválido!");
 		}
 	}
-	
-	public static Date stringToDate(String dateStr) throws ParseException{
-        // Define o formato da data que você espera receber
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-        try {
-            return formatter.parse(dateStr);
-        } catch (ParseException e) {
-        	throw new ParseException("Insira uma data válida!", e.getErrorOffset());
-        }
+
+	public static Date stringToDate(String dateStr) throws DataFormatoErradoException {
+
+		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+		try {
+			return formatter.parse(dateStr);
+		} catch (ParseException e) {
+			throw new DataFormatoErradoException();
+		}
 	}
-	
+
 	public static void validarTelefone(long telefoneLong)
 			throws TelefoneInvalidoException, TelefoneNaoNumericoException, CampoNaoPreenchidoException {
 
