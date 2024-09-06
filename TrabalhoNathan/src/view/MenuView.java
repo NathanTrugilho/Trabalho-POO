@@ -52,6 +52,9 @@ public class MenuView extends JFrame {
 
 		JPanel novoProcessoPanel = createNovoProcessoPanel();
 		tabbedPane.addTab("Criar Processo", null, novoProcessoPanel, "Cria um novo processo");
+		
+		JPanel gerenciaProcessoPanel = createGerenciaProcessoPanel();
+		tabbedPane.addTab("Gerenciar Processo", null, gerenciaProcessoPanel, "Gerencia processos de um cliente");
 
 		contentPane.add(tabbedPane, BorderLayout.CENTER);
 		setContentPane(contentPane);
@@ -85,13 +88,26 @@ public class MenuView extends JFrame {
 
 	private JPanel createNovoProcessoPanel() {
 		// Cria a instância de CadastroPessoaView para exibir dentro da aba
-		NovoProcessoView novoProcessoView= new NovoProcessoView();
+		NovoProcessoView novoProcessoView = new NovoProcessoView();
 
 		// Cria um JPanel que conterá o conteúdo da CadastroPessoaView
 		JPanel panel = new JPanel(new BorderLayout());
 		panel.setBackground(new Color(255, 255, 255)); // Fundo branco para o painel
 		panel.setBorder(new EmptyBorder(15, 15, 15, 15)); // Bordas internas com espaçamento ajustado
 		panel.add(novoProcessoView.getContentPane(), BorderLayout.CENTER);
+
+		return panel;
+	}
+	
+	private JPanel createGerenciaProcessoPanel() {
+		// Cria a instância de CadastroPessoaView para exibir dentro da aba
+		GerenciarProcessoView gerenciaProcessoView = new GerenciarProcessoView();
+
+		// Cria um JPanel que conterá o conteúdo da CadastroPessoaView
+		JPanel panel = new JPanel(new BorderLayout());
+		panel.setBackground(new Color(255, 255, 255)); // Fundo branco para o painel
+		panel.setBorder(new EmptyBorder(15, 15, 15, 15)); // Bordas internas com espaçamento ajustado
+		panel.add(gerenciaProcessoView.getContentPane(), BorderLayout.CENTER);
 
 		return panel;
 	}

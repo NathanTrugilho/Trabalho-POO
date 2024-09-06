@@ -55,7 +55,7 @@ public abstract class Pessoa implements Serializable {
 		this.telefone = telefone;
 	}
 
-	public abstract long getCadastroRF();
+	public abstract String getCadastroRF();
 
 	@Override
 	public String toString() {

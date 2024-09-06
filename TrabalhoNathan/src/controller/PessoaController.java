@@ -15,7 +15,7 @@ import exception.PessoaJaExistenteException;
 import exception.PessoaNaoExistenteException;
 import exception.PrepostoNaoCadastradoException;
 import exception.PrepostoNaoPodeSerNuloException;
-import exception.RegistroInvalidoException;
+import exception.RegistroNuloException;
 import exception.TelefoneInvalidoException;
 import exception.TelefoneNaoNumericoException;
 import model.Advogado;
@@ -27,9 +27,9 @@ public class PessoaController implements Serializable {
 
 	private static final long serialVersionUID = 2931953718446081990L;
 
-	private Map<Long, PessoaFisica> pessoasFisicas;
-	private Map<Long, PessoaJuridica> pessoasJuridicas;
-	private Map<Long, Advogado> advogados;
+	private Map<String, PessoaFisica> pessoasFisicas;
+	private Map<String, PessoaJuridica> pessoasJuridicas;
+	private Map<String, Advogado> advogados; //Registro como key
 
 	public PessoaController() {
 
@@ -40,7 +40,7 @@ public class PessoaController implements Serializable {
 
 	// A chave no meu map de Pessoas físicas será o CPF
 
-	public void addPessoasFisicas(String nome, long cpf, String email, long telefone) throws NumberFormatException,
+	public void addPessoasFisicas(String nome, String cpf, String email, long telefone) throws NumberFormatException,
 			CampoNaoPreenchidoException, CPFNaoNumericoException, TelefoneNaoNumericoException, CPFInvalidoException,
 			FormatoEmailInvalidoException, TelefoneInvalidoException, PessoaJaExistenteException {
 
@@ -60,7 +60,7 @@ public class PessoaController implements Serializable {
 
 	// A chave no meu map de Pessoas Jurídicas será o CNPJ
 
-	public void addPessoaJuridica(String nome, long cnpj, long preposto, String email, long telefone)
+	public void addPessoaJuridica(String nome, String cnpj, String preposto, String email, long telefone)
 			throws PessoaJaExistenteException, PrepostoNaoCadastradoException, CampoNaoPreenchidoException,
 			CNPJNaoNumericoException, NumberFormatException, CNPJInvalidoException, CPFInvalidoException,
 			CPFNaoNumericoException, FormatoEmailInvalidoException, TelefoneInvalidoException,
@@ -80,10 +80,10 @@ public class PessoaController implements Serializable {
 
 	// A chave no meu map de Advogados será o registro
 
-	public void addAdvogados(String nome, long cpf, long registro, String email, long telefone)
+	public void addAdvogados(String nome, String cpf, String registro, String email, long telefone)
 			throws AdvogadoJaExistenteException, NumberFormatException, CampoNaoPreenchidoException,
 			CPFNaoNumericoException, TelefoneNaoNumericoException, CPFInvalidoException, FormatoEmailInvalidoException,
-			TelefoneInvalidoException, RegistroInvalidoException, PessoaJaExistenteException {
+			TelefoneInvalidoException, RegistroNuloException, PessoaJaExistenteException {
 
 		if (pessoasFisicas.containsKey(cpf)) {
 			throw new PessoaJaExistenteException("CPF já cadastrado no sistema!");
@@ -95,15 +95,15 @@ public class PessoaController implements Serializable {
 			}
 		}
 
-		if (advogados.containsKey(registro)) {
+		if (advogados.containsKey(cpf)) {
 			throw new AdvogadoJaExistenteException();
 		}
 
-		advogados.put(registro, new Advogado(nome, cpf, registro, email, telefone));
+		advogados.put(cpf, new Advogado(nome, cpf, registro, email, telefone));
 		MainController.save();
 	}
 
-	public Pessoa getPessoa(long cadastroRF) throws PessoaNaoExistenteException {
+	public Pessoa getPessoa(String cadastroRF) throws PessoaNaoExistenteException {
 		
 		if (pessoasFisicas.containsKey(cadastroRF)) {
 			return pessoasFisicas.get(cadastroRF);

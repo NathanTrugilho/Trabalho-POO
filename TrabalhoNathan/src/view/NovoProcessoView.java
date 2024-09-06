@@ -151,7 +151,7 @@ public class NovoProcessoView extends JFrame {
 		gbcCadastrarButton.gridy = 5;
 		gbcCadastrarButton.anchor = GridBagConstraints.CENTER;
 		gbcCadastrarButton.fill = GridBagConstraints.HORIZONTAL;
-		
+
 		JButton cadastrarButton = new JButton("Cadastrar");
 		cadastrarButton.setFont(buttonFont);
 		panel.add(cadastrarButton, gbcCadastrarButton);
@@ -165,7 +165,7 @@ public class NovoProcessoView extends JFrame {
 		gbcListarButton.gridy = 5;
 		gbcListarButton.anchor = GridBagConstraints.CENTER;
 		gbcListarButton.fill = GridBagConstraints.HORIZONTAL;
-		
+
 		JButton listarButton = new JButton("Listar Processos");
 		listarButton.setFont(buttonFont);
 		panel.add(listarButton, gbcListarButton);
@@ -218,9 +218,9 @@ public class NovoProcessoView extends JFrame {
 			}
 
 			if (cadastroRFCliente.length() == 11) {
-				Utils.validarCPF(Long.parseLong(cadastroRFCliente));
+				Utils.validarCPF(cadastroRFCliente);
 			} else {
-				Utils.validarCNPJ(Long.parseLong(cadastroRFCliente));
+				Utils.validarCNPJ(cadastroRFCliente);
 			}
 
 			if (cadastroRFParteContraria.isBlank() || !cadastroRFParteContraria.matches("\\d+")) {
@@ -242,9 +242,9 @@ public class NovoProcessoView extends JFrame {
 			}
 
 			if (cadastroRFParteContraria.length() == 11) {
-				Utils.validarCPF(Long.parseLong(cadastroRFParteContraria));
+				Utils.validarCPF(cadastroRFParteContraria);
 			} else {
-				Utils.validarCNPJ(Long.parseLong(cadastroRFParteContraria));
+				Utils.validarCNPJ(cadastroRFParteContraria);
 			}
 
 			if (siglaTribunal.isBlank()) {
@@ -257,8 +257,8 @@ public class NovoProcessoView extends JFrame {
 
 			MainController.getProcessoController().addProcesso(Long.parseLong(numeroProcesso),
 					Utils.stringToDate(dataAbertura),
-					MainController.getClienteController().getCliente(Long.parseLong(cadastroRFCliente)),
-					MainController.getPessoaController().getPessoa(Long.parseLong(cadastroRFParteContraria)),
+					MainController.getClienteController().getCliente(cadastroRFCliente),
+					MainController.getPessoaController().getPessoa(cadastroRFParteContraria),
 					MainController.getTribunalController().getTribunal(siglaTribunal));
 
 			JOptionPane.showMessageDialog(null, "Processo realizado com sucesso!");
@@ -273,12 +273,12 @@ public class NovoProcessoView extends JFrame {
 
 			try {
 				if (resposta == JOptionPane.YES_OPTION) {
-					MainController.getClienteController().addCliente(Long.parseLong(cadastroRFCliente));
+					MainController.getClienteController().addCliente(cadastroRFCliente);
 
 					MainController.getProcessoController().addProcesso(Long.parseLong(numeroProcesso),
 							Utils.stringToDate(dataAbertura),
-							MainController.getClienteController().getCliente(Long.parseLong(cadastroRFCliente)),
-							MainController.getPessoaController().getPessoa(Long.parseLong(cadastroRFParteContraria)),
+							MainController.getClienteController().getCliente(cadastroRFCliente),
+							MainController.getPessoaController().getPessoa(cadastroRFParteContraria),
 							MainController.getTribunalController().getTribunal(siglaTribunal));
 
 					JOptionPane.showMessageDialog(null, "Processo realizado com sucesso!");

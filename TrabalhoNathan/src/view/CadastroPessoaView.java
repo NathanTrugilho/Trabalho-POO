@@ -45,7 +45,7 @@ public class CadastroPessoaView extends JFrame {
 
 		// Definir fonte maior
 		Font labelFont = new Font("Arial", Font.BOLD, 16);
-		Font fieldFont = new Font("Arial", Font.PLAIN, 13);
+		Font fieldFont = new Font("Arial", Font.PLAIN, 14);
 		Font buttonFont = new Font("Arial", Font.BOLD, 16);
 
 		// Campo Tipo de Pessoa
@@ -285,7 +285,7 @@ public class CadastroPessoaView extends JFrame {
 					return;
 				}
 
-				MainController.getPessoaController().addPessoasFisicas(nome, Long.parseLong(cadastroRF), email,
+				MainController.getPessoaController().addPessoasFisicas(nome, cadastroRF, email,
 						Long.parseLong(telefone));
 				break;
 
@@ -309,8 +309,8 @@ public class CadastroPessoaView extends JFrame {
 					return;
 				}
 
-				MainController.getPessoaController().addPessoaJuridica(nome, Long.parseLong(cadastroRF),
-						Long.parseLong(preposto), email, Long.parseLong(telefone));
+				MainController.getPessoaController().addPessoaJuridica(nome, cadastroRF, preposto, email,
+						Long.parseLong(telefone));
 				break;
 
 			case "Advogado":
@@ -333,8 +333,8 @@ public class CadastroPessoaView extends JFrame {
 					return;
 				}
 
-				MainController.getPessoaController().addAdvogados(nome, Long.parseLong(cadastroRF),
-						Long.parseLong(registro), email, Long.parseLong(telefone));
+				MainController.getPessoaController().addAdvogados(nome, cadastroRF, registro, email,
+						Long.parseLong(telefone));
 				break;
 			}
 

@@ -90,7 +90,7 @@ public class CadastroTribunalView extends JFrame {
 	    gbcDescricaoLabel.gridx = 0;
 	    gbcDescricaoLabel.gridy = 2;
 	    gbcDescricaoLabel.anchor = GridBagConstraints.LINE_START;
-	    JLabel label3 = new JLabel("Descrição:");
+	    JLabel label3 = new JLabel("Nome:");
 	    label3.setFont(labelFont);
 	    panel.add(label3, gbcDescricaoLabel);
 

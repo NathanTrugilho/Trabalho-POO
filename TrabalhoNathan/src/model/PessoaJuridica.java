@@ -14,10 +14,10 @@ public class PessoaJuridica extends Pessoa implements Serializable {
 
 	private static final long serialVersionUID = 833265267744814155L;
 
-	private final long cnpj;
+	private final String cnpj;
 	private PessoaFisica preposto;
 
-	public PessoaJuridica(String nome, long cnpj, PessoaFisica preposto, String email, long telefone)
+	public PessoaJuridica(String nome, String cnpj, PessoaFisica preposto, String email, long telefone)
 			throws CampoNaoPreenchidoException, FormatoEmailInvalidoException, TelefoneInvalidoException,
 			TelefoneNaoNumericoException, CNPJInvalidoException, PrepostoNaoPodeSerNuloException {
 
@@ -34,7 +34,7 @@ public class PessoaJuridica extends Pessoa implements Serializable {
 	}
 
 	@Override
-	public long getCadastroRF() {
+	public String getCadastroRF() {
 		return this.cnpj;
 	}
 

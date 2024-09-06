@@ -13,9 +13,9 @@ public class PessoaFisica extends Pessoa implements Serializable {
 
 	private static final long serialVersionUID = 2873049312251537530L;
 
-	private final long cpf;
+	private final String cpf;
 
-	public PessoaFisica(String nome, long cpf, String email, long telefone)
+	public PessoaFisica(String nome, String cpf, String email, long telefone)
 			throws CampoNaoPreenchidoException, FormatoEmailInvalidoException, TelefoneInvalidoException,
 			TelefoneNaoNumericoException, CPFInvalidoException {
 
@@ -25,7 +25,7 @@ public class PessoaFisica extends Pessoa implements Serializable {
 	}
 
 	@Override
-	public long getCadastroRF() {
+	public String getCadastroRF() {
 		return this.cpf;
 	}
 }

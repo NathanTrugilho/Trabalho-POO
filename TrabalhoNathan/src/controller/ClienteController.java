@@ -14,18 +14,18 @@ public class ClienteController implements Serializable {
 	private static final long serialVersionUID = 3788235120261465931L;
 	
 	//CadastroRF como identificador
-	private Map<Long, Cliente> clientes;
+	private Map<String, Cliente> clientes;
 
 	public ClienteController() {
 		clientes = new TreeMap<>();
 	}
 
-	public void addCliente(long cadastroRF) throws PessoaNaoExistenteException, ClienteNecessitaPessoa {
+	public void addCliente(String cadastroRF) throws PessoaNaoExistenteException, ClienteNecessitaPessoa {
 		clientes.put(cadastroRF, new Cliente(MainController.getPessoaController().getPessoa(cadastroRF)));
 		MainController.save();
 	}
 
-	public Cliente getCliente(long cadastroRF) throws ClienteNaoExisteException {
+	public Cliente getCliente(String cadastroRF) throws ClienteNaoExisteException {
 		if (clientes.containsKey(cadastroRF)) {
 			return clientes.get(cadastroRF);
 		} else {

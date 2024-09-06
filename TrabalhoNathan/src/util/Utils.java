@@ -10,6 +10,7 @@ import exception.CNPJInvalidoException;
 import exception.CPFInvalidoException;
 import exception.CampoNaoPreenchidoException;
 import exception.DataFormatoErradoException;
+import exception.DataInvalidaException;
 import exception.FormatoEmailInvalidoException;
 import exception.TelefoneInvalidoException;
 import exception.TelefoneNaoNumericoException;
@@ -35,9 +36,7 @@ public class Utils {
 
 	}
 
-	public static void validarCPF(long cpfLong) throws CPFInvalidoException {
-
-		String cpf = Long.toString(cpfLong);
+	public static void validarCPF(String cpf) throws CPFInvalidoException {
 
 		// Verifica se o CPF contém 11 dígitos
 		if (cpf.length() != 11) {
@@ -81,9 +80,7 @@ public class Utils {
 		return (firstDigit == cpf.charAt(9) - '0') && (secondDigit == cpf.charAt(10) - '0');
 	}
 
-	public static void validarCNPJ(long cnpjLong) throws CNPJInvalidoException {
-
-		String cnpj = Long.toString(cnpjLong);
+	public static void validarCNPJ(String cnpj) throws CNPJInvalidoException {
 
 		// Verifica se o CNPJ tem 14 dígitos
 		if (cnpj.length() != 14) {
@@ -124,8 +121,23 @@ public class Utils {
 		}
 	}
 
-	public static Date stringToDate(String dateStr) throws DataFormatoErradoException {
+	private static void validarData(String data) throws DataInvalidaException {
+        // Define o formato da data "dd/MM/yyyy"
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        sdf.setLenient(false); // Garante que datas incorretas como 31/02 sejam rejeitadas
 
+        try {
+            // Tenta fazer o parsing da data
+            sdf.parse(data);
+        } catch (ParseException e) {
+        	throw new DataInvalidaException();
+        }
+    }
+	
+	public static Date stringToDate(String dateStr) throws DataFormatoErradoException, DataInvalidaException {
+
+		validarData(dateStr);
+		
 		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
 		try {
 			return formatter.parse(dateStr);
