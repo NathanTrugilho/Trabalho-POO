@@ -43,108 +43,149 @@ public class NovoProcessoView extends JFrame {
 		JPanel panel = new JPanel(new GridBagLayout());
 		panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
-		GridBagConstraints gbc = new GridBagConstraints();
-		gbc.insets = new Insets(5, 2, 5, 2);
-		gbc.fill = GridBagConstraints.HORIZONTAL;
-		gbc.weightx = 1.0;
-
+		// Definir fontes
 		Font labelFont = new Font("Arial", Font.BOLD, 16);
 		Font fieldFont = new Font("Arial", Font.PLAIN, 16);
 		Font buttonFont = new Font("Arial", Font.BOLD, 16);
 
 		// Número do Processo
-		gbc.gridx = 0;
-		gbc.gridy = 0;
+		GridBagConstraints gbcLabelNumeroProcesso = new GridBagConstraints();
+		gbcLabelNumeroProcesso.insets = new Insets(5, 2, 5, 2);
+		gbcLabelNumeroProcesso.gridx = 0;
+		gbcLabelNumeroProcesso.gridy = 0;
+		gbcLabelNumeroProcesso.anchor = GridBagConstraints.LINE_START;
 		JLabel label1 = new JLabel("Número Processo:");
 		label1.setFont(labelFont);
-		panel.add(label1, gbc);
+		panel.add(label1, gbcLabelNumeroProcesso);
 
-		gbc.gridx = 1;
+		GridBagConstraints gbcFieldNumeroProcesso = new GridBagConstraints();
+		gbcFieldNumeroProcesso.insets = new Insets(5, 2, 5, 2);
+		gbcFieldNumeroProcesso.gridx = 1;
+		gbcFieldNumeroProcesso.gridy = 0;
+		gbcFieldNumeroProcesso.fill = GridBagConstraints.HORIZONTAL;
 		numeroProcessoField = new JTextField(25);
 		numeroProcessoField.setFont(fieldFont);
-		panel.add(numeroProcessoField, gbc);
+		panel.add(numeroProcessoField, gbcFieldNumeroProcesso);
 
-		// Data Abertura
-		gbc.gridx = 0;
-		gbc.gridy = 1;
+		// Data de Abertura
+		GridBagConstraints gbcLabelDataAbertura = new GridBagConstraints();
+		gbcLabelDataAbertura.insets = new Insets(5, 2, 5, 2);
+		gbcLabelDataAbertura.gridx = 0;
+		gbcLabelDataAbertura.gridy = 1;
+		gbcLabelDataAbertura.anchor = GridBagConstraints.LINE_START;
 		JLabel label2 = new JLabel("Data Abertura:");
 		label2.setFont(labelFont);
-		panel.add(label2, gbc);
+		panel.add(label2, gbcLabelDataAbertura);
 
-		gbc.gridx = 1;
+		GridBagConstraints gbcFieldDataAbertura = new GridBagConstraints();
+		gbcFieldDataAbertura.insets = new Insets(5, 2, 5, 2);
+		gbcFieldDataAbertura.gridx = 1;
+		gbcFieldDataAbertura.gridy = 1;
+		gbcFieldDataAbertura.fill = GridBagConstraints.HORIZONTAL;
 		dataAberturaField = new JTextField(10);
 		dataAberturaField.setFont(fieldFont);
-		panel.add(dataAberturaField, gbc);
 		dataAberturaField.setText("dd/MM/yyyy");
+		panel.add(dataAberturaField, gbcFieldDataAbertura);
 
 		// CPF Cliente
-		gbc.gridx = 0;
-		gbc.gridy = 2;
+		GridBagConstraints gbcLabelCadastroRFCliente = new GridBagConstraints();
+		gbcLabelCadastroRFCliente.insets = new Insets(5, 2, 5, 2);
+		gbcLabelCadastroRFCliente.gridx = 0;
+		gbcLabelCadastroRFCliente.gridy = 2;
+		gbcLabelCadastroRFCliente.anchor = GridBagConstraints.LINE_START;
 		JLabel label3 = new JLabel("CadastroRF Cliente:");
 		label3.setFont(labelFont);
-		panel.add(label3, gbc);
+		panel.add(label3, gbcLabelCadastroRFCliente);
 
-		gbc.gridx = 1;
+		GridBagConstraints gbcFieldCadastroRFCliente = new GridBagConstraints();
+		gbcFieldCadastroRFCliente.insets = new Insets(5, 2, 5, 2);
+		gbcFieldCadastroRFCliente.gridx = 1;
+		gbcFieldCadastroRFCliente.gridy = 2;
+		gbcFieldCadastroRFCliente.fill = GridBagConstraints.HORIZONTAL;
 		cadastroRFClienteField = new JTextField(25);
 		cadastroRFClienteField.setFont(fieldFont);
-		panel.add(cadastroRFClienteField, gbc);
+		panel.add(cadastroRFClienteField, gbcFieldCadastroRFCliente);
 
 		// CPF Parte Contrária
-		gbc.gridx = 0;
-		gbc.gridy = 3;
+		GridBagConstraints gbcLabelCadastroRFParteContraria = new GridBagConstraints();
+		gbcLabelCadastroRFParteContraria.insets = new Insets(5, 2, 5, 2);
+		gbcLabelCadastroRFParteContraria.gridx = 0;
+		gbcLabelCadastroRFParteContraria.gridy = 3;
+		gbcLabelCadastroRFParteContraria.anchor = GridBagConstraints.LINE_START;
 		JLabel label4 = new JLabel("CadastroRF Parte Contrária:");
 		label4.setFont(labelFont);
-		panel.add(label4, gbc);
+		panel.add(label4, gbcLabelCadastroRFParteContraria);
 
-		gbc.gridx = 1;
+		GridBagConstraints gbcFieldCadastroRFParteContraria = new GridBagConstraints();
+		gbcFieldCadastroRFParteContraria.insets = new Insets(5, 2, 5, 2);
+		gbcFieldCadastroRFParteContraria.gridx = 1;
+		gbcFieldCadastroRFParteContraria.gridy = 3;
+		gbcFieldCadastroRFParteContraria.fill = GridBagConstraints.HORIZONTAL;
 		cadastroRFParteContrariaField = new JTextField(25);
 		cadastroRFParteContrariaField.setFont(fieldFont);
-		panel.add(cadastroRFParteContrariaField, gbc);
+		panel.add(cadastroRFParteContrariaField, gbcFieldCadastroRFParteContraria);
 
 		// Tribunal
-		gbc.gridx = 0;
-		gbc.gridy = 4;
+		GridBagConstraints gbcLabelTribunal = new GridBagConstraints();
+		gbcLabelTribunal.insets = new Insets(5, 2, 5, 2);
+		gbcLabelTribunal.gridx = 0;
+		gbcLabelTribunal.gridy = 4;
+		gbcLabelTribunal.anchor = GridBagConstraints.LINE_START;
 		JLabel label5 = new JLabel("Sigla Tribunal:");
 		label5.setFont(labelFont);
-		panel.add(label5, gbc);
+		panel.add(label5, gbcLabelTribunal);
 
-		gbc.gridx = 1;
+		GridBagConstraints gbcFieldTribunal = new GridBagConstraints();
+		gbcFieldTribunal.insets = new Insets(5, 2, 5, 2);
+		gbcFieldTribunal.gridx = 1;
+		gbcFieldTribunal.gridy = 4;
+		gbcFieldTribunal.fill = GridBagConstraints.HORIZONTAL;
 		tribunalField = new JTextField(25);
 		tribunalField.setFont(fieldFont);
-		panel.add(tribunalField, gbc);
+		panel.add(tribunalField, gbcFieldTribunal);
 
 		// Botão Confirmar Cadastro
-		gbc.gridx = 1;
-		gbc.gridy = 5;
-		gbc.gridwidth = 1;
-		gbc.anchor = GridBagConstraints.CENTER;
+		GridBagConstraints gbcCadastrarButton = new GridBagConstraints();
+		gbcCadastrarButton.insets = new Insets(10, 5, 10, 5);
+		gbcCadastrarButton.gridx = 1;
+		gbcCadastrarButton.gridy = 5;
+		gbcCadastrarButton.anchor = GridBagConstraints.CENTER;
+		gbcCadastrarButton.fill = GridBagConstraints.HORIZONTAL;
+		
 		JButton cadastrarButton = new JButton("Cadastrar");
 		cadastrarButton.setFont(buttonFont);
-		panel.add(cadastrarButton, gbc);
+		panel.add(cadastrarButton, gbcCadastrarButton);
 
 		cadastrarButton.addActionListener(e -> realizarCadastro());
-		
+
 		// Botão Listar Processos
-        gbc.gridx = 0;
-        gbc.gridy = 5;
-        JButton listarButton = new JButton("Listar Processos");
-        listarButton.setFont(buttonFont);
-        panel.add(listarButton, gbc);
-
-        listarButton.addActionListener(e -> listaProcessos());
-
-        // Área de texto para exibir os processos
-        gbc.gridx = 0;
-        gbc.gridy = 6;
-        gbc.gridwidth = 2; // Faz com que a área de texto ocupe toda a largura disponível
-        gbc.fill = GridBagConstraints.BOTH;
-        gbc.weighty = 1.0;
-
-        textArea = new JTextArea(10, 40);
-        textArea.setEditable(false);
-        JScrollPane scrollPane = new JScrollPane(textArea);
-        panel.add(scrollPane, gbc);
+		GridBagConstraints gbcListarButton = new GridBagConstraints();
+		gbcListarButton.insets = new Insets(10, 5, 10, 5);
+		gbcListarButton.gridx = 0;
+		gbcListarButton.gridy = 5;
+		gbcListarButton.anchor = GridBagConstraints.CENTER;
+		gbcListarButton.fill = GridBagConstraints.HORIZONTAL;
 		
+		JButton listarButton = new JButton("Listar Processos");
+		listarButton.setFont(buttonFont);
+		panel.add(listarButton, gbcListarButton);
+
+		listarButton.addActionListener(e -> listaProcessos());
+
+		// Área de texto para exibir os processos
+		GridBagConstraints gbcScrollPane = new GridBagConstraints();
+		gbcScrollPane.insets = new Insets(10, 5, 10, 5);
+		gbcScrollPane.gridx = 0;
+		gbcScrollPane.gridy = 6;
+		gbcScrollPane.gridwidth = 2;
+		gbcScrollPane.fill = GridBagConstraints.BOTH;
+		gbcScrollPane.weightx = 1.0;
+		gbcScrollPane.weighty = 1.0;
+		textArea = new JTextArea(10, 40);
+		textArea.setEditable(false);
+		JScrollPane scrollPane = new JScrollPane(textArea);
+		panel.add(scrollPane, gbcScrollPane);
+
 		// Adiciona o painel ao JFrame
 		getContentPane().add(panel);
 	}
@@ -194,12 +235,12 @@ public class NovoProcessoView extends JFrame {
 				return;
 			}
 
-			if(cadastroRFCliente.equals(cadastroRFParteContraria)) {
-				JOptionPane.showMessageDialog(null, "Uma pessoa não pode se processar!",
-						"Erro de Entrada", JOptionPane.ERROR_MESSAGE);
+			if (cadastroRFCliente.equals(cadastroRFParteContraria)) {
+				JOptionPane.showMessageDialog(null, "Uma pessoa não pode se processar!", "Erro de Entrada",
+						JOptionPane.ERROR_MESSAGE);
 				return;
 			}
-			
+
 			if (cadastroRFParteContraria.length() == 11) {
 				Utils.validarCPF(Long.parseLong(cadastroRFParteContraria));
 			} else {
@@ -211,9 +252,9 @@ public class NovoProcessoView extends JFrame {
 						JOptionPane.ERROR_MESSAGE);
 				return;
 			}
-			
+
 			MainController.getTribunalController().verificaTribunalExistente(siglaTribunal);
-			
+
 			MainController.getProcessoController().addProcesso(Long.parseLong(numeroProcesso),
 					Utils.stringToDate(dataAbertura),
 					MainController.getClienteController().getCliente(Long.parseLong(cadastroRFCliente)),
@@ -252,15 +293,15 @@ public class NovoProcessoView extends JFrame {
 			JOptionPane.showMessageDialog(null, e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
 		}
 	}
-	
+
 	private void listaProcessos() {
-        try {
-            textArea.setText(MainController.getProcessoController().listaProcessos().toString());
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Ocorreu um erro ao listar os processos: " + e.getMessage(), "Erro",
-                    JOptionPane.ERROR_MESSAGE);
-        }
-    }
+		try {
+			textArea.setText(MainController.getProcessoController().listaProcessos().toString());
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "Ocorreu um erro ao listar os processos: " + e.getMessage(), "Erro",
+					JOptionPane.ERROR_MESSAGE);
+		}
+	}
 
 	private void limparCampos() {
 		cadastroRFClienteField.setText("");

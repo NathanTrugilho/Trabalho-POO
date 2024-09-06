@@ -22,7 +22,7 @@ import controller.MainController;
 public class CadastroPessoaView extends JFrame {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	private JTextField nomeField;
 	private JTextField cadastroRFField;
 	private JTextField prepostoField;
@@ -43,99 +43,150 @@ public class CadastroPessoaView extends JFrame {
 		JPanel panel = new JPanel(new GridBagLayout());
 		panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
-		GridBagConstraints gbc = new GridBagConstraints();
-		gbc.insets = new Insets(5, 2, 5, 2);
-		gbc.fill = GridBagConstraints.HORIZONTAL;
-		gbc.weightx = 1;
-
 		// Definir fonte maior
 		Font labelFont = new Font("Arial", Font.BOLD, 16);
 		Font fieldFont = new Font("Arial", Font.PLAIN, 13);
 		Font buttonFont = new Font("Arial", Font.BOLD, 16);
 
 		// Campo Tipo de Pessoa
-		gbc.gridx = 0;
-		gbc.gridy = 0;
+		GridBagConstraints gbcTipoPessoaLabel = new GridBagConstraints();
+		gbcTipoPessoaLabel.insets = new Insets(5, 5, 5, 5);
+		gbcTipoPessoaLabel.gridx = 0;
+		gbcTipoPessoaLabel.gridy = 0;
+		gbcTipoPessoaLabel.anchor = GridBagConstraints.LINE_START;
 		JLabel tipoPessoaLabel = new JLabel("Tipo de Pessoa:");
 		tipoPessoaLabel.setFont(labelFont);
-		panel.add(tipoPessoaLabel, gbc);
+		panel.add(tipoPessoaLabel, gbcTipoPessoaLabel);
 
-		gbc.gridx = 1;
+		GridBagConstraints gbcTipoPessoaBox = new GridBagConstraints();
+		gbcTipoPessoaBox.insets = new Insets(5, 5, 5, 5);
+		gbcTipoPessoaBox.gridx = 1;
+		gbcTipoPessoaBox.gridy = 0;
+		gbcTipoPessoaBox.fill = GridBagConstraints.HORIZONTAL;
+		gbcTipoPessoaBox.weightx = 1.0;
 		tipoPessoaBox = new JComboBox<>(new String[] { "Pessoa Física", "Pessoa Jurídica", "Advogado" });
 		tipoPessoaBox.setFont(fieldFont);
-		panel.add(tipoPessoaBox, gbc);
+		panel.add(tipoPessoaBox, gbcTipoPessoaBox);
 
 		// Campo Nome
-		gbc.gridx = 0;
-		gbc.gridy = 1;
+		GridBagConstraints gbcNomeLabel = new GridBagConstraints();
+		gbcNomeLabel.insets = new Insets(5, 5, 5, 5);
+		gbcNomeLabel.gridx = 0;
+		gbcNomeLabel.gridy = 1;
+		gbcNomeLabel.anchor = GridBagConstraints.LINE_START;
 		JLabel nomeLabel = new JLabel("Nome:");
 		nomeLabel.setFont(labelFont);
-		panel.add(nomeLabel, gbc);
+		panel.add(nomeLabel, gbcNomeLabel);
 
-		gbc.gridx = 1;
+		GridBagConstraints gbcNomeField = new GridBagConstraints();
+		gbcNomeField.insets = new Insets(5, 5, 5, 5);
+		gbcNomeField.gridx = 1;
+		gbcNomeField.gridy = 1;
+		gbcNomeField.fill = GridBagConstraints.HORIZONTAL;
+		gbcNomeField.weightx = 1.0;
 		nomeField = new JTextField(30);
 		nomeField.setFont(fieldFont);
-		panel.add(nomeField, gbc);
+		panel.add(nomeField, gbcNomeField);
 
 		// Campo CPF/CNPJ
-		gbc.gridx = 0;
-		gbc.gridy = 2;
+		GridBagConstraints gbcCadastroRFLabel = new GridBagConstraints();
+		gbcCadastroRFLabel.insets = new Insets(5, 5, 5, 5);
+		gbcCadastroRFLabel.gridx = 0;
+		gbcCadastroRFLabel.gridy = 2;
+		gbcCadastroRFLabel.anchor = GridBagConstraints.LINE_START;
 		JLabel cadastroRFLabel = new JLabel("CPF (numero):");
 		cadastroRFLabel.setFont(labelFont);
-		panel.add(cadastroRFLabel, gbc);
+		panel.add(cadastroRFLabel, gbcCadastroRFLabel);
 
-		gbc.gridx = 1;
+		GridBagConstraints gbcCadastroRFField = new GridBagConstraints();
+		gbcCadastroRFField.insets = new Insets(5, 5, 5, 5);
+		gbcCadastroRFField.gridx = 1;
+		gbcCadastroRFField.gridy = 2;
+		gbcCadastroRFField.fill = GridBagConstraints.HORIZONTAL;
+		gbcCadastroRFField.weightx = 1.0;
 		cadastroRFField = new JTextField(20);
 		cadastroRFField.setFont(fieldFont);
-		panel.add(cadastroRFField, gbc);
+		panel.add(cadastroRFField, gbcCadastroRFField);
 
 		// Campo Preposto
-		gbc.gridx = 0;
-		gbc.gridy = 3;
+		GridBagConstraints gbcPrepostoLabel = new GridBagConstraints();
+		gbcPrepostoLabel.insets = new Insets(5, 5, 5, 5);
+		gbcPrepostoLabel.gridx = 0;
+		gbcPrepostoLabel.gridy = 3;
+		gbcPrepostoLabel.anchor = GridBagConstraints.LINE_START;
 		JLabel prepostoLabel = new JLabel("CPF Preposto:");
 		prepostoLabel.setFont(labelFont);
-		panel.add(prepostoLabel, gbc);
+		panel.add(prepostoLabel, gbcPrepostoLabel);
 
-		gbc.gridx = 1;
+		GridBagConstraints gbcPrepostoField = new GridBagConstraints();
+		gbcPrepostoField.insets = new Insets(5, 5, 5, 5);
+		gbcPrepostoField.gridx = 1;
+		gbcPrepostoField.gridy = 3;
+		gbcPrepostoField.fill = GridBagConstraints.HORIZONTAL;
+		gbcPrepostoField.weightx = 1.0;
 		prepostoField = new JTextField(11);
 		prepostoField.setFont(fieldFont);
-		panel.add(prepostoField, gbc);
+		panel.add(prepostoField, gbcPrepostoField);
 
 		// Campo Email
-		gbc.gridx = 0;
-		gbc.gridy = 4;
+		GridBagConstraints gbcEmailLabel = new GridBagConstraints();
+		gbcEmailLabel.insets = new Insets(5, 5, 5, 5);
+		gbcEmailLabel.gridx = 0;
+		gbcEmailLabel.gridy = 4;
+		gbcEmailLabel.anchor = GridBagConstraints.LINE_START;
 		JLabel emailLabel = new JLabel("Email:");
 		emailLabel.setFont(labelFont);
-		panel.add(emailLabel, gbc);
+		panel.add(emailLabel, gbcEmailLabel);
 
-		gbc.gridx = 1;
+		GridBagConstraints gbcEmailField = new GridBagConstraints();
+		gbcEmailField.insets = new Insets(5, 5, 5, 5);
+		gbcEmailField.gridx = 1;
+		gbcEmailField.gridy = 4;
+		gbcEmailField.fill = GridBagConstraints.HORIZONTAL;
+		gbcEmailField.weightx = 1.0;
 		emailField = new JTextField(40);
 		emailField.setFont(fieldFont);
-		panel.add(emailField, gbc);
+		panel.add(emailField, gbcEmailField);
 
 		// Campo Telefone
-		gbc.gridx = 0;
-		gbc.gridy = 5;
+		GridBagConstraints gbcTelefoneLabel = new GridBagConstraints();
+		gbcTelefoneLabel.insets = new Insets(5, 5, 5, 5);
+		gbcTelefoneLabel.gridx = 0;
+		gbcTelefoneLabel.gridy = 5;
+		gbcTelefoneLabel.anchor = GridBagConstraints.LINE_START;
 		JLabel telefoneLabel = new JLabel("Telefone (DDD + num):");
 		telefoneLabel.setFont(labelFont);
-		panel.add(telefoneLabel, gbc);
+		panel.add(telefoneLabel, gbcTelefoneLabel);
 
-		gbc.gridx = 1;
+		GridBagConstraints gbcTelefoneField = new GridBagConstraints();
+		gbcTelefoneField.insets = new Insets(5, 5, 5, 5);
+		gbcTelefoneField.gridx = 1;
+		gbcTelefoneField.gridy = 5;
+		gbcTelefoneField.fill = GridBagConstraints.HORIZONTAL;
+		gbcTelefoneField.weightx = 1.0;
 		telefoneField = new JTextField(11);
 		telefoneField.setFont(fieldFont);
-		panel.add(telefoneField, gbc);
+		panel.add(telefoneField, gbcTelefoneField);
 
 		// Campo Registro
-		gbc.gridx = 0;
-		gbc.gridy = 6;
+		GridBagConstraints gbcRegistroLabel = new GridBagConstraints();
+		gbcRegistroLabel.insets = new Insets(5, 5, 5, 5);
+		gbcRegistroLabel.gridx = 0;
+		gbcRegistroLabel.gridy = 6;
+		gbcRegistroLabel.anchor = GridBagConstraints.LINE_START;
 		JLabel registroLabel = new JLabel("Registro:");
 		registroLabel.setFont(labelFont);
-		panel.add(registroLabel, gbc);
+		panel.add(registroLabel, gbcRegistroLabel);
 
-		gbc.gridx = 1;
+		GridBagConstraints gbcRegistroField = new GridBagConstraints();
+		gbcRegistroField.insets = new Insets(5, 5, 5, 5);
+		gbcRegistroField.gridx = 1;
+		gbcRegistroField.gridy = 6;
+		gbcRegistroField.fill = GridBagConstraints.HORIZONTAL;
+		gbcRegistroField.weightx = 1.0;
 		registroField = new JTextField(20);
 		registroField.setFont(fieldFont);
-		panel.add(registroField, gbc);
+		panel.add(registroField, gbcRegistroField);
 
 		// Ocultar o campo de registro e preposto inicialmente
 		registroLabel.setVisible(false);
@@ -152,41 +203,50 @@ public class CadastroPessoaView extends JFrame {
 		});
 
 		// Botão de Cadastro
-		gbc.gridx = 1;
-		gbc.gridy = 7;
-		gbc.gridwidth = 1;
-		gbc.anchor = GridBagConstraints.CENTER;
+		GridBagConstraints gbcCadastrarButton = new GridBagConstraints();
+		gbcCadastrarButton.insets = new Insets(10, 5, 10, 5);
+		gbcCadastrarButton.gridx = 1;
+		gbcCadastrarButton.gridy = 7;
+		gbcCadastrarButton.fill = GridBagConstraints.HORIZONTAL;
+		gbcCadastrarButton.anchor = GridBagConstraints.LINE_START;
 		JButton cadastrarButton = new JButton("Cadastrar");
 		cadastrarButton.setFont(buttonFont);
-		panel.add(cadastrarButton, gbc);
+		panel.add(cadastrarButton, gbcCadastrarButton);
 
 		cadastrarButton.addActionListener(e -> realizarCadastro());
 
-		// Botão Listar Tribunais
-		gbc.gridx = 0;
-		gbc.gridwidth = 1;
+		// Botão Listar Pessoas
+		GridBagConstraints gbcListarButton = new GridBagConstraints();
+		gbcListarButton.insets = new Insets(10, 5, 10, 5);
+		gbcListarButton.gridx = 0;
+		gbcListarButton.gridy = 7;
+		gbcListarButton.fill = GridBagConstraints.HORIZONTAL;
+		gbcListarButton.anchor = GridBagConstraints.LINE_START;
 		JButton listarButton = new JButton("Listar Pessoas");
 		listarButton.setFont(buttonFont);
-		panel.add(listarButton, gbc);
+		panel.add(listarButton, gbcListarButton);
 
 		listarButton.addActionListener(e -> listaPessoas());
 
-		// Área de texto para exibir os tribunais
-		gbc.gridx = 0;
-		gbc.gridy = 8;
-		gbc.gridwidth = 2; // Faz com que a área de texto ocupe toda a largura disponível
-		gbc.fill = GridBagConstraints.BOTH; // Faz com que a área de texto ocupe o espaço disponível
-		gbc.weighty = 1.0; // Faz com que a área de texto ocupe o espaço vertical disponível
-
+		// Área de Texto
+		GridBagConstraints gbcScrollPane = new GridBagConstraints();
+		gbcScrollPane.insets = new Insets(10, 5, 10, 5);
+		gbcScrollPane.gridx = 0;
+		gbcScrollPane.gridy = 8;
+		gbcScrollPane.gridwidth = 2;
+		gbcScrollPane.fill = GridBagConstraints.BOTH;
+		gbcScrollPane.weightx = 1.0;
+		gbcScrollPane.weighty = 1.0;
 		textArea = new JTextArea(10, 40);
-		textArea.setEditable(false); // A área de texto é somente leitura
+		textArea.setEditable(false);
 		JScrollPane scrollPane = new JScrollPane(textArea);
-		panel.add(scrollPane, gbc);
+		panel.add(scrollPane, gbcScrollPane);
 
 		getContentPane().add(panel);
 	}
 
-	private void atualizarCamposParaTipoSelecionado(JLabel registroLabel, JLabel cadastroRFLabel, JLabel prepostoLabel) {
+	private void atualizarCamposParaTipoSelecionado(JLabel registroLabel, JLabel cadastroRFLabel,
+			JLabel prepostoLabel) {
 		String selected = (String) tipoPessoaBox.getSelectedItem();
 
 		boolean isAdvogado = "Advogado".equals(selected);
