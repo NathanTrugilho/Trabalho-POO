@@ -1,6 +1,7 @@
 package controller;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -8,6 +9,7 @@ import exception.ClienteNaoExisteException;
 import exception.ClienteNecessitaPessoa;
 import exception.PessoaNaoExistenteException;
 import model.Cliente;
+import model.Processo;
 
 public class ClienteController implements Serializable {
 
@@ -31,5 +33,9 @@ public class ClienteController implements Serializable {
 		} else {
 			throw new ClienteNaoExisteException();
 		}
+	}
+	
+	public List<Processo> getProcessos(String cadastroRF) throws ClienteNaoExisteException{
+		return getCliente(cadastroRF).getListProcessos();
 	}
 }

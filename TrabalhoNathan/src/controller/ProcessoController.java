@@ -31,7 +31,12 @@ public class ProcessoController implements Serializable {
 			throw new NumeroProcessoJaExistenteException();
 		}
 		
-		processosSistema.put(numero, new Processo(numero, dataAbertura, cliente, parteContraria, tribunal));
+		Processo novoProcesso = new Processo(numero, dataAbertura, cliente, parteContraria, tribunal);
+		
+		processosSistema.put(numero, novoProcesso);
+		
+		cliente.addProcesso(novoProcesso);
+		
 		MainController.save();
 	}
 	

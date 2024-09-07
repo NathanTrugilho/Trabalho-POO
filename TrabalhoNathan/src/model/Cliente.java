@@ -34,6 +34,10 @@ public class Cliente implements Serializable{
 		processos.remove(processo);
 	}
 	
+	public List<Processo> getListProcessos() {
+		return this.processos;
+	}
+	
 	public StringBuilder getExtratoConta() {
 		
 		StringBuilder sb = new StringBuilder();
