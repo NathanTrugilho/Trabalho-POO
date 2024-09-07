@@ -1,14 +1,24 @@
 package model;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Audiencia {
+import exception.AtributoNuloException;
 
+public class Audiencia implements Serializable{
+
+	private static final long serialVersionUID = -166608631342301689L;
+	
 	private final Advogado advogado;
 	private final Date data;
 	private final String recomendacao;
 
-	public Audiencia(Advogado advogado, Date data, String recomendacao) {
+	public Audiencia(Advogado advogado, Date data, String recomendacao) throws AtributoNuloException {
+		
+		if(advogado == null) {
+			throw new AtributoNuloException("Advogado não pode ser nulo na criação de uma audiência!");
+		}
+		
 		this.advogado = advogado;
 		this.data = data;
 		this.recomendacao = recomendacao;

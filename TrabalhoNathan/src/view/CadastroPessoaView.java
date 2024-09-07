@@ -327,8 +327,8 @@ public class CadastroPessoaView extends JFrame {
 					return;
 				}
 
-				if (registro.isBlank() || !registro.matches("\\d+")) {
-					JOptionPane.showMessageDialog(null, "Insira um registro numérico", "Erro de Entrada",
+				if (registro.isBlank()) {
+					JOptionPane.showMessageDialog(null, "Insira um registro!", "Erro de Entrada",
 							JOptionPane.ERROR_MESSAGE);
 					return;
 				}

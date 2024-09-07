@@ -28,6 +28,7 @@ public class ClienteController implements Serializable {
 	}
 
 	public Cliente getCliente(String cadastroRF) throws ClienteNaoExisteException {
+		
 		if (clientes.containsKey(cadastroRF)) {
 			return clientes.get(cadastroRF);
 		} else {

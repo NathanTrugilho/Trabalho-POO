@@ -121,7 +121,7 @@ public class Utils {
 		}
 	}
 
-	private static void validarData(String data) throws DataInvalidaException {
+	public static void validarData(String data) throws DataInvalidaException {
         // Define o formato da data "dd/MM/yyyy"
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         sdf.setLenient(false); // Garante que datas incorretas como 31/02 sejam rejeitadas

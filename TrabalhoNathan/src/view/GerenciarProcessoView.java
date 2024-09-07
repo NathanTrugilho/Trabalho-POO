@@ -29,10 +29,10 @@ public class GerenciarProcessoView extends JFrame {
 	private JLabel cadastroRFLabel;
 	private JLabel numeroProcessoLabel;
 	private JButton listarProcessosButton;
-	private JComboBox<String> comboBoxProcessos;
+	private JComboBox<Processo> comboBoxProcessos;
 
 	// Botões da parte direita
-	private JButton botao1;
+	private JButton addAudienciaButton;
 	private JButton botao2;
 	private JButton botao3;
 	private JButton botao4;
@@ -56,7 +56,7 @@ public class GerenciarProcessoView extends JFrame {
 		// Fonte para os campos e botões
 		Font fieldFont = new Font("Arial", Font.PLAIN, 15);
 		Font buttonFont = new Font("Arial", Font.BOLD, 16);
-		Font labelFont = new Font("Arial", Font.BOLD, 16); // Fonte para o label
+		Font labelFont = new Font("Arial", Font.BOLD, 16);
 
 		// GridBagConstraints para cada componente
 		GridBagConstraints gbcCadastroRFLabel = new GridBagConstraints();
@@ -132,9 +132,12 @@ public class GerenciarProcessoView extends JFrame {
 		gbcBotao1.gridx = 0;
 		gbcBotao1.gridy = 0;
 		gbcBotao1.fill = GridBagConstraints.HORIZONTAL;
-		botao1 = new JButton("Botão 1");
-		botao1.setFont(buttonFont);
-		botoesPanel.add(botao1, gbcBotao1);
+		addAudienciaButton = new JButton("Adicionar audiência");
+		addAudienciaButton.setFont(buttonFont);
+		botoesPanel.add(addAudienciaButton, gbcBotao1);
+		addAudienciaButton.setEnabled(false);
+
+		addAudienciaButton.addActionListener(e -> addAudiencia());
 
 		GridBagConstraints gbcBotao2 = new GridBagConstraints();
 		gbcBotao2.insets = new Insets(10, 5, 15, 5);
@@ -164,20 +167,37 @@ public class GerenciarProcessoView extends JFrame {
 		botoesPanel.add(botao4, gbcBotao4);
 
 		panel.add(botoesPanel, gbcBotoesPanel);
-		
+
 		// Adiciona o painel ao JFrame
 		getContentPane().add(panel);
 	}
 
-	private List<Processo> buscarProcessos(String cadastroRF) throws ClienteNaoExisteException {
-		// Simulação de busca de processos
-		List<Processo> processos = MainController.getClienteController().getProcessos(cadastroRF);
+	private void addAudiencia() {
+		Processo processoSelecionado;
+		try {
 
+			processoSelecionado = (Processo) comboBoxProcessos.getSelectedItem();
+
+			addAudienciaButton.setEnabled(false);
+
+			new NovaAudienciaView(addAudienciaButton, processoSelecionado);
+
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+		}
+
+	}
+
+	private List<Processo> buscarProcessos(String cadastroRF) throws ClienteNaoExisteException {
+
+		List<Processo> processos = MainController.getProcessoController().getProcessos(cadastroRF);
 		return processos;
 	}
 
 	private void listarProcessos() {
 		String cadastroRFCliente = cadastroRFField.getText();
+		comboBoxProcessos.removeAllItems();
+		
 		try {
 
 			if (cadastroRFCliente.isBlank() || !cadastroRFCliente.matches("\\d+")) {
@@ -198,21 +218,22 @@ public class GerenciarProcessoView extends JFrame {
 				Utils.validarCNPJ(cadastroRFCliente);
 			}
 
-			// Limpa a ComboBox antes de adicionar novos itens
-			comboBoxProcessos.removeAllItems();
-
-			// Busca os processos
+			// Busca os processos (não pode acontecer dele não encontrar processos já que o
+			// Cliente só é cliente com processos)
 			List<Processo> processos = buscarProcessos(cadastroRFCliente);
 
 			// Adiciona os processos à ComboBox
 			for (Processo processo : processos) {
-				comboBoxProcessos.addItem(processo.toString());
+				comboBoxProcessos.addItem(processo);
 			}
+
+			addAudienciaButton.setEnabled(true);
+
 		} catch (Exception e) {
-			JOptionPane.showMessageDialog(null, "Este cliente não existe", "Erro", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
 		}
 	}
-	
+
 	private void limparCampos() {
 		cadastroRFField.setText("");
 	}

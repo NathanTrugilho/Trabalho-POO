@@ -8,6 +8,7 @@ import java.util.List;
 import exception.AtributoNuloException;
 import exception.DataInvalidaException;
 import exception.DataNulaException;
+import exception.NumeroProcessoInvalidoException;
 
 public class Processo implements Serializable {
 
@@ -24,18 +25,26 @@ public class Processo implements Serializable {
 	private List<Audiencia> audiencias = new ArrayList<>();
 
 	public Processo(long numero, Date dataAbertura, Cliente cliente, Pessoa parteContraria, Tribunal tribunal)
-			throws DataNulaException, DataInvalidaException, AtributoNuloException {
-
+			throws DataNulaException, DataInvalidaException, AtributoNuloException, NumeroProcessoInvalidoException {
+		
+		if(numero <= 0) {
+			throw new NumeroProcessoInvalidoException();
+		}
+		
+		if (dataAbertura == null) {
+			throw new AtributoNuloException("Data não pode ser nula na criação de um processo!");
+		}
+		
 		if (cliente == null) {
-			throw new AtributoNuloException("cliente não pode ser nulo na criação de um processo");
+			throw new AtributoNuloException("cliente não pode ser nulo na criação de um processo!");
 		}
 		
 		if (parteContraria == null) {
-			throw new AtributoNuloException("parteContraria não pode ser nulo na criação de um processo");
+			throw new AtributoNuloException("parteContraria não pode ser nulo na criação de um processo!");
 		}
 		
 		if (tribunal == null) {
-			throw new AtributoNuloException("tribunal não pode ser nulo na criação de um processo");
+			throw new AtributoNuloException("tribunal não pode ser nulo na criação de um processo!");
 		}
 				
 		this.fase = EFaseProcesso.INICIAL;
@@ -83,7 +92,7 @@ public class Processo implements Serializable {
 		return sb;
 	}
 
-	public void addAudiencia(Advogado advogado, Date data, String recomendacao) {
+	public void addAudiencia(Advogado advogado, Date data, String recomendacao) throws AtributoNuloException {
 		Audiencia audiencia = new Audiencia(advogado, data, recomendacao);
 		audiencias.add(audiencia);
 	}

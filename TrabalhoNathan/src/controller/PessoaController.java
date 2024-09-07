@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import exception.AdvogadoJaExistenteException;
+import exception.AdvogadoNaoExistenteException;
 import exception.CNPJInvalidoException;
 import exception.CNPJNaoNumericoException;
 import exception.CPFInvalidoException;
@@ -26,10 +27,11 @@ import model.PessoaJuridica;
 public class PessoaController implements Serializable {
 
 	private static final long serialVersionUID = 2931953718446081990L;
-
+	
+	// Chave = CadastroRF
 	private Map<String, PessoaFisica> pessoasFisicas;
 	private Map<String, PessoaJuridica> pessoasJuridicas;
-	private Map<String, Advogado> advogados; //Registro como key
+	private Map<String, Advogado> advogados; 
 
 	public PessoaController() {
 
@@ -118,6 +120,22 @@ public class PessoaController implements Serializable {
 			throw new PessoaNaoExistenteException();
 		}
 	}
+	
+	public Advogado getAdvogado(String registro) throws AdvogadoNaoExistenteException {
+        
+		if (registro == null) {
+            throw new IllegalArgumentException("O número de registro não pode ser nulo");
+        }
+        
+        for (Advogado advogado : advogados.values()) {
+			
+        	if(advogado.getRegistro().equals(registro)) {
+				return advogado;
+			}
+		}
+		    
+        throw new AdvogadoNaoExistenteException();
+    }
 
 	public StringBuilder listaPessoas() {
 

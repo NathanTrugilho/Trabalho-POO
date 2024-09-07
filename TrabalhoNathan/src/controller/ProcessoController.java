@@ -2,13 +2,17 @@ package controller;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
 import exception.AtributoNuloException;
+import exception.ClienteNaoExisteException;
 import exception.DataInvalidaException;
 import exception.DataNulaException;
+import exception.NumeroProcessoInvalidoException;
 import exception.NumeroProcessoJaExistenteException;
+import model.Advogado;
 import model.Cliente;
 import model.Pessoa;
 import model.Processo;
@@ -25,7 +29,7 @@ public class ProcessoController implements Serializable {
 	}
 
 	public void addProcesso(long numero, Date dataAbertura, Cliente cliente, Pessoa parteContraria, Tribunal tribunal)
-			throws DataNulaException, DataInvalidaException, AtributoNuloException, NumeroProcessoJaExistenteException {
+			throws DataNulaException, DataInvalidaException, AtributoNuloException, NumeroProcessoJaExistenteException, NumeroProcessoInvalidoException {
 		
 		if(processosSistema.containsKey(numero)) {
 			throw new NumeroProcessoJaExistenteException();
@@ -34,9 +38,18 @@ public class ProcessoController implements Serializable {
 		Processo novoProcesso = new Processo(numero, dataAbertura, cliente, parteContraria, tribunal);
 		
 		processosSistema.put(numero, novoProcesso);
-		
+
 		cliente.addProcesso(novoProcesso);
-		
+		MainController.save();
+	}
+	
+	public List<Processo> getProcessos(String cadastroRF) throws ClienteNaoExisteException{
+		return MainController.getClienteController().getProcessos(cadastroRF);
+	}
+	
+	public void addAudiencia(Processo processo, Advogado advogado, Date data, String recomendação) throws AtributoNuloException {
+		processo.addAudiencia(advogado, data, recomendação);
+		System.out.println(processo.getAudiencias());
 		MainController.save();
 	}
 	
