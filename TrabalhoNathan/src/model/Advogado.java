@@ -1,5 +1,6 @@
 package model;
 
+import exception.AdvogadoNecessitaRegistroException;
 import exception.CPFInvalidoException;
 import exception.CampoNaoPreenchidoException;
 import exception.FormatoEmailInvalidoException;
@@ -15,12 +16,16 @@ public class Advogado extends PessoaFisica {
 
 	public Advogado(String nome, String cpf, String registro, String email, long telefone)
 			throws CampoNaoPreenchidoException, FormatoEmailInvalidoException, TelefoneInvalidoException,
-			TelefoneNaoNumericoException, CPFInvalidoException, RegistroNuloException {
+			TelefoneNaoNumericoException, CPFInvalidoException, RegistroNuloException, AdvogadoNecessitaRegistroException {
 
 		super(nome, cpf, email, telefone);
 				
 		if (registro == null) {
 			throw new RegistroNuloException();
+		}
+		
+		if(registro.isBlank()) {
+			throw new AdvogadoNecessitaRegistroException();
 		}
 		
 		this.registro = registro;

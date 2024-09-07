@@ -9,6 +9,7 @@ import exception.AtributoNuloException;
 import exception.DataInvalidaException;
 import exception.DataNulaException;
 import exception.NumeroProcessoInvalidoException;
+import exception.ValorInvalidoException;
 
 public class Processo implements Serializable {
 
@@ -61,7 +62,7 @@ public class Processo implements Serializable {
 		conta.addPagamento(forma, data, valor);
 	}
 
-	public void addDespesa(Date data, String descricao, double valor) {
+	public void addDespesa(Date data, String descricao, double valor) throws AtributoNuloException, ValorInvalidoException {
 		conta.addDespesa(data, descricao, valor);
 	}
 

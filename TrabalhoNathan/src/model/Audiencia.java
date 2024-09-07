@@ -19,6 +19,14 @@ public class Audiencia implements Serializable{
 			throw new AtributoNuloException("Advogado não pode ser nulo na criação de uma audiência!");
 		}
 		
+		if(data == null) {
+			throw new AtributoNuloException("Data não pode ser nula na criação de uma audiência!");
+		}
+		
+		if(recomendacao == null || recomendacao.isBlank()) {
+			throw new AtributoNuloException("Recomendação não pode ser nula na criação de uma audiência!");
+		}
+		
 		this.advogado = advogado;
 		this.data = data;
 		this.recomendacao = recomendacao;

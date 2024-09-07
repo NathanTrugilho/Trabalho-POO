@@ -20,6 +20,7 @@ public class PessoaFisica extends Pessoa implements Serializable {
 			TelefoneNaoNumericoException, CPFInvalidoException {
 
 		super(nome, email, telefone);
+		
 		Utils.validarCPF(cpf);
 		this.cpf = cpf;
 	}

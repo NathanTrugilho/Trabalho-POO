@@ -5,6 +5,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import exception.AtributoNuloException;
+import exception.ValorInvalidoException;
+
 public class Conta implements IConta, Serializable{
 
 	private static final long serialVersionUID = 2908618581228493812L;
@@ -16,7 +19,7 @@ public class Conta implements IConta, Serializable{
 		super();
 	}
 	
-	public void addDespesa(Date data, String descricao, double valor) {
+	public void addDespesa(Date data, String descricao, double valor) throws AtributoNuloException, ValorInvalidoException {
 		Despesa desp = new Despesa(data, descricao, valor);
 		despesas.add(desp);
 	};

@@ -49,7 +49,6 @@ public class ProcessoController implements Serializable {
 	
 	public void addAudiencia(Processo processo, Advogado advogado, Date data, String recomendação) throws AtributoNuloException {
 		processo.addAudiencia(advogado, data, recomendação);
-		System.out.println(processo.getAudiencias());
 		MainController.save();
 	}
 	

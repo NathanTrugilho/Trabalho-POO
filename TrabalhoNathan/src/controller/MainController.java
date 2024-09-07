@@ -13,6 +13,7 @@ public class MainController implements Serializable {
 	private TribunalController tribunalController;
 	private ClienteController clienteController;
 	private ProcessoController processoController;
+	private ContaController contaController;
 	
 	// declarar os demais controladores
 
@@ -22,6 +23,7 @@ public class MainController implements Serializable {
 		tribunalController = new TribunalController();
 		clienteController = new ClienteController();
 		processoController = new ProcessoController();
+		contaController = new ContaController();
 		
 		// instanciar os demais controladores
 	}
@@ -44,6 +46,10 @@ public class MainController implements Serializable {
 	
 	public static ProcessoController getProcessoController() {
 		return instance.processoController;
+	}
+	
+	public static ContaController getContaController() {
+		return instance.contaController;
 	}
 	
 	// implementar metodos acessadores estaticos para os demais controladores

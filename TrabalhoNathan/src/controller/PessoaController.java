@@ -6,6 +6,7 @@ import java.util.TreeMap;
 
 import exception.AdvogadoJaExistenteException;
 import exception.AdvogadoNaoExistenteException;
+import exception.AdvogadoNecessitaRegistroException;
 import exception.CNPJInvalidoException;
 import exception.CNPJNaoNumericoException;
 import exception.CPFInvalidoException;
@@ -27,11 +28,11 @@ import model.PessoaJuridica;
 public class PessoaController implements Serializable {
 
 	private static final long serialVersionUID = 2931953718446081990L;
-	
+
 	// Chave = CadastroRF
 	private Map<String, PessoaFisica> pessoasFisicas;
 	private Map<String, PessoaJuridica> pessoasJuridicas;
-	private Map<String, Advogado> advogados; 
+	private Map<String, Advogado> advogados;
 
 	public PessoaController() {
 
@@ -85,7 +86,8 @@ public class PessoaController implements Serializable {
 	public void addAdvogados(String nome, String cpf, String registro, String email, long telefone)
 			throws AdvogadoJaExistenteException, NumberFormatException, CampoNaoPreenchidoException,
 			CPFNaoNumericoException, TelefoneNaoNumericoException, CPFInvalidoException, FormatoEmailInvalidoException,
-			TelefoneInvalidoException, RegistroNuloException, PessoaJaExistenteException {
+			TelefoneInvalidoException, RegistroNuloException, PessoaJaExistenteException,
+			AdvogadoNecessitaRegistroException {
 
 		if (pessoasFisicas.containsKey(cpf)) {
 			throw new PessoaJaExistenteException("CPF já cadastrado no sistema!");
@@ -106,7 +108,7 @@ public class PessoaController implements Serializable {
 	}
 
 	public Pessoa getPessoa(String cadastroRF) throws PessoaNaoExistenteException {
-		
+
 		if (pessoasFisicas.containsKey(cadastroRF)) {
 			return pessoasFisicas.get(cadastroRF);
 
@@ -120,22 +122,22 @@ public class PessoaController implements Serializable {
 			throw new PessoaNaoExistenteException();
 		}
 	}
-	
-	public Advogado getAdvogado(String registro) throws AdvogadoNaoExistenteException {
-        
+
+	public Advogado getAdvogado(String registro) throws AdvogadoNaoExistenteException, AdvogadoNecessitaRegistroException {
+
 		if (registro == null) {
-            throw new IllegalArgumentException("O número de registro não pode ser nulo");
-        }
-        
-        for (Advogado advogado : advogados.values()) {
-			
-        	if(advogado.getRegistro().equals(registro)) {
+			throw new AdvogadoNecessitaRegistroException();
+		}
+
+		for (Advogado advogado : advogados.values()) {
+
+			if (advogado.getRegistro().equals(registro)) {
 				return advogado;
 			}
 		}
-		    
-        throw new AdvogadoNaoExistenteException();
-    }
+
+		throw new AdvogadoNaoExistenteException();
+	}
 
 	public StringBuilder listaPessoas() {
 

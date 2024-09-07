@@ -32,8 +32,8 @@ public class GerenciarProcessoView extends JFrame {
 	private JComboBox<Processo> comboBoxProcessos;
 
 	// Botões da parte direita
-	private JButton addAudienciaButton;
-	private JButton botao2;
+	private JButton gerenciarAudienciasButton;
+	private JButton gerenciarContaButton;
 	private JButton botao3;
 	private JButton botao4;
 
@@ -132,22 +132,25 @@ public class GerenciarProcessoView extends JFrame {
 		gbcBotao1.gridx = 0;
 		gbcBotao1.gridy = 0;
 		gbcBotao1.fill = GridBagConstraints.HORIZONTAL;
-		addAudienciaButton = new JButton("Adicionar audiência");
-		addAudienciaButton.setFont(buttonFont);
-		botoesPanel.add(addAudienciaButton, gbcBotao1);
-		addAudienciaButton.setEnabled(false);
+		gerenciarAudienciasButton = new JButton("Gerenciar audiências");
+		gerenciarAudienciasButton.setFont(buttonFont);
+		botoesPanel.add(gerenciarAudienciasButton, gbcBotao1);
+		gerenciarAudienciasButton.setEnabled(false);
 
-		addAudienciaButton.addActionListener(e -> addAudiencia());
+		gerenciarAudienciasButton.addActionListener(e -> gerenciarAudiencias());
 
 		GridBagConstraints gbcBotao2 = new GridBagConstraints();
 		gbcBotao2.insets = new Insets(10, 5, 15, 5);
 		gbcBotao2.gridx = 0;
 		gbcBotao2.gridy = 1;
 		gbcBotao2.fill = GridBagConstraints.HORIZONTAL;
-		botao2 = new JButton("Botão 2");
-		botao2.setFont(buttonFont);
-		botoesPanel.add(botao2, gbcBotao2);
-
+		gerenciarContaButton = new JButton("Gerenciar conta");
+		gerenciarContaButton.setFont(buttonFont);
+		botoesPanel.add(gerenciarContaButton, gbcBotao2);
+		gerenciarContaButton.setEnabled(false);
+		
+		gerenciarContaButton.addActionListener(e -> gerenciarContas());
+		
 		GridBagConstraints gbcBotao3 = new GridBagConstraints();
 		gbcBotao3.insets = new Insets(10, 5, 15, 5);
 		gbcBotao3.gridx = 0;
@@ -172,15 +175,29 @@ public class GerenciarProcessoView extends JFrame {
 		getContentPane().add(panel);
 	}
 
-	private void addAudiencia() {
+	 private void gerenciarContas() {
+	        Processo processoSelecionado;
+	        try {
+	            processoSelecionado = (Processo) comboBoxProcessos.getSelectedItem();
+	            
+	            gerenciarContaButton.setEnabled(false);
+	            
+	            new ContaView(gerenciarContaButton, processoSelecionado);
+	            
+	        } catch (Exception e) {
+	            JOptionPane.showMessageDialog(null, e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+	        }
+	    }
+	
+	private void gerenciarAudiencias() {
 		Processo processoSelecionado;
 		try {
 
 			processoSelecionado = (Processo) comboBoxProcessos.getSelectedItem();
 
-			addAudienciaButton.setEnabled(false);
+			gerenciarAudienciasButton.setEnabled(false);
 
-			new NovaAudienciaView(addAudienciaButton, processoSelecionado);
+			new AudienciaView(gerenciarAudienciasButton, processoSelecionado);
 
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
@@ -227,14 +244,11 @@ public class GerenciarProcessoView extends JFrame {
 				comboBoxProcessos.addItem(processo);
 			}
 
-			addAudienciaButton.setEnabled(true);
-
+			gerenciarAudienciasButton.setEnabled(true);
+			gerenciarContaButton.setEnabled(true);
+			
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
 		}
-	}
-
-	private void limparCampos() {
-		cadastroRFField.setText("");
 	}
 }
