@@ -60,7 +60,7 @@ public class Conta implements IConta, Serializable{
 			sb.append(despesa.toString());
 		}
 		
-		sb.append("\n====== Pagamentos ======\n");
+		sb.append("====== Pagamentos ======\n");
 		
 		for (Pagamento pagamento : pagamentos) {
 			sb.append(pagamento.toString());
