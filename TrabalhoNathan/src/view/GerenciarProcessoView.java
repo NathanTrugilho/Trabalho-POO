@@ -1,5 +1,6 @@
 package view;
 
+import java.awt.BorderLayout;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -12,6 +13,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 import controller.MainController;
@@ -35,7 +38,7 @@ public class GerenciarProcessoView extends JFrame {
 	// Botões da parte direita
 	private JButton gerenciarAudienciasButton;
 	private JButton gerenciarContaButton;
-	private JButton botao3;
+	private JButton descreverProcessoButton;
 	private JComboBox<EFaseProcesso> comboBoxFaseProcesso;
 
 	public GerenciarProcessoView() {
@@ -149,17 +152,20 @@ public class GerenciarProcessoView extends JFrame {
 		gerenciarContaButton.setFont(buttonFont);
 		botoesPanel.add(gerenciarContaButton, gbcBotao2);
 		gerenciarContaButton.setEnabled(false);
-		
+
 		gerenciarContaButton.addActionListener(e -> gerenciarContas());
-		
+
 		GridBagConstraints gbcBotao3 = new GridBagConstraints();
 		gbcBotao3.insets = new Insets(10, 5, 15, 5);
 		gbcBotao3.gridx = 0;
 		gbcBotao3.gridy = 2;
 		gbcBotao3.fill = GridBagConstraints.HORIZONTAL;
-		botao3 = new JButton("Botão 3");
-		botao3.setFont(buttonFont);
-		botoesPanel.add(botao3, gbcBotao3);
+		descreverProcessoButton = new JButton("Descrever processo");
+		descreverProcessoButton.setFont(buttonFont);
+		botoesPanel.add(descreverProcessoButton, gbcBotao3);
+		descreverProcessoButton.setEnabled(false);
+
+		descreverProcessoButton.addActionListener(e -> descreverProcesso());
 
 		GridBagConstraints gbcComboBoxFase = new GridBagConstraints();
 		gbcComboBoxFase.insets = new Insets(10, 5, 15, 5);
@@ -172,41 +178,101 @@ public class GerenciarProcessoView extends JFrame {
 		botoesPanel.add(comboBoxFaseProcesso, gbcComboBoxFase);
 
 		comboBoxFaseProcesso.addActionListener(e -> selecionaFase());
-		
+
 		panel.add(botoesPanel, gbcBotoesPanel);
 
 		// Adiciona o painel ao JFrame
 		getContentPane().add(panel);
 	}
 
-	
 	private void selecionaFase() {
+
 		Processo processoSelecionado = (Processo) comboBoxProcessos.getSelectedItem();
-	    
-	    if (processoSelecionado != null) {
-	        EFaseProcesso faseSelecionada = (EFaseProcesso) comboBoxFaseProcesso.getSelectedItem();
-	        processoSelecionado.setFase(faseSelecionada);
-	        JOptionPane.showMessageDialog(null, "Fase do processo atualizada para: " + faseSelecionada);
-	    } else {
-	        JOptionPane.showMessageDialog(null, "Selecione um processo primeiro!", "Erro", JOptionPane.ERROR_MESSAGE);
-	    }
+
+		if (processoSelecionado != null) {
+			EFaseProcesso faseSelecionada = (EFaseProcesso) comboBoxFaseProcesso.getSelectedItem();
+			processoSelecionado.setFase(faseSelecionada);
+			JOptionPane.showMessageDialog(null, "Fase do processo atualizada para: " + faseSelecionada);
+		} else {
+			JOptionPane.showMessageDialog(null, "Selecione um processo primeiro!", "Erro", JOptionPane.ERROR_MESSAGE);
+		}
 	}
-	
-	 private void gerenciarContas() {
-	        Processo processoSelecionado;
-	        try {
-	            processoSelecionado = (Processo) comboBoxProcessos.getSelectedItem();
-	            
-	            gerenciarContaButton.setEnabled(false);
-	            
-	            new ContaView(gerenciarContaButton, processoSelecionado);
-	            
-	        } catch (Exception e) {
-	            JOptionPane.showMessageDialog(null, e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
-	        }
-	    }
-	
+
+	private void descreverProcesso() {
+		JFrame novaJanela = new JFrame("Detalhes do Processo");
+		Processo processoSelecionado = (Processo) comboBoxProcessos.getSelectedItem();
+
+		descreverProcessoButton.setEnabled(false);
+		comboBoxFaseProcesso.setEnabled(false);
+
+		novaJanela.setSize(500, 300);
+		novaJanela.setLocationRelativeTo(null); // Centraliza a janela
+		novaJanela.setLayout(new BorderLayout()); // Usa BorderLayout para maior controle de redimensionamento
+
+		// Cria uma área de texto (JTextArea)
+		JTextArea areaTexto = new JTextArea();
+		areaTexto.setFont(new Font("Arial", Font.PLAIN, 14));
+		areaTexto.setEditable(false); // Deixe a área de texto apenas para leitura
+
+		// Define o conteúdo da JTextArea
+		if (processoSelecionado != null) {
+			
+			StringBuilder sb = new StringBuilder();
+
+			sb.append("Numero processo: " + processoSelecionado.getNumero() + "\n");
+			sb.append("Data abertura: " + processoSelecionado.getDataAbertura() + "\n");
+			sb.append("Cliente: " + processoSelecionado.getCliente().getPessoa().getNome() + "\n");
+			sb.append("Parte contraria: " + processoSelecionado.getParteContraria().getNome() + "\n\n");
+			sb.append("====== Tribunal ======" + "\n" + processoSelecionado.getTribunal().toString() + "\n");
+			sb.append(processoSelecionado.getConta().getExtrato() + "\n");
+	        sb.append("====================\n");
+	        sb.append(String.format("Total custas: %.2f reais\n", processoSelecionado.getTotalCustas()));
+	        sb.append(String.format("Total pagamentos: %.2f reais\n", processoSelecionado.getConta().getTotalPagamentos()));
+	        sb.append(String.format("Total saldo: %+.2f reais\n", processoSelecionado.getConta().getSaldoConta())); 
+			
+			areaTexto.setText(sb.toString());
+			
+		} else {
+			areaTexto.setText("Nenhum processo selecionado.");
+		}
+
+		// Adiciona a JTextArea dentro de um JScrollPane
+		JScrollPane scrollPane = new JScrollPane(areaTexto);
+
+		// Adiciona o JScrollPane (com a JTextArea) ao centro da janela
+		novaJanela.add(scrollPane, BorderLayout.CENTER);
+
+		// Adiciona um WindowListener para capturar o fechamento da janela
+		novaJanela.addWindowListener(new java.awt.event.WindowAdapter() {
+			@Override
+			public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+				// Quando a janela for fechada, habilite os botões novamente
+				descreverProcessoButton.setEnabled(true);
+				comboBoxFaseProcesso.setEnabled(true);
+			}
+		});
+
+		// Faz a janela ser visível
+		novaJanela.setVisible(true);
+	}
+
+	private void gerenciarContas() {
+
+		Processo processoSelecionado;
+		try {
+			processoSelecionado = (Processo) comboBoxProcessos.getSelectedItem();
+
+			gerenciarContaButton.setEnabled(false);
+
+			new ContaView(gerenciarContaButton, processoSelecionado);
+
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+		}
+	}
+
 	private void gerenciarAudiencias() {
+
 		Processo processoSelecionado;
 		try {
 
@@ -229,9 +295,10 @@ public class GerenciarProcessoView extends JFrame {
 	}
 
 	private void listarProcessos() {
+
 		String cadastroRFCliente = cadastroRFField.getText();
 		comboBoxProcessos.removeAllItems();
-		
+
 		try {
 
 			if (cadastroRFCliente.isBlank() || !cadastroRFCliente.matches("\\d+")) {
@@ -263,7 +330,8 @@ public class GerenciarProcessoView extends JFrame {
 
 			gerenciarAudienciasButton.setEnabled(true);
 			gerenciarContaButton.setEnabled(true);
-			
+			descreverProcessoButton.setEnabled(true);
+
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
 		}

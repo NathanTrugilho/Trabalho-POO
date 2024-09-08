@@ -48,7 +48,7 @@ public class Conta implements IConta, Serializable{
 	};
 
 	public double getSaldoConta() {
-		return this.getTotalDespesas() - this.getTotalPagamentos();
+		return this.getTotalPagamentos() - this.getTotalDespesas();
 	};
 
 	public StringBuilder getExtrato() {

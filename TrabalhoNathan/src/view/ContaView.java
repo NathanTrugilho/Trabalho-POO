@@ -145,7 +145,7 @@ public class ContaView extends JFrame {
 		adicionarDespesaButton.addActionListener(e -> {
 			String data = dataField.getText();
 			String descricao = descricaoField.getText();
-			String valor = valorField.getText();
+			String valor = valorField.getText().replace(",", ".");
 
 			try {
 				if (descricao.isBlank()) {
@@ -154,7 +154,7 @@ public class ContaView extends JFrame {
 					return;
 				}
 
-				if (valor.isBlank() || !valor.matches("\\d+(\\.\\d{2})?")) {
+				if (valor.isBlank() || !valor.matches("\\d+(\\.\\d{1,2})?")) {
 					JOptionPane.showMessageDialog(null, "Insira um valor válido!", "Erro de Entrada",
 							JOptionPane.ERROR_MESSAGE);
 					return;
@@ -250,11 +250,11 @@ public class ContaView extends JFrame {
 
 			String data = dataField.getText();
 			EFormaPagamento formaPagamento = (EFormaPagamento) formaPagamentoComboBox.getSelectedItem();
-			String valor = valorField.getText();
+			String valor = valorField.getText().replace(",", ".");
 
 			try {
 
-				if (valor.isBlank() || !valor.matches("\\d+(\\.\\d{2})?")) {
+				if (valor.isBlank() || !valor.matches("\\d+(\\.\\d{1,2})?")) {
 					JOptionPane.showMessageDialog(null, "Insira um valor válido!", "Erro de Entrada",
 							JOptionPane.ERROR_MESSAGE);
 					return;
@@ -286,38 +286,43 @@ public class ContaView extends JFrame {
 
 	// Método para criar a aba de "Extrato"
 	private JPanel criarAbaExtrato() {
-		JPanel panel = new JPanel(new BorderLayout());
+	    JPanel panel = new JPanel(new BorderLayout());
 
-		// Criação do botão "Gerar Extrato"
-		JButton gerarExtratoButton = new JButton("Gerar Extrato");
-		gerarExtratoButton.setFont(new Font("Arial", Font.BOLD, 16));
-		panel.add(gerarExtratoButton, BorderLayout.NORTH); // Adiciona o botão no topo (Norte)
+	    // Criação do botão "Gerar Extrato"
+	    JButton gerarExtratoButton = new JButton("Gerar Extrato");
+	    gerarExtratoButton.setFont(new Font("Arial", Font.BOLD, 16));
+	    panel.add(gerarExtratoButton, BorderLayout.NORTH); // Adiciona o botão no topo (Norte)
 
-		// Criação da área de texto para mostrar o extrato
-		JTextArea extratoTextArea = new JTextArea(10, 30); // Exemplo de 10 linhas e 30 colunas
-		extratoTextArea.setFont(new Font("Arial", Font.PLAIN, 14));
-		extratoTextArea.setEditable(false); // Torna a área de texto não-editável
-		extratoTextArea.setLineWrap(true); // Habilita quebra de linha
-		extratoTextArea.setWrapStyleWord(true); // Quebra completa palavras
-		JScrollPane scrollPane = new JScrollPane(extratoTextArea); // Adiciona barra de rolagem
+	    // Criação da área de texto para mostrar o extrato
+	    JTextArea extratoTextArea = new JTextArea(10, 30); // Exemplo de 10 linhas e 30 colunas
+	    extratoTextArea.setFont(new Font("Arial", Font.PLAIN, 14));
+	    extratoTextArea.setEditable(false); // Torna a área de texto não-editável
+	    extratoTextArea.setLineWrap(true); // Habilita quebra de linha
+	    extratoTextArea.setWrapStyleWord(true); // Quebra completa palavras
+	    JScrollPane scrollPane = new JScrollPane(extratoTextArea); // Adiciona barra de rolagem
 
-		panel.add(scrollPane, BorderLayout.CENTER); // Adiciona a área de texto com rolagem no centro
+	    panel.add(scrollPane, BorderLayout.CENTER); // Adiciona a área de texto com rolagem no centro
 
-		// Ação do botão "Gerar Extrato"
-		gerarExtratoButton.addActionListener(e -> {
-			// Exemplo de lógica para gerar extrato (substitua com a lógica real)
-			extratoTextArea.setText("");
+	    // Ação do botão "Gerar Extrato"
+	    gerarExtratoButton.addActionListener(e -> {
+	        extratoTextArea.setText("");
 
-			StringBuilder sb = processo.getExtratoContas();
-			sb.append("=====================\n");
-			sb.append("Total custas: " + processo.getTotalCustas() + "\n");
-			sb.append("Total pagamentos: " + processo.getConta().getTotalPagamentos() + "\n");
-			sb.append("Total saldo: " + processo.getConta().getSaldoConta() + "\n");
+	        // Formatação com duas casas decimais
+	        double totalCustas = processo.getTotalCustas();
+	        double totalPagamentos = processo.getConta().getTotalPagamentos();
+	        double saldoConta = processo.getConta().getSaldoConta();
 
-			extratoTextArea.setText(sb.toString());
-		});
+	        // Exibe os valores com duas casas decimais e o saldo com sinal
+	        StringBuilder sb = processo.getExtratoContas();
+	        sb.append("====================\n");
+	        sb.append(String.format("Total custas: %.2f reais\n", totalCustas));
+	        sb.append(String.format("Total pagamentos: %.2f reais\n", totalPagamentos));
+	        sb.append(String.format("Total saldo: %+.2f reais\n", saldoConta)); 
 
-		return panel;
+	        extratoTextArea.setText(sb.toString());
+	    });
+
+	    return panel;
 	}
 
 }

@@ -51,7 +51,7 @@ public class Despesa implements Serializable{
 		StringBuilder sb = new StringBuilder();
 
 		sb.append("Data: " + this.getData() + "\n");
-		sb.append("Valor: " + this.getValor() + "\n");
+		sb.append("Valor: " + this.getValor() + " reais\n");
 		sb.append("Descricao: " + this.getDescricao() + "\n\n");
 
 		return sb.toString();

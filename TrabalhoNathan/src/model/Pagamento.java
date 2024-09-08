@@ -52,7 +52,7 @@ public class Pagamento implements Serializable{
 		
 		sb.append("Data: " + this.getData() + "\n");
 
-		sb.append("FormaPagamento: " + this.getFormaPagamento() + "\tValor: " + this.getValor() + "\n\n");
+		sb.append("FormaPagamento: " + this.getFormaPagamento() + "\tValor: " + this.getValor() + " reais\n\n");
 		
 		return sb.toString();
 	}

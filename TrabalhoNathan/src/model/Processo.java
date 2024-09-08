@@ -122,21 +122,6 @@ public class Processo implements Serializable {
 
 	@Override
 	public String toString() {
-		/*
-		StringBuilder sb = new StringBuilder();
-
-		sb.append("Numero: " + this.getNumero() + "\n");
-		
-		sb.append("Data abertura: " + this.getDataAbertura() + "\n");
-		if (this.getFase() == EFaseProcesso.CONCLUSAO) {
-			sb.append("Data conclusao: " + this.getDataConclusao() + "\n");
-			sb.append("Fase: " + this.getFase() + "\n");
-		}
-		sb.append("Cliente: " + this.getCliente().getPessoa().getNome() + "\n");
-		sb.append("Parte contraria: " + this.getParteContraria().getNome() + "\n");
-		sb.append("====== Tribunal ======" + "\n" + this.getTribunal().toString() + "\n");
-		sb.append("======= Conta =======" + this.getConta().getExtrato() + "\n"); */
-
 		return "Numero do Processo: " + this.getNumero();
 	}
 }
