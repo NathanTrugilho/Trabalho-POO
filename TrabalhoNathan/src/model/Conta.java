@@ -54,13 +54,13 @@ public class Conta implements IConta, Serializable{
 	public StringBuilder getExtrato() {
 		
 		StringBuilder sb = new StringBuilder();
-		sb.append("\n====== Despesas ======\n");
+		sb.append("\n============= Despesas =============\n");
 		
 		for (Despesa despesa : despesas) {
 			sb.append(despesa.toString());
 		}
 		
-		sb.append("====== Pagamentos ======\n");
+		sb.append("============= Pagamentos =============\n");
 		
 		for (Pagamento pagamento : pagamentos) {
 			sb.append(pagamento.toString());

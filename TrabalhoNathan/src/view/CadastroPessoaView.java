@@ -43,12 +43,10 @@ public class CadastroPessoaView extends JFrame {
 		JPanel panel = new JPanel(new GridBagLayout());
 		panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
-		// Definir fonte maior
 		Font labelFont = new Font("Arial", Font.BOLD, 16);
 		Font fieldFont = new Font("Arial", Font.PLAIN, 14);
 		Font buttonFont = new Font("Arial", Font.BOLD, 16);
 
-		// Campo Tipo de Pessoa
 		GridBagConstraints gbcTipoPessoaLabel = new GridBagConstraints();
 		gbcTipoPessoaLabel.insets = new Insets(5, 5, 5, 5);
 		gbcTipoPessoaLabel.gridx = 0;
@@ -68,7 +66,6 @@ public class CadastroPessoaView extends JFrame {
 		tipoPessoaBox.setFont(fieldFont);
 		panel.add(tipoPessoaBox, gbcTipoPessoaBox);
 
-		// Campo Nome
 		GridBagConstraints gbcNomeLabel = new GridBagConstraints();
 		gbcNomeLabel.insets = new Insets(5, 5, 5, 5);
 		gbcNomeLabel.gridx = 0;
@@ -88,7 +85,6 @@ public class CadastroPessoaView extends JFrame {
 		nomeField.setFont(fieldFont);
 		panel.add(nomeField, gbcNomeField);
 
-		// Campo CPF/CNPJ
 		GridBagConstraints gbcCadastroRFLabel = new GridBagConstraints();
 		gbcCadastroRFLabel.insets = new Insets(5, 5, 5, 5);
 		gbcCadastroRFLabel.gridx = 0;
@@ -108,7 +104,6 @@ public class CadastroPessoaView extends JFrame {
 		cadastroRFField.setFont(fieldFont);
 		panel.add(cadastroRFField, gbcCadastroRFField);
 
-		// Campo Preposto
 		GridBagConstraints gbcPrepostoLabel = new GridBagConstraints();
 		gbcPrepostoLabel.insets = new Insets(5, 5, 5, 5);
 		gbcPrepostoLabel.gridx = 0;
@@ -128,7 +123,6 @@ public class CadastroPessoaView extends JFrame {
 		prepostoField.setFont(fieldFont);
 		panel.add(prepostoField, gbcPrepostoField);
 
-		// Campo Email
 		GridBagConstraints gbcEmailLabel = new GridBagConstraints();
 		gbcEmailLabel.insets = new Insets(5, 5, 5, 5);
 		gbcEmailLabel.gridx = 0;
@@ -148,7 +142,6 @@ public class CadastroPessoaView extends JFrame {
 		emailField.setFont(fieldFont);
 		panel.add(emailField, gbcEmailField);
 
-		// Campo Telefone
 		GridBagConstraints gbcTelefoneLabel = new GridBagConstraints();
 		gbcTelefoneLabel.insets = new Insets(5, 5, 5, 5);
 		gbcTelefoneLabel.gridx = 0;
@@ -168,7 +161,6 @@ public class CadastroPessoaView extends JFrame {
 		telefoneField.setFont(fieldFont);
 		panel.add(telefoneField, gbcTelefoneField);
 
-		// Campo Registro
 		GridBagConstraints gbcRegistroLabel = new GridBagConstraints();
 		gbcRegistroLabel.insets = new Insets(5, 5, 5, 5);
 		gbcRegistroLabel.gridx = 0;
@@ -188,13 +180,11 @@ public class CadastroPessoaView extends JFrame {
 		registroField.setFont(fieldFont);
 		panel.add(registroField, gbcRegistroField);
 
-		// Ocultar o campo de registro e preposto inicialmente
 		registroLabel.setVisible(false);
 		registroField.setVisible(false);
 		prepostoLabel.setVisible(false);
 		prepostoField.setVisible(false);
 
-		// Listener para atualizar campos com base na seleção
 		tipoPessoaBox.addItemListener(e -> {
 			if (e.getStateChange() == ItemEvent.SELECTED) {
 				atualizarCamposParaTipoSelecionado(registroLabel, cadastroRFLabel, prepostoLabel);
@@ -202,7 +192,6 @@ public class CadastroPessoaView extends JFrame {
 			}
 		});
 
-		// Botão de Cadastro
 		GridBagConstraints gbcCadastrarButton = new GridBagConstraints();
 		gbcCadastrarButton.insets = new Insets(10, 5, 10, 5);
 		gbcCadastrarButton.gridx = 1;
@@ -215,7 +204,6 @@ public class CadastroPessoaView extends JFrame {
 
 		cadastrarButton.addActionListener(e -> realizarCadastro());
 
-		// Botão Listar Pessoas
 		GridBagConstraints gbcListarButton = new GridBagConstraints();
 		gbcListarButton.insets = new Insets(10, 5, 10, 5);
 		gbcListarButton.gridx = 0;
@@ -228,7 +216,6 @@ public class CadastroPessoaView extends JFrame {
 
 		listarButton.addActionListener(e -> listaPessoas());
 
-		// Área de Texto
 		GridBagConstraints gbcScrollPane = new GridBagConstraints();
 		gbcScrollPane.insets = new Insets(10, 5, 10, 5);
 		gbcScrollPane.gridx = 0;
@@ -245,8 +232,7 @@ public class CadastroPessoaView extends JFrame {
 		getContentPane().add(panel);
 	}
 
-	private void atualizarCamposParaTipoSelecionado(JLabel registroLabel, JLabel cadastroRFLabel,
-			JLabel prepostoLabel) {
+	private void atualizarCamposParaTipoSelecionado(JLabel registroLabel, JLabel cadastroRFLabel, JLabel prepostoLabel) {
 		String selected = (String) tipoPessoaBox.getSelectedItem();
 
 		boolean isAdvogado = "Advogado".equals(selected);
@@ -348,7 +334,6 @@ public class CadastroPessoaView extends JFrame {
 
 	private void listaPessoas() {
 		try {
-			// Ultra mega power delegação
 			textArea.setText(MainController.getPessoaController().listaPessoas().toString());
 
 		} catch (Exception e) {

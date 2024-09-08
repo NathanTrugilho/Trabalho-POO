@@ -20,11 +20,10 @@ import controller.MainController;
 public class CadastroTribunalView extends JFrame {
 
 	private static final long serialVersionUID = 1L;
-	
 	private JTextField siglaField;
 	private JTextField secaoField;
 	private JTextField descricaoField;
-	private JTextArea textArea; // Área de texto para exibir os tribunais
+	private JTextArea textArea;
 
 	public CadastroTribunalView() {
 		initialize();
@@ -33,18 +32,16 @@ public class CadastroTribunalView extends JFrame {
 	private void initialize() {
 	    setTitle("Tribunal View");
 	    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	    setSize(500, 400); // Tamanho aumentado para acomodar a área de texto
-	    setLocationRelativeTo(null); // Centraliza a janela
+	    setSize(500, 400);
+	    setLocationRelativeTo(null);
 
 	    JPanel panel = new JPanel(new GridBagLayout());
-	    panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10)); // Adiciona margens internas
+	    panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
-	    // Definir fonte
-	    Font labelFont = new Font("Arial", Font.BOLD, 16); // Fonte maior para os labels
-	    Font fieldFont = new Font("Arial", Font.PLAIN, 16); // Fonte maior para os campos de texto
-	    Font buttonFont = new Font("Arial", Font.BOLD, 16); // Fonte para o botão
+	    Font labelFont = new Font("Arial", Font.BOLD, 16); 
+	    Font fieldFont = new Font("Arial", Font.PLAIN, 16); 
+	    Font buttonFont = new Font("Arial", Font.BOLD, 16); 
 
-	    // Campo Sigla
 	    GridBagConstraints gbcSiglaLabel = new GridBagConstraints();
 	    gbcSiglaLabel.insets = new Insets(5, 2, 5, 2);
 	    gbcSiglaLabel.gridx = 0;
@@ -64,7 +61,6 @@ public class CadastroTribunalView extends JFrame {
 	    siglaField.setFont(fieldFont);
 	    panel.add(siglaField, gbcSiglaField);
 
-	    // Campo Seção
 	    GridBagConstraints gbcSecaoLabel = new GridBagConstraints();
 	    gbcSecaoLabel.insets = new Insets(5, 2, 5, 2);
 	    gbcSecaoLabel.gridx = 0;
@@ -84,7 +80,6 @@ public class CadastroTribunalView extends JFrame {
 	    secaoField.setFont(fieldFont);
 	    panel.add(secaoField, gbcSecaoField);
 
-	    // Campo Descrição
 	    GridBagConstraints gbcDescricaoLabel = new GridBagConstraints();
 	    gbcDescricaoLabel.insets = new Insets(5, 2, 5, 2);
 	    gbcDescricaoLabel.gridx = 0;
@@ -104,7 +99,6 @@ public class CadastroTribunalView extends JFrame {
 	    descricaoField.setFont(fieldFont);
 	    panel.add(descricaoField, gbcDescricaoField);
 
-	    // Botão Confirmar Cadastro
 	    GridBagConstraints gbcCadastrarButton = new GridBagConstraints();
 	    gbcCadastrarButton.insets = new Insets(10, 5, 10, 5);
 	    gbcCadastrarButton.gridx = 1;
@@ -117,20 +111,18 @@ public class CadastroTribunalView extends JFrame {
 
 	    cadastrarButton.addActionListener(e -> realizarCadastro());
 
-	    // Botão Listar Tribunais
 	    GridBagConstraints gbcListarButton = new GridBagConstraints();
 	    gbcListarButton.insets = new Insets(10, 5, 10, 5);
 	    gbcListarButton.gridx = 0;
 	    gbcListarButton.gridy = 3;
 	    gbcListarButton.anchor = GridBagConstraints.CENTER;
-		gbcListarButton.fill = GridBagConstraints.HORIZONTAL;
+	    gbcListarButton.fill = GridBagConstraints.HORIZONTAL;
 	    JButton listarButton = new JButton("Listar Tribunais");
 	    listarButton.setFont(buttonFont);
 	    panel.add(listarButton, gbcListarButton);
 
 	    listarButton.addActionListener(e -> listaTribunais());
 
-	    // Área de texto para exibir os tribunais
 	    GridBagConstraints gbcScrollPane = new GridBagConstraints();
 	    gbcScrollPane.insets = new Insets(10, 5, 10, 5);
 	    gbcScrollPane.gridx = 0;
@@ -144,7 +136,6 @@ public class CadastroTribunalView extends JFrame {
 	    JScrollPane scrollPane = new JScrollPane(textArea);
 	    panel.add(scrollPane, gbcScrollPane);
 
-	    // Adiciona o painel ao JFrame
 	    getContentPane().add(panel);
 	}
 
@@ -162,7 +153,6 @@ public class CadastroTribunalView extends JFrame {
 			limparCampos();
 
 		} catch (Exception e) {
-			// Em caso de erro, mostrar uma mensagem de erro
 			JOptionPane.showMessageDialog(null, "Ocorreu um erro ao realizar o cadastro: " + e.getMessage(), "Erro",
 					JOptionPane.ERROR_MESSAGE);
 		}
@@ -170,8 +160,6 @@ public class CadastroTribunalView extends JFrame {
 
 	private void listaTribunais() {
 		try {
-
-			// Ultra mega power delegação
 			textArea.setText(MainController.getTribunalController().listaTribunais().toString());
 
 		} catch (Exception e) {

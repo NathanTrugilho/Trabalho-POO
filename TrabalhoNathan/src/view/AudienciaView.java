@@ -23,7 +23,6 @@ public class AudienciaView extends JFrame {
 
 	private static final long serialVersionUID = -720382062866130585L;
 
-	// Componentes declarados fora do initialize
 	private JLabel registroLabel;
 	private JTextField registroField;
 	private JLabel dataLabel;
@@ -44,58 +43,53 @@ public class AudienciaView extends JFrame {
 	}
 
 	private void initialize() {
-		
-		// Criação da nova janela (JFrame)
 		janelaAudiencia = new JFrame("Adicionar Audiência");
-		janelaAudiencia.setSize(572, 530); // Ajustado o tamanho da janela para acomodar novos componentes
+		janelaAudiencia.setSize(572, 530);
 		janelaAudiencia.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		janelaAudiencia.setLocationRelativeTo(null); // Centraliza a janela
+		janelaAudiencia.setLocationRelativeTo(null);
 		
 		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 1.0 }; // Diminui o peso das primeiras linhas
-		gridBagLayout.rowHeights = new int[] { 0, 0, 80, 0, 160 }; // Reduz a altura da descrição e aumenta a lista
-		janelaAudiencia.getContentPane().setLayout(gridBagLayout); // Layout GridBagLayout
+		gridBagLayout.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 1.0 };
+		gridBagLayout.rowHeights = new int[] { 0, 0, 80, 0, 160 };
+		janelaAudiencia.getContentPane().setLayout(gridBagLayout);
 
-		// Definindo as fontes
 		Font fieldFont = new Font("Arial", Font.PLAIN, 15);
 		Font buttonFont = new Font("Arial", Font.BOLD, 16);
 		Font labelFont = new Font("Arial", Font.BOLD, 15);
 
-		// Inicializando os componentes
 		registroLabel = new JLabel("Registro:");
-		registroLabel.setFont(labelFont); // Fonte do rótulo
+		registroLabel.setFont(labelFont);
 
 		registroField = new JTextField(14);
-		registroField.setFont(fieldFont); // Fonte do campo de texto
+		registroField.setFont(fieldFont);
 
 		dataLabel = new JLabel("Data:");
-		dataLabel.setFont(labelFont); // Fonte do rótulo
+		dataLabel.setFont(labelFont);
 
 		dataField = new JTextField(11);
-		dataField.setFont(fieldFont); // Fonte do campo de texto
+		dataField.setFont(fieldFont);
 		dataField.setText("dd/MM/yyyy");
 
 		descricaoLabel = new JLabel("Descrição:");
-		descricaoLabel.setFont(labelFont); // Fonte do rótulo
+		descricaoLabel.setFont(labelFont);
 
-		descricaoArea = new JTextArea(3, 15); // Reduzido de 4 para 3 linhas
+		descricaoArea = new JTextArea(3, 15);
 		descricaoArea.setWrapStyleWord(true);
-		descricaoArea.setFont(fieldFont); // Fonte do campo de texto
+		descricaoArea.setFont(fieldFont);
 		descricaoArea.setLineWrap(true);
 
 		adicionarAudienciaButton = new JButton("Adicionar audiência");
-		adicionarAudienciaButton.setFont(buttonFont); // Fonte do botão
+		adicionarAudienciaButton.setFont(buttonFont);
 
 		listarAudienciasButton = new JButton("Listar audiências");
-		listarAudienciasButton.setFont(buttonFont); // Fonte do novo botão
+		listarAudienciasButton.setFont(buttonFont);
 
-		audienciasArea = new JTextArea(10, 40); // Aumenta o número de linhas visíveis
+		audienciasArea = new JTextArea(10, 40);
 		audienciasArea.setWrapStyleWord(true);
 		audienciasArea.setFont(fieldFont);
 		audienciasArea.setLineWrap(true);
-		JScrollPane audienciasScrollPane = new JScrollPane(audienciasArea); // Adiciona rolagem
+		JScrollPane audienciasScrollPane = new JScrollPane(audienciasArea);
 
-		// Configurando o GridBagConstraints e adicionando os componentes à janela
 		GridBagConstraints gbcRegistroLabel = new GridBagConstraints();
 		gbcRegistroLabel.anchor = GridBagConstraints.LINE_START;
 		gbcRegistroLabel.insets = new Insets(15, 15, 15, 0);
@@ -140,12 +134,10 @@ public class AudienciaView extends JFrame {
 		gbcDescricaoArea.gridy = 2;
 		gbcDescricaoArea.fill = GridBagConstraints.BOTH;
 		gbcDescricaoArea.weightx = 1;
-		gbcDescricaoArea.weighty = 0.3; // Reduzido o peso vertical da área de descrição
-		gbcDescricaoArea.anchor = GridBagConstraints.CENTER;
-		JScrollPane scrollPane = new JScrollPane(descricaoArea); // Adiciona rolagem
+		gbcDescricaoArea.weighty = 0.3;
+		JScrollPane scrollPane = new JScrollPane(descricaoArea);
 		janelaAudiencia.getContentPane().add(scrollPane, gbcDescricaoArea);
 
-		// Adicionando o novo botão à esquerda do botão de adicionar audiência
 		GridBagConstraints gbcNovoBotao = new GridBagConstraints();
 		gbcNovoBotao.anchor = GridBagConstraints.WEST;
 		gbcNovoBotao.insets = new Insets(0, 15, 15, 0);
@@ -160,9 +152,8 @@ public class AudienciaView extends JFrame {
 		gbcAdicionarAudienciaButton.anchor = GridBagConstraints.CENTER;
 		janelaAudiencia.getContentPane().add(adicionarAudienciaButton, gbcAdicionarAudienciaButton);
 
-		// Adicionando a área de texto para audiências
 		GridBagConstraints gbcAudienciasArea = new GridBagConstraints();
-		gbcAudienciasArea.weighty = 0.7; // Aumentado o peso vertical da área de audiências
+		gbcAudienciasArea.weighty = 0.7;
 		gbcAudienciasArea.weightx = 1.0;
 		gbcAudienciasArea.insets = new Insets(5, 15, 25, 15);
 		gbcAudienciasArea.gridx = 0;
@@ -171,9 +162,7 @@ public class AudienciaView extends JFrame {
 		gbcAudienciasArea.fill = GridBagConstraints.BOTH;
 		janelaAudiencia.getContentPane().add(audienciasScrollPane, gbcAudienciasArea);
 
-		// Define a ação ao clicar no botão
 		adicionarAudienciaButton.addActionListener(e -> adicionaAudiencia());
-
 		listarAudienciasButton.addActionListener(e -> listarAudiencias());
 
 		janelaAudiencia.addWindowListener(new WindowAdapter() {
@@ -192,16 +181,13 @@ public class AudienciaView extends JFrame {
 		String descricao = descricaoArea.getText();
 
 		try {
-
 			if (registro.isBlank()) {
-				JOptionPane.showMessageDialog(null, "Insira um registro!", "Erro de Entrada",
-						JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(null, "Insira um registro!", "Erro de Entrada", JOptionPane.ERROR_MESSAGE);
 				return;
 			}
 
 			if (descricao.isBlank()) {
-				JOptionPane.showMessageDialog(null, "Insira uma descrição!", "Erro de Entrada",
-						JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(null, "Insira uma descrição!", "Erro de Entrada", JOptionPane.ERROR_MESSAGE);
 				return;
 			}
 
@@ -219,15 +205,12 @@ public class AudienciaView extends JFrame {
 	}
 
 	private void listarAudiencias() {
-
-		audienciasArea.setText(""); // limpo a área antes de mostrar as audiencias
-
+		audienciasArea.setText("");
 		audienciasArea.setText(processo.getAudiencias().toString());
 
 		if (audienciasArea.getText().isBlank()) {
 			audienciasArea.setText("Este processo não possui audiências!");
 		}
-
 	}
 
 	private void limparCampos() {

@@ -42,27 +42,22 @@ public class ContaView extends JFrame {
 
 		setTitle("Gerenciar Conta");
 		setSize(600, 400);
-		setLocationRelativeTo(null); // Centraliza a janela
-		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); // Fecha apenas essa janela
+		setLocationRelativeTo(null);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); 
 
-		// Cria o JTabbedPane
 		JTabbedPane tabbedPane = new JTabbedPane();
 
-		// Adiciona as abas
 		tabbedPane.addTab("Adicionar Despesa", criarAbaAdicionarDespesas());
 		tabbedPane.addTab("Adicionar Pagamento", criarAbaAdicionarPagamentos());
 		tabbedPane.addTab("Extrato", criarAbaExtrato());
 
-		// Adiciona o JTabbedPane à janela
 		getContentPane().add(tabbedPane, BorderLayout.CENTER);
 
-		// Exibe a janela
 		setVisible(true);
 
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosed(WindowEvent e) {
-				// Habilita o botão gerenciarContaButton quando a janela for fechada
 				gerenciarContaButton.setEnabled(true);
 			}
 		});
@@ -72,16 +67,14 @@ public class ContaView extends JFrame {
 		JPanel abaAdicionarDespesas = new JPanel(new GridBagLayout());
 		abaAdicionarDespesas.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
-		// Definir fontes
 		Font labelFont = new Font("Arial", Font.BOLD, 16);
 		Font fieldFont = new Font("Arial", Font.PLAIN, 16);
 		Font buttonFont = new Font("Arial", Font.BOLD, 16);
 
 		GridBagConstraints gbc = new GridBagConstraints();
-		gbc.insets = new Insets(10, 10, 10, 10); // Ajuste de espaçamento para maior espaço
+		gbc.insets = new Insets(10, 10, 10, 10); 
 		gbc.anchor = GridBagConstraints.LINE_START;
 
-		// Label e campo de texto para a data da despesa
 		gbc.gridx = 0;
 		gbc.gridy = 0;
 		JLabel dataLabel = new JLabel("Data:");
@@ -89,59 +82,55 @@ public class ContaView extends JFrame {
 		abaAdicionarDespesas.add(dataLabel, gbc);
 
 		gbc.gridx = 1;
-		gbc.fill = GridBagConstraints.HORIZONTAL; // Expandir o campo para preencher horizontalmente
-		JTextField dataField = new JTextField(15); // Aumentado o tamanho do campo
+		gbc.fill = GridBagConstraints.HORIZONTAL; 
+		JTextField dataField = new JTextField(15); 
 		dataField.setFont(fieldFont);
 		abaAdicionarDespesas.add(dataField, gbc);
 
 		dataField.setText("dd/MM/yyyy");
 
-		// Label e campo de texto para a descrição da despesa (Text Area)
 		gbc.gridx = 0;
 		gbc.gridy = 1;
-		gbc.gridwidth = 1; // Resetando o gridwidth para uma largura normal
+		gbc.gridwidth = 1; 
 		JLabel descricaoLabel = new JLabel("Descrição:");
 		descricaoLabel.setFont(labelFont);
 		abaAdicionarDespesas.add(descricaoLabel, gbc);
 
 		gbc.gridx = 1;
-		gbc.fill = GridBagConstraints.BOTH; // Permitir que o campo se expanda em ambas as direções
+		gbc.fill = GridBagConstraints.BOTH;
 		gbc.weightx = 1.0;
 		gbc.weighty = 1.0;
-		JTextArea descricaoField = new JTextArea(5, 20); // TextArea com 5 linhas e 20 colunas
+		JTextArea descricaoField = new JTextArea(5, 20);
 		descricaoField.setFont(fieldFont);
-		descricaoField.setLineWrap(true); // Habilitar quebra de linha automática
-		descricaoField.setWrapStyleWord(true); // Quebra de linha completa palavras
-		JScrollPane scrollDescricao = new JScrollPane(descricaoField); // Adiciona barra de rolagem se o texto for maior
-																		// que o campo
+		descricaoField.setLineWrap(true); 
+		descricaoField.setWrapStyleWord(true); 
+		JScrollPane scrollDescricao = new JScrollPane(descricaoField);
+																		
 		abaAdicionarDespesas.add(scrollDescricao, gbc);
 
-		// Label e campo de texto para o valor da despesa
 		gbc.gridx = 0;
 		gbc.gridy = 2;
 		gbc.gridwidth = 1;
-		gbc.weighty = 0; // Resetando o peso vertical
+		gbc.weighty = 0; 
 		JLabel valorLabel = new JLabel("Valor da Despesa:");
 		valorLabel.setFont(labelFont);
 		abaAdicionarDespesas.add(valorLabel, gbc);
 
 		gbc.gridx = 1;
-		gbc.fill = GridBagConstraints.HORIZONTAL; // Expandir o campo para preencher horizontalmente
-		JTextField valorField = new JTextField(15); // Aumentado o tamanho do campo
+		gbc.fill = GridBagConstraints.HORIZONTAL; 
+		JTextField valorField = new JTextField(15);
 		valorField.setFont(fieldFont);
 		abaAdicionarDespesas.add(valorField, gbc);
-
-		// Botão para adicionar a despesa
+		
 		gbc.gridx = 0;
 		gbc.gridy = 3;
 		gbc.gridwidth = 2;
-		gbc.fill = GridBagConstraints.NONE; // Resetando o preenchimento para o botão
-		gbc.anchor = GridBagConstraints.CENTER; // Centralizando o botão
+		gbc.fill = GridBagConstraints.NONE;
+		gbc.anchor = GridBagConstraints.CENTER; 
 		JButton adicionarDespesaButton = new JButton("Criar Despesa");
 		adicionarDespesaButton.setFont(buttonFont);
 		abaAdicionarDespesas.add(adicionarDespesaButton, gbc);
 
-		// Tratamento de erros e ação do botão
 		adicionarDespesaButton.addActionListener(e -> {
 			String data = dataField.getText();
 			String descricao = descricaoField.getText();
@@ -160,7 +149,6 @@ public class ContaView extends JFrame {
 					return;
 				}
 
-				// Adicionando despesa (ajustar lógica conforme necessário)
 				MainController.getContaController().addDespesa(processo.getConta(), Utils.stringToDate(data), descricao,
 						Double.parseDouble(valor));
 
@@ -177,26 +165,22 @@ public class ContaView extends JFrame {
 		return abaAdicionarDespesas;
 	}
 
-	// Método para limpar os campos após adicionar a despesa
 	private void limparCamposDespesa(JTextField dataField, JTextArea descricaoField, JTextField valorField) {
 		dataField.setText("dd/MM/yyyy");
 		descricaoField.setText("");
 		valorField.setText("");
 	}
 
-	// Método para criar a aba de "Adicionar Pagamento"
 	private JPanel criarAbaAdicionarPagamentos() {
 		JPanel abaAdicionarPagamentos = new JPanel(new GridBagLayout());
 		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.insets = new Insets(10, 10, 10, 10);
 		gbc.anchor = GridBagConstraints.LINE_START;
 
-		// Definir fontes
 		Font labelFont = new Font("Arial", Font.BOLD, 16);
 		Font fieldFont = new Font("Arial", Font.PLAIN, 16);
 		Font buttonFont = new Font("Arial", Font.BOLD, 16);
 
-		// Label e campo de texto para a data do pagamento
 		gbc.gridx = 0;
 		gbc.gridy = 0;
 		JLabel dataLabel = new JLabel("Data do Pagamento:");
@@ -210,7 +194,6 @@ public class ContaView extends JFrame {
 		dataField.setText("dd/MM/yyyy");
 		abaAdicionarPagamentos.add(dataField, gbc);
 
-		// Label e comboBox para a forma de pagamento
 		gbc.gridx = 0;
 		gbc.gridy = 1;
 		JLabel formaPagamentoLabel = new JLabel("Forma de Pagamento:");
@@ -223,7 +206,6 @@ public class ContaView extends JFrame {
 		formaPagamentoComboBox.setFont(fieldFont);
 		abaAdicionarPagamentos.add(formaPagamentoComboBox, gbc);
 
-		// Label e campo de texto para o valor do pagamento
 		gbc.gridx = 0;
 		gbc.gridy = 2;
 		JLabel valorLabel = new JLabel("Valor do Pagamento:");
@@ -236,7 +218,6 @@ public class ContaView extends JFrame {
 		valorField.setFont(fieldFont);
 		abaAdicionarPagamentos.add(valorField, gbc);
 
-		// Botão para adicionar o pagamento
 		gbc.gridx = 0;
 		gbc.gridy = 3;
 		gbc.gridwidth = 2;
@@ -276,7 +257,6 @@ public class ContaView extends JFrame {
 		return abaAdicionarPagamentos;
 	}
 
-	// Método para limpar os campos após adicionar o pagamento
 	private void limparCamposPagamento(JTextField dataField, JComboBox<EFormaPagamento> formaPagamentoComboBox,
 			JTextField valorField) {
 		dataField.setText("dd/MM/yyyy");
@@ -284,35 +264,29 @@ public class ContaView extends JFrame {
 		valorField.setText("");
 	}
 
-	// Método para criar a aba de "Extrato"
 	private JPanel criarAbaExtrato() {
 	    JPanel panel = new JPanel(new BorderLayout());
 
-	    // Criação do botão "Gerar Extrato"
 	    JButton gerarExtratoButton = new JButton("Gerar Extrato");
 	    gerarExtratoButton.setFont(new Font("Arial", Font.BOLD, 16));
-	    panel.add(gerarExtratoButton, BorderLayout.NORTH); // Adiciona o botão no topo (Norte)
+	    panel.add(gerarExtratoButton, BorderLayout.NORTH); 
 
-	    // Criação da área de texto para mostrar o extrato
-	    JTextArea extratoTextArea = new JTextArea(10, 30); // Exemplo de 10 linhas e 30 colunas
+	    JTextArea extratoTextArea = new JTextArea(10, 30); 
 	    extratoTextArea.setFont(new Font("Arial", Font.PLAIN, 14));
-	    extratoTextArea.setEditable(false); // Torna a área de texto não-editável
-	    extratoTextArea.setLineWrap(true); // Habilita quebra de linha
-	    extratoTextArea.setWrapStyleWord(true); // Quebra completa palavras
-	    JScrollPane scrollPane = new JScrollPane(extratoTextArea); // Adiciona barra de rolagem
+	    extratoTextArea.setEditable(false); 
+	    extratoTextArea.setLineWrap(true); 
+	    extratoTextArea.setWrapStyleWord(true); 
+	    JScrollPane scrollPane = new JScrollPane(extratoTextArea); 
 
-	    panel.add(scrollPane, BorderLayout.CENTER); // Adiciona a área de texto com rolagem no centro
+	    panel.add(scrollPane, BorderLayout.CENTER); 
 
-	    // Ação do botão "Gerar Extrato"
 	    gerarExtratoButton.addActionListener(e -> {
 	        extratoTextArea.setText("");
 
-	        // Formatação com duas casas decimais
 	        double totalCustas = processo.getTotalCustas();
 	        double totalPagamentos = processo.getConta().getTotalPagamentos();
 	        double saldoConta = processo.getConta().getSaldoConta();
 
-	        // Exibe os valores com duas casas decimais e o saldo com sinal
 	        StringBuilder sb = processo.getExtratoContas();
 	        sb.append("====================\n");
 	        sb.append(String.format("Total custas: %.2f reais\n", totalCustas));

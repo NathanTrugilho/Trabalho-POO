@@ -17,6 +17,7 @@ import javax.swing.JTextField;
 
 import controller.MainController;
 import exception.ClienteNaoExisteException;
+import model.Processo;
 import util.Utils;
 
 public class NovoProcessoView extends JFrame {
@@ -296,7 +297,15 @@ public class NovoProcessoView extends JFrame {
 
 	private void listaProcessos() {
 		try {
-			textArea.setText(MainController.getProcessoController().listaProcessos().toString());
+			
+			StringBuilder sb = new StringBuilder();
+
+			for (Processo processo : MainController.getProcessoController().listaProcessos()) {
+				sb.append("Cliente: " + processo.getCliente().getPessoa().getCadastroRF() + "  ");
+				sb.append(processo.toString() + "\n");
+			}
+			textArea.setText(sb.toString());
+			
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "Ocorreu um erro ao listar os processos: " + e.getMessage(), "Erro",
 					JOptionPane.ERROR_MESSAGE);

@@ -1,6 +1,7 @@
 package controller;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -16,6 +17,7 @@ import exception.NumeroProcessoJaExistenteException;
 import exception.PessoaNaoExistenteException;
 import model.Advogado;
 import model.Cliente;
+import model.EFaseProcesso;
 import model.Pessoa;
 import model.Processo;
 import model.Tribunal;
@@ -61,15 +63,13 @@ public class ProcessoController implements Serializable {
 		MainController.save();
 	}
 
-	public StringBuilder listaProcessos() {
-
-		StringBuilder sb = new StringBuilder();
-
-		for (Processo processo : processosSistema.values()) {
-			sb.append(processo.toString());
-		}
-
-		return sb;
+	public Collection<Processo> listaProcessos() {
+		return processosSistema.values();
+	}
+	
+	public void setFaseProcesso(Processo processo, EFaseProcesso faseProcesso) {
+		processo.setFase(faseProcesso);
+		MainController.save();
 	}
 
 }
