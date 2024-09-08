@@ -58,7 +58,7 @@ public class Processo implements Serializable {
 		this.conta = new Conta();
 	}
 
-	public void addPagamento(EFormaPagamento forma, Date data, double valor) {
+	public void addPagamento(EFormaPagamento forma, Date data, double valor) throws AtributoNuloException, ValorInvalidoException {
 		conta.addPagamento(forma, data, valor);
 	}
 

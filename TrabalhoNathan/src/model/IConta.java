@@ -7,7 +7,7 @@ import exception.ValorInvalidoException;
 
 public interface IConta {
 
-	public void addPagamento(EFormaPagamento forma, Date data, double valor);
+	public void addPagamento(EFormaPagamento forma, Date data, double valor) throws AtributoNuloException, ValorInvalidoException;
 
 	public void addDespesa(Date data, String descricao, double valor) throws AtributoNuloException, ValorInvalidoException ;
 

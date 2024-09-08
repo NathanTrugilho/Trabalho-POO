@@ -24,7 +24,7 @@ public class Conta implements IConta, Serializable{
 		despesas.add(desp);
 	};
 	
-	public void addPagamento(EFormaPagamento forma, Date data, double valor) {
+	public void addPagamento(EFormaPagamento forma, Date data, double valor) throws AtributoNuloException, ValorInvalidoException {
 		Pagamento pag = new Pagamento(forma, data, valor);
 		pagamentos.add(pag);
 	};

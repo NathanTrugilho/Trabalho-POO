@@ -10,6 +10,7 @@ import java.awt.event.WindowEvent;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -20,6 +21,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 import controller.MainController;
+import model.EFormaPagamento;
 import model.Processo;
 import util.Utils;
 
@@ -162,10 +164,12 @@ public class ContaView extends JFrame {
 				MainController.getContaController().addDespesa(processo.getConta(), Utils.stringToDate(data), descricao,
 						Long.parseLong(valor));
 
-				limparCampos(dataField, descricaoField, valorField);
+				JOptionPane.showMessageDialog(null, "Despesa criada com sucesso!");
+				
+				limparCamposDespesa(dataField, descricaoField, valorField);
 
 			} catch (Exception ex) {
-				JOptionPane.showMessageDialog(null, "Erro ao adicionar despesa: " + ex.getMessage(), "Erro",
+				JOptionPane.showMessageDialog(null, "Erro ao criar despesa: " + ex.getMessage(), "Erro",
 						JOptionPane.ERROR_MESSAGE);
 			}
 		});
@@ -174,7 +178,7 @@ public class ContaView extends JFrame {
 	}
 
 	// Método para limpar os campos após adicionar a despesa
-	private void limparCampos(JTextField dataField, JTextArea descricaoField, JTextField valorField) {
+	private void limparCamposDespesa(JTextField dataField, JTextArea descricaoField, JTextField valorField) {
 		dataField.setText("dd/MM/yyyy");
 		descricaoField.setText("");
 		valorField.setText("");
@@ -182,34 +186,98 @@ public class ContaView extends JFrame {
 
 	// Método para criar a aba de "Adicionar Pagamento"
 	private JPanel criarAbaAdicionarPagamentos() {
-		JPanel panel = new JPanel(new GridBagLayout());
-		GridBagConstraints gbc = new GridBagConstraints();
-		gbc.insets = new Insets(5, 5, 5, 5);
+	    JPanel abaAdicionarPagamentos = new JPanel(new GridBagLayout());
+	    GridBagConstraints gbc = new GridBagConstraints();
+	    gbc.insets = new Insets(10, 10, 10, 10);
+	    gbc.anchor = GridBagConstraints.LINE_START;
 
-		// Label e campo de texto para o valor do pagamento
-		gbc.gridx = 0;
-		gbc.gridy = 0;
-		panel.add(new JLabel("Valor do Pagamento:"), gbc);
+	    // Definir fontes
+	    Font labelFont = new Font("Arial", Font.BOLD, 16);
+	    Font fieldFont = new Font("Arial", Font.PLAIN, 16);
+	    Font buttonFont = new Font("Arial", Font.BOLD, 16);
 
-		gbc.gridx = 1;
-		JTextField valorPagamentoField = new JTextField(20);
-		panel.add(valorPagamentoField, gbc);
+	    // Label e campo de texto para a data do pagamento
+	    gbc.gridx = 0;
+	    gbc.gridy = 0;
+	    JLabel dataLabel = new JLabel("Data do Pagamento:");
+	    dataLabel.setFont(labelFont);
+	    abaAdicionarPagamentos.add(dataLabel, gbc);
 
-		// Botão para adicionar o pagamento
-		gbc.gridx = 0;
-		gbc.gridy = 1;
-		gbc.gridwidth = 2;
-		JButton adicionarPagamentoButton = new JButton("Adicionar Pagamento");
-		panel.add(adicionarPagamentoButton, gbc);
+	    gbc.gridx = 1;
+	    gbc.fill = GridBagConstraints.HORIZONTAL;
+	    JTextField dataField = new JTextField(15);
+	    dataField.setFont(fieldFont);
+	    dataField.setText("dd/MM/yyyy");
+	    abaAdicionarPagamentos.add(dataField, gbc);
 
-		// Exemplo de ação do botão (apenas uma mensagem, você pode alterar a lógica)
-		adicionarPagamentoButton.addActionListener(e -> {
-			String valorPagamento = valorPagamentoField.getText();
-			System.out.println("Pagamento adicionado: " + valorPagamento);
-			valorPagamentoField.setText(""); // Limpa o campo após adicionar
-		});
+	    // Label e comboBox para a forma de pagamento
+	    gbc.gridx = 0;
+	    gbc.gridy = 1;
+	    JLabel formaPagamentoLabel = new JLabel("Forma de Pagamento:");
+	    formaPagamentoLabel.setFont(labelFont);
+	    abaAdicionarPagamentos.add(formaPagamentoLabel, gbc);
 
-		return panel;
+	    gbc.gridx = 1;
+	    gbc.fill = GridBagConstraints.HORIZONTAL;
+	    JComboBox<EFormaPagamento> formaPagamentoComboBox = new JComboBox<>(EFormaPagamento.values());
+	    formaPagamentoComboBox.setFont(fieldFont);
+	    abaAdicionarPagamentos.add(formaPagamentoComboBox, gbc);
+
+	    // Label e campo de texto para o valor do pagamento
+	    gbc.gridx = 0;
+	    gbc.gridy = 2;
+	    JLabel valorLabel = new JLabel("Valor do Pagamento:");
+	    valorLabel.setFont(labelFont);
+	    abaAdicionarPagamentos.add(valorLabel, gbc);
+
+	    gbc.gridx = 1;
+	    gbc.fill = GridBagConstraints.HORIZONTAL;
+	    JTextField valorField = new JTextField(15);
+	    valorField.setFont(fieldFont);
+	    abaAdicionarPagamentos.add(valorField, gbc);
+
+	    // Botão para adicionar o pagamento
+	    gbc.gridx = 0;
+	    gbc.gridy = 3;
+	    gbc.gridwidth = 2;
+	    gbc.fill = GridBagConstraints.NONE;
+	    gbc.anchor = GridBagConstraints.CENTER;
+	    JButton adicionarPagamentoButton = new JButton("Adicionar Pagamento");
+	    adicionarPagamentoButton.setFont(buttonFont);
+	    abaAdicionarPagamentos.add(adicionarPagamentoButton, gbc);
+
+	    adicionarPagamentoButton.addActionListener(e -> {
+	        
+	    	String data = dataField.getText();
+	        EFormaPagamento formaPagamento = (EFormaPagamento) formaPagamentoComboBox.getSelectedItem();
+	        String valor = valorField.getText();
+
+	        try {
+
+	            if (valor.isBlank() || !valor.matches("\\d+(\\.\\d{2})?")) {
+	                JOptionPane.showMessageDialog(null, "Insira um valor válido!", "Erro de Entrada", JOptionPane.ERROR_MESSAGE);
+	                return;
+	            }
+
+	            MainController.getContaController().addPagamento(processo.getConta(), formaPagamento, Utils.stringToDate(data), Long.parseLong(valor));
+
+	            JOptionPane.showMessageDialog(null, "Pagamento realizado com sucesso!");
+	            
+	            limparCamposPagamento(dataField, formaPagamentoComboBox, valorField);
+
+	        } catch (Exception ex) {
+	            JOptionPane.showMessageDialog(null, "Erro ao adicionar pagamento: " + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+	        }
+	    });
+
+	    return abaAdicionarPagamentos;
+	}
+
+	// Método para limpar os campos após adicionar o pagamento
+	private void limparCamposPagamento(JTextField dataField, JComboBox<EFormaPagamento> formaPagamentoComboBox, JTextField valorField) {
+	    dataField.setText("dd/MM/yyyy");
+	    formaPagamentoComboBox.setSelectedIndex(0);
+	    valorField.setText("");
 	}
 
 	// Método para criar a aba de "Extrato"
