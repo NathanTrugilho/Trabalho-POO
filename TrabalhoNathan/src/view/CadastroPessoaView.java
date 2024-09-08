@@ -166,7 +166,7 @@ public class CadastroPessoaView extends JFrame {
 		gbcRegistroLabel.gridx = 0;
 		gbcRegistroLabel.gridy = 6;
 		gbcRegistroLabel.anchor = GridBagConstraints.LINE_START;
-		JLabel registroLabel = new JLabel("Registro:");
+		JLabel registroLabel = new JLabel("Inscrição OAB:");
 		registroLabel.setFont(labelFont);
 		panel.add(registroLabel, gbcRegistroLabel);
 

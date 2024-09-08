@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import exception.CampoNaoPreenchidoException;
 import exception.FormatoEmailInvalidoException;
+import exception.NomeContemNumerosException;
 import exception.TelefoneInvalidoException;
 import exception.TelefoneNaoNumericoException;
 import util.Utils;
@@ -16,13 +17,15 @@ public abstract class Pessoa implements Serializable {
 	private String email;
 	private long telefone;
 
-	public Pessoa(String nome, String email, long telefone) throws CampoNaoPreenchidoException,
-			FormatoEmailInvalidoException, TelefoneInvalidoException, TelefoneNaoNumericoException {
+	public Pessoa(String nome, String email, long telefone)
+			throws CampoNaoPreenchidoException, FormatoEmailInvalidoException, TelefoneInvalidoException,
+			TelefoneNaoNumericoException, NomeContemNumerosException {
 
 		if (nome.isBlank()) {
 			throw new CampoNaoPreenchidoException("Insira um nome!");
 		}
 
+		Utils.validaNome(nome);
 		Utils.validarEmail(email);
 		Utils.validarTelefone(telefone);
 

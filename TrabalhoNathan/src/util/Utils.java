@@ -12,6 +12,7 @@ import exception.CampoNaoPreenchidoException;
 import exception.DataFormatoErradoException;
 import exception.DataInvalidaException;
 import exception.FormatoEmailInvalidoException;
+import exception.NomeContemNumerosException;
 import exception.TelefoneInvalidoException;
 import exception.TelefoneNaoNumericoException;
 
@@ -36,6 +37,12 @@ public class Utils {
 
 	}
 
+	public static void validaNome(String str) throws NomeContemNumerosException {
+        if(str.chars().anyMatch(Character::isDigit)) {
+        	throw new NomeContemNumerosException();
+        }
+    }
+	
 	public static void validarCPF(String cpf) throws CPFInvalidoException {
 
 		// Verifica se o CPF contém 11 dígitos

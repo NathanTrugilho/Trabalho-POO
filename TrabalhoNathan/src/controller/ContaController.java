@@ -25,7 +25,7 @@ public class ContaController implements Serializable {
 	public void addPagamento(IConta conta, EFormaPagamento formaPagamento, Date data, double valor)
 			throws AtributoNuloException, ValorInvalidoException, ValorPagamentoInvalidoException {
 
-		if (valor > conta.getSaldoConta()) {
+		if (valor > (conta.getSaldoConta() * -1)) {
 			throw new ValorPagamentoInvalidoException(
 					"O valor do pagamento não pode ser maior que os débitos pendentes!");
 		}

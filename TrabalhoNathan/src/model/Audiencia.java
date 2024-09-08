@@ -52,7 +52,7 @@ public class Audiencia implements Serializable{
 				
 		sb.append("Data: " + this.getData() + "\n");
 
-		sb.append("Recomendacao: " + this.getRecomendacao() + "\n\n");
+		sb.append("Descrição: " + this.getRecomendacao() + "\n\n");
 
 		return sb.toString();
 	}

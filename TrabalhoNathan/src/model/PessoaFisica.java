@@ -5,6 +5,7 @@ import java.io.Serializable;
 import exception.CPFInvalidoException;
 import exception.CampoNaoPreenchidoException;
 import exception.FormatoEmailInvalidoException;
+import exception.NomeContemNumerosException;
 import exception.TelefoneInvalidoException;
 import exception.TelefoneNaoNumericoException;
 import util.Utils;
@@ -17,10 +18,10 @@ public class PessoaFisica extends Pessoa implements Serializable {
 
 	public PessoaFisica(String nome, String cpf, String email, long telefone)
 			throws CampoNaoPreenchidoException, FormatoEmailInvalidoException, TelefoneInvalidoException,
-			TelefoneNaoNumericoException, CPFInvalidoException {
+			TelefoneNaoNumericoException, CPFInvalidoException, NomeContemNumerosException {
 
 		super(nome, email, telefone);
-		
+
 		Utils.validarCPF(cpf);
 		this.cpf = cpf;
 	}

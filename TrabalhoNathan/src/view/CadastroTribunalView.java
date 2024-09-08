@@ -57,7 +57,7 @@ public class CadastroTribunalView extends JFrame {
 	    gbcSiglaField.gridy = 0;
 	    gbcSiglaField.fill = GridBagConstraints.HORIZONTAL;
 	    gbcSiglaField.weightx = 1.0;
-	    siglaField = new JTextField(25);
+	    siglaField = new JTextField(12);
 	    siglaField.setFont(fieldFont);
 	    panel.add(siglaField, gbcSiglaField);
 
@@ -76,28 +76,28 @@ public class CadastroTribunalView extends JFrame {
 	    gbcSecaoField.gridy = 1;
 	    gbcSecaoField.fill = GridBagConstraints.HORIZONTAL;
 	    gbcSecaoField.weightx = 1.0;
-	    secaoField = new JTextField(25);
+	    secaoField = new JTextField(30);
 	    secaoField.setFont(fieldFont);
 	    panel.add(secaoField, gbcSecaoField);
 
-	    GridBagConstraints gbcDescricaoLabel = new GridBagConstraints();
-	    gbcDescricaoLabel.insets = new Insets(5, 2, 5, 2);
-	    gbcDescricaoLabel.gridx = 0;
-	    gbcDescricaoLabel.gridy = 2;
-	    gbcDescricaoLabel.anchor = GridBagConstraints.LINE_START;
-	    JLabel label3 = new JLabel("Nome:");
+	    GridBagConstraints gbcVaraLabel = new GridBagConstraints();
+	    gbcVaraLabel.insets = new Insets(5, 2, 5, 2);
+	    gbcVaraLabel.gridx = 0;
+	    gbcVaraLabel.gridy = 2;
+	    gbcVaraLabel.anchor = GridBagConstraints.LINE_START;
+	    JLabel label3 = new JLabel("Vara:");
 	    label3.setFont(labelFont);
-	    panel.add(label3, gbcDescricaoLabel);
+	    panel.add(label3, gbcVaraLabel);
 
-	    GridBagConstraints gbcDescricaoField = new GridBagConstraints();
-	    gbcDescricaoField.insets = new Insets(5, 2, 5, 2);
-	    gbcDescricaoField.gridx = 1;
-	    gbcDescricaoField.gridy = 2;
-	    gbcDescricaoField.fill = GridBagConstraints.HORIZONTAL;
-	    gbcDescricaoField.weightx = 1.0;
-	    descricaoField = new JTextField(25);
+	    GridBagConstraints varaField = new GridBagConstraints();
+	    varaField.insets = new Insets(5, 2, 5, 2);
+	    varaField.gridx = 1;
+	    varaField.gridy = 2;
+	    varaField.fill = GridBagConstraints.HORIZONTAL;
+	    varaField.weightx = 1.0;
+	    descricaoField = new JTextField(50);
 	    descricaoField.setFont(fieldFont);
-	    panel.add(descricaoField, gbcDescricaoField);
+	    panel.add(descricaoField, varaField);
 
 	    GridBagConstraints gbcCadastrarButton = new GridBagConstraints();
 	    gbcCadastrarButton.insets = new Insets(10, 5, 10, 5);

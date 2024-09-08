@@ -34,6 +34,7 @@ public class GerenciarProcessoView extends JFrame {
 	private JLabel numeroProcessoLabel;
 	private JButton listarProcessosButton;
 	private JComboBox<Processo> comboBoxProcessos;
+	private EFaseProcesso faseSelecionada;
 
 	// Botões da parte direita
 	private JButton gerenciarAudienciasButton;
@@ -173,9 +174,9 @@ public class GerenciarProcessoView extends JFrame {
 		comboBoxFaseProcesso.setEnabled(false);
 		botoesPanel.add(comboBoxFaseProcesso, gbcComboBoxFase);
 
-		comboBoxFaseProcesso.addActionListener(e -> selecionaFase());
-
 		comboBoxProcessos.addActionListener(e -> defineFase());
+
+		comboBoxFaseProcesso.addActionListener(e -> selecionaFase());
 
 		panel.add(botoesPanel, gbcBotoesPanel);
 
@@ -186,7 +187,10 @@ public class GerenciarProcessoView extends JFrame {
 	private void defineFase() {
 
 		Processo processoSelecionado = (Processo) comboBoxProcessos.getSelectedItem();
-		comboBoxFaseProcesso.setSelectedItem(processoSelecionado.getFase());
+
+		if (processoSelecionado != null) {
+			comboBoxFaseProcesso.setSelectedItem(processoSelecionado.getFase());
+		}
 	}
 
 	private void selecionaFase() {
@@ -196,10 +200,8 @@ public class GerenciarProcessoView extends JFrame {
 		// Verificação para não entrar no event listener toda vez que eu mudar a
 		// combobox pela seleção de outro processo
 		if (processoSelecionado.getFase() != comboBoxFaseProcesso.getSelectedItem()) {
-			EFaseProcesso faseSelecionada = (EFaseProcesso) comboBoxFaseProcesso.getSelectedItem();
-
+			faseSelecionada = (EFaseProcesso) comboBoxFaseProcesso.getSelectedItem();
 			MainController.getProcessoController().setFaseProcesso(processoSelecionado, faseSelecionada);
-
 			JOptionPane.showMessageDialog(null, "Fase do processo atualizada para: " + faseSelecionada);
 		}
 	}
@@ -336,10 +338,10 @@ public class GerenciarProcessoView extends JFrame {
 				comboBoxProcessos.addItem(processo);
 			}
 
+			comboBoxFaseProcesso.setEnabled(true);
 			gerenciarAudienciasButton.setEnabled(true);
 			gerenciarContaButton.setEnabled(true);
 			descreverProcessoButton.setEnabled(true);
-			comboBoxFaseProcesso.setEnabled(true);
 
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
