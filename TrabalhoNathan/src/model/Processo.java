@@ -17,7 +17,6 @@ public class Processo implements Serializable {
 
 	private final long numero;
 	private final Date dataAbertura;
-	private Date dataConclusao;
 	private EFaseProcesso fase;
 	private final Cliente cliente;
 	private final Pessoa parteContraria;
@@ -49,7 +48,6 @@ public class Processo implements Serializable {
 		}
 				
 		this.fase = EFaseProcesso.INICIAL;
-		this.dataConclusao = null;
 		this.numero = numero;
 		this.dataAbertura = dataAbertura;
 		this.cliente = cliente;
@@ -64,10 +62,6 @@ public class Processo implements Serializable {
 
 	public void addDespesa(Date data, String descricao, double valor) throws AtributoNuloException, ValorInvalidoException {
 		conta.addDespesa(data, descricao, valor);
-	}
-
-	public Date getDataConclusao() {
-		return dataConclusao;
 	}
 
 	public EFaseProcesso getFase() {
@@ -124,16 +118,6 @@ public class Processo implements Serializable {
 
 	public double getTotalCustas() {
 		return this.conta.getTotalDespesas();
-	}
-
-	public void encerraProcesso(Date dataConclusao) {
-		this.dataConclusao = dataConclusao;
-		this.fase = EFaseProcesso.CONCLUSAO;
-	}
-
-	public void encerraProcesso() {
-		this.dataConclusao = new Date();
-		this.fase = EFaseProcesso.CONCLUSAO;
 	}
 
 	@Override

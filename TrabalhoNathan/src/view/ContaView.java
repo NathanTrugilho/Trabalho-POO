@@ -309,7 +309,7 @@ public class ContaView extends JFrame {
 			extratoTextArea.setText("");
 
 			StringBuilder sb = processo.getExtratoContas();
-			sb.append("=======================\n");
+			sb.append("=====================\n");
 			sb.append("Total custas: " + processo.getTotalCustas() + "\n");
 			sb.append("Total pagamentos: " + processo.getConta().getTotalPagamentos() + "\n");
 			sb.append("Total saldo: " + processo.getConta().getSaldoConta() + "\n");

@@ -16,6 +16,7 @@ import javax.swing.JTextField;
 
 import controller.MainController;
 import exception.ClienteNaoExisteException;
+import model.EFaseProcesso;
 import model.Processo;
 import util.Utils;
 
@@ -35,7 +36,7 @@ public class GerenciarProcessoView extends JFrame {
 	private JButton gerenciarAudienciasButton;
 	private JButton gerenciarContaButton;
 	private JButton botao3;
-	private JButton botao4;
+	private JComboBox<EFaseProcesso> comboBoxFaseProcesso;
 
 	public GerenciarProcessoView() {
 		initialize();
@@ -160,21 +161,37 @@ public class GerenciarProcessoView extends JFrame {
 		botao3.setFont(buttonFont);
 		botoesPanel.add(botao3, gbcBotao3);
 
-		GridBagConstraints gbcBotao4 = new GridBagConstraints();
-		gbcBotao4.insets = new Insets(10, 5, 15, 5);
-		gbcBotao4.gridx = 0;
-		gbcBotao4.gridy = 3;
-		gbcBotao4.fill = GridBagConstraints.HORIZONTAL;
-		botao4 = new JButton("Botão 4");
-		botao4.setFont(buttonFont);
-		botoesPanel.add(botao4, gbcBotao4);
+		GridBagConstraints gbcComboBoxFase = new GridBagConstraints();
+		gbcComboBoxFase.insets = new Insets(10, 5, 15, 5);
+		gbcComboBoxFase.gridx = 0;
+		gbcComboBoxFase.gridy = 3;
+		gbcComboBoxFase.fill = GridBagConstraints.HORIZONTAL;
 
+		comboBoxFaseProcesso = new JComboBox<>(EFaseProcesso.values());
+		comboBoxFaseProcesso.setFont(buttonFont);
+		botoesPanel.add(comboBoxFaseProcesso, gbcComboBoxFase);
+
+		comboBoxFaseProcesso.addActionListener(e -> selecionaFase());
+		
 		panel.add(botoesPanel, gbcBotoesPanel);
 
 		// Adiciona o painel ao JFrame
 		getContentPane().add(panel);
 	}
 
+	
+	private void selecionaFase() {
+		Processo processoSelecionado = (Processo) comboBoxProcessos.getSelectedItem();
+	    
+	    if (processoSelecionado != null) {
+	        EFaseProcesso faseSelecionada = (EFaseProcesso) comboBoxFaseProcesso.getSelectedItem();
+	        processoSelecionado.setFase(faseSelecionada);
+	        JOptionPane.showMessageDialog(null, "Fase do processo atualizada para: " + faseSelecionada);
+	    } else {
+	        JOptionPane.showMessageDialog(null, "Selecione um processo primeiro!", "Erro", JOptionPane.ERROR_MESSAGE);
+	    }
+	}
+	
 	 private void gerenciarContas() {
 	        Processo processoSelecionado;
 	        try {

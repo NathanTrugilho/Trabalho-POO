@@ -1,5 +1,5 @@
 package model;
 
 public enum EFaseProcesso {
-	INICIAL, INSTRUCAO, DECISAO, RECURSO, CONCLUSAO
+	INICIAL, INSTRUCAO, DECISAO, RECURSO
 }
