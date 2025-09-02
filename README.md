@@ -23,11 +23,11 @@ Automatizar o controle de processos de um escritório de advocacia, permitindo c
 ---
 
 ## Imagens do sistema
-![](imagens/Audiência.PNG)
 ![](imagens/Cadastro.PNG)
+![](imagens/Tribunal.PNG)
+![](imagens/Processo.PNG)
+![](imagens/listar.PNG)
+![](imagens/Audiência.PNG)
 ![](imagens/Conta.PNG)
 ![](imagens/Detalhes.PNG)
-![](imagens/Processo.PNG)
-![](imagens/Tribunal.PNG)
-![](imagens/listar.PNG)
 
