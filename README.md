@@ -4,15 +4,15 @@ Projeto desenvolvido como parte da disciplina **Programação Orientada a Objeto
 
 O enunciado completo em pdf está disponível [aqui](Enunciado.pdf)
 
-## 📌 Objetivo
+## Objetivo
 Automatizar o controle de processos de um escritório de advocacia, permitindo cadastro de clientes, processos, audiências e controle financeiro.  
 
-## 🛠️ Tecnologias utilizadas
+## Tecnologias utilizadas
 - **Java (Swing)** – Interface gráfica  
 - **POO ** – Arquitetura em camadas (`model`, `view`, `controller`, `persistence`)  
 - **Persistência em arquivo binário**  
 
-## ✨ Funcionalidades
+## Funcionalidades
 - Cadastro de **pessoas físicas e jurídicas**  
 - Registro de **processos** (número, tribunal, cliente, parte contrária)  
 - Gerenciamento de **audiências** (data, advogado responsável, recomendações)  
@@ -23,11 +23,11 @@ Automatizar o controle de processos de um escritório de advocacia, permitindo c
 ---
 
 ## Imagens do sistema
-![](Audiência.PNG)
-![](Cadastro.PNG)
-![](Conta.PNG)
-![](Detalhes.PNG)
-![](Processo.PNG)
-![](Tribunal.PNG)
-![](listar.PNG)
+![](imagens/Audiência.PNG)
+![](imagens/Cadastro.PNG)
+![](imagens/Conta.PNG)
+![](imagens/Detalhes.PNG)
+![](imagens/Processo.PNG)
+![](imagens/Tribunal.PNG)
+![](imagens/listar.PNG)
 
